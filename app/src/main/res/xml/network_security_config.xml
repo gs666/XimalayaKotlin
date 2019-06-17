@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Android targetSDK >=28 时需要本文件解决网络问题，详见喜马拉雅文档-->
+<network-security-config >
+    <base-config cleartextTrafficPermitted="true"/>
+</network-security-config>
