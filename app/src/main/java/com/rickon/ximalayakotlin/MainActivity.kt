@@ -2,11 +2,15 @@ package com.rickon.ximalayakotlin
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager
 import android.util.Log
-import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
-import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
-import com.ximalaya.ting.android.opensdk.model.live.provinces.ProvinceList
+import com.rickon.ximalayakotlin.adapter.FragmentAdapter
+import com.rickon.ximalayakotlin.fragment.RadioFragment
+import com.rickon.ximalayakotlin.fragment.RecommendFrag
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.ArrayList
 
 /**
  * @Description:
@@ -20,7 +24,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        hello.setOnClickListener { loadProvinceList() }
+        initView()
+
+        //打开广播界面
+        id_tab_layout.getTabAt(1)!!.select()
 
 
     }
@@ -31,27 +38,48 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    /**
-     * 获取省份列表
-     */
-    fun loadProvinceList() {
-        val map = java.util.HashMap<String, String>()
-        CommonRequest.getProvinces(map, object : IDataCallBack<ProvinceList> {
-            override fun onSuccess(provinceList: ProvinceList?) {
-                val provinces = provinceList!!.provinceList
-                if (provinces.size > 0) {
-                    Log.d(TAG, "" + provinces.size)
-                }
-                for (province in provinces) {
-                    //                    Log.e(TAG, "onSuccess: " + province.getProvinceName() + ",省市代码：" + province.getProvinceCode());
-                }
+    fun initView() {
+        id_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+
             }
 
-            override fun onError(i: Int, s: String) {
-                Log.d(TAG, s + i.toString())
+            override fun onTabUnselected(tab: TabLayout.Tab) {
 
-                Log.d(TAG, "获取省市列表失败")
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
+        })
+
+        var fragmentList: MutableList<Fragment> = ArrayList()
+        var titleList: MutableList<String> = ArrayList()
+
+        fragmentList.add(RecommendFrag())
+        fragmentList.add(RadioFragment())
+
+        titleList.add(getString(R.string.recommend))
+        titleList.add(getString(R.string.fm))
+
+        val fragmentAdapter = FragmentAdapter(supportFragmentManager)
+        id_view_pager.adapter = fragmentAdapter
+        id_tab_layout.setupWithViewPager(id_view_pager)
+
+        fragmentAdapter.setData(titleList)
+
+        id_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
+            }
+
+            override fun onPageSelected(p0: Int) {
+                Log.d(TAG, "viewpager 当前位置 $p0")
+            }
+
+            override fun onPageScrollStateChanged(p0: Int) {
+
             }
         })
     }
+
 }
