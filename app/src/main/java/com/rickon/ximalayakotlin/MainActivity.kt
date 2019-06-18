@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
-import android.util.Log
 import com.rickon.ximalayakotlin.adapter.FragmentAdapter
 import com.rickon.ximalayakotlin.fragment.RadioFragment
 import com.rickon.ximalayakotlin.fragment.RecommendFrag
@@ -29,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         //打开广播界面
         id_tab_layout.getTabAt(1)!!.select()
 
-
     }
 
     companion object {
@@ -39,19 +37,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initView() {
-        id_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
-        })
 
         var fragmentList: MutableList<Fragment> = ArrayList()
         var titleList: MutableList<String> = ArrayList()
@@ -73,10 +58,23 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(p0: Int) {
-                Log.d(TAG, "viewpager 当前位置 $p0")
             }
 
             override fun onPageScrollStateChanged(p0: Int) {
+
+            }
+        })
+
+        id_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
 
             }
         })

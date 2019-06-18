@@ -32,23 +32,4 @@ class FragmentAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(mana
     override fun getCount(): Int {
         return if (mTitles == null) 0 else mTitles!!.size
     }
-
-    fun dataEquals(oldData: Any?, newData: Any?): Boolean {
-
-        return if (oldData == null || newData == null) {
-            false
-        } else oldData == newData
-    }
-
-    fun getDataPosition(data: Any): Int {
-        var index = -1
-        for (i in mTitles!!.indices) {
-            val string = mTitles!![i]
-            if (dataEquals(string, data)) {
-                index = i
-                break
-            }
-        }
-        return index
-    }
 }

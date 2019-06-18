@@ -19,10 +19,10 @@ class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
 
     private var mContext: Context? = null
     private var provinceList: List<Province>? = null
-    private var itemClickListener:IKotlinItemClickListener? = null
+    private var itemClickListener: IKotlinItemClickListener? = null
     private var selectItem = -1
 
-    constructor(mContext:Context,list:List<Province>) {
+    constructor(mContext: Context, list: List<Province>) {
         this.mContext = mContext
         this.provinceList = list
     }
@@ -43,9 +43,7 @@ class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textViewTitle.text = provinceList!![position].provinceName
 
-        if (position == selectItem) {
-            holder.provinceItemView.setBackgroundResource(R.color.selected_bg)
-        }
+        if (position == selectItem) holder.provinceItemView.setBackgroundResource(R.color.selected_bg) else holder.provinceItemView.setBackgroundResource(R.color.white)
 
         holder.provinceItemView.setOnClickListener {
             itemClickListener!!.onItemClickListener(position)

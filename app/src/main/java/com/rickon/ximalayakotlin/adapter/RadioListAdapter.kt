@@ -43,6 +43,8 @@ class RadioListAdapter : RecyclerView.Adapter<RadioListAdapter.ViewHolder> {
 
         if (position == selectItem) {
             holder.radioItemView.setBackgroundResource(R.color.selected_bg)
+        } else {
+            holder.radioItemView.setBackgroundResource(R.color.white)
         }
 
         holder.radioItemView.setOnClickListener {

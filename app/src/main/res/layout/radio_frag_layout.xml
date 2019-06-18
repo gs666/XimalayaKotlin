@@ -5,8 +5,7 @@
               android:orientation="horizontal">
     <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_provinces"
-            android:background="@color/tab_selected"
-            android:layout_width="200dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"/>
 
     <android.support.v7.widget.RecyclerView

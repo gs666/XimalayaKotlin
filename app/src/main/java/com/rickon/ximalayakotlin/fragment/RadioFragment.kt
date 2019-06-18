@@ -12,12 +12,13 @@ import android.view.ViewGroup
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.ProvinceListAdapter
 import com.rickon.ximalayakotlin.adapter.RadioListAdapter
+import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
 import com.ximalaya.ting.android.opensdk.model.live.provinces.Province
 import com.ximalaya.ting.android.opensdk.model.live.provinces.ProvinceList
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
-import kotlinx.android.synthetic.main.activity_main.*
+import com.ximalaya.ting.android.opensdk.model.live.radio.RadioList
 import kotlinx.android.synthetic.main.radio_frag_layout.*
 
 /**
@@ -31,22 +32,55 @@ class RadioFragment() : BaseFragment() {
     private var mProvinceList: List<Province>? = null
     private var mRadioList: List<Radio>? = null
 
+    private var provinceCode: Long? = 110000L
+    private var mLoading = false
+    private var currentRadioPos = Int.MAX_VALUE
+    private var currentProvincePos = 0
+
     //uiHandler在主线程中创建，所以自动绑定主线程
     private var uiHandler = object : Handler() {
         override fun handleMessage(msg: Message?) {
             super.handleMessage(msg)
             when (msg?.what) {
                 LOAD_PROVINCE_SUCCESS -> {
-                    Log.d(TAG, "收到获取成功的消息")
 
                     recyclerview_provinces.layoutManager = LinearLayoutManager(mContext)
-                    val adapter = ProvinceListAdapter(mContext!!, mProvinceList!!)
-                    recyclerview_provinces.adapter = adapter
+                    val provinceAdapter = ProvinceListAdapter(mContext!!, mProvinceList!!)
+                    recyclerview_provinces.adapter = provinceAdapter
+                    //默认选中第一项
+                    provinceAdapter.setSelectItem(currentProvincePos)
 
-                    adapter.setOnKotlinItemClickListener(object :
+                    provinceAdapter.setOnKotlinItemClickListener(object :
                         ProvinceListAdapter.IKotlinItemClickListener {
                         override fun onItemClickListener(position: Int) {
-                            Log.d(TAG, position.toString())
+                            if (position != currentProvincePos) {
+                                Log.d(TAG, position.toString())
+                                currentProvincePos = position
+
+                                provinceAdapter.setSelectItem(position)
+                                provinceAdapter.notifyDataSetChanged()
+
+                                provinceCode = mProvinceList!![position].provinceCode
+                                loadRadioList()
+                            }
+                        }
+                    })
+                }
+
+                LOAD_RADIO_SUCCESS -> {
+                    recyclerview_radios.layoutManager = LinearLayoutManager(mContext)
+                    val radioAdapter = RadioListAdapter(mContext!!, mRadioList!!)
+                    recyclerview_radios.adapter = radioAdapter
+
+                    radioAdapter.setOnKotlinItemClickListener(object : RadioListAdapter.IKotlinItemClickListener {
+                        override fun onItemClickListener(position: Int) {
+                            if (position != currentRadioPos) {
+                                Log.d(TAG, position.toString())
+                                currentRadioPos = position
+                                radioAdapter.setSelectItem(position)
+                                radioAdapter.notifyDataSetChanged()
+                                //todo:播放电台
+                            }
                         }
                     })
                 }
@@ -65,6 +99,7 @@ class RadioFragment() : BaseFragment() {
         mContext = activity
 
         loadProvinceList()
+        loadRadioList()
 
 
     }
@@ -89,6 +124,38 @@ class RadioFragment() : BaseFragment() {
 
             override fun onError(i: Int, s: String) {
                 Log.d(TAG, "获取省市列表失败")
+            }
+        })
+    }
+
+    /**
+     * 加载对应省份直播电台不播放
+     */
+    fun loadRadioList() {
+        Log.d(TAG, "加载对应省份直播电台不播放")
+        if (mLoading) {
+            return
+        }
+        mLoading = true
+        val map = HashMap<String, String>()
+        map[DTransferConstants.RADIOTYPE] = PROVINCE_RADIO_TYPE.toString()
+        map[DTransferConstants.PROVINCECODE] = provinceCode.toString()
+        CommonRequest.getRadios(map, object : IDataCallBack<RadioList> {
+            override fun onSuccess(radioList: RadioList?) {
+                if (radioList?.radios != null) {
+                    mRadioList = null
+                    mRadioList = radioList.radios
+
+                    val msg = Message()
+                    msg.what = LOAD_RADIO_SUCCESS
+                    uiHandler.sendMessage(msg)
+                }
+                mLoading = false
+            }
+
+            override fun onError(code: Int, message: String) {
+                mLoading = false
+                Log.d(TAG, "获取省市下的电台失败,错误码$code,错误信息$message")
             }
         })
     }
