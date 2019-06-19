@@ -15,10 +15,14 @@ import com.rickon.ximalayakotlin.adapter.RadioListAdapter
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
+import com.ximalaya.ting.android.opensdk.model.PlayableModel
 import com.ximalaya.ting.android.opensdk.model.live.provinces.Province
 import com.ximalaya.ting.android.opensdk.model.live.provinces.ProvinceList
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.model.live.radio.RadioList
+import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
+import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
+import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
 import kotlinx.android.synthetic.main.radio_frag_layout.*
 
 /**
@@ -36,6 +40,9 @@ class RadioFragment() : BaseFragment() {
     private var mLoading = false
     private var currentRadioPos = Int.MAX_VALUE
     private var currentProvincePos = 0
+
+    private var mPlayerServiceManager: XmPlayerManager? = null
+
 
     //uiHandler在主线程中创建，所以自动绑定主线程
     private var uiHandler = object : Handler() {
@@ -76,16 +83,52 @@ class RadioFragment() : BaseFragment() {
                         override fun onItemClickListener(position: Int) {
                             if (position != currentRadioPos) {
                                 Log.d(TAG, position.toString())
+
+                                val radio = mRadioList?.get(position)
+                                //播放直播
+                                mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
+
                                 currentRadioPos = position
                                 radioAdapter.setSelectItem(position)
                                 radioAdapter.notifyDataSetChanged()
                                 //todo:播放电台
+
                             }
                         }
                     })
                 }
             }
         }
+
+    }
+
+    private val mPlayerStatusListener = object : IXmPlayerStatusListener {
+        override fun onSoundSwitch(laModel: PlayableModel?, curModel: PlayableModel) {
+            //notifyDataSetChanged
+        }
+
+        override fun onSoundPrepared() {}
+
+        override fun onSoundPlayComplete() {}
+
+        override fun onPlayStop() {}
+
+        override fun onPlayStart() {}
+
+        override fun onPlayProgress(currPos: Int, duration: Int) {}
+
+        override fun onPlayPause() {}
+
+        override fun onError(exception: XmPlayerException): Boolean {
+            return false
+
+        }
+
+        override fun onBufferingStop() {}
+
+        override fun onBufferingStart() {}
+
+        override fun onBufferProgress(percent: Int) {}
 
     }
 
@@ -97,6 +140,9 @@ class RadioFragment() : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mContext = activity
+
+        mPlayerServiceManager = XmPlayerManager.getInstance(mContext)
+        mPlayerServiceManager?.addPlayerStatusListener(mPlayerStatusListener)
 
         loadProvinceList()
         loadRadioList()

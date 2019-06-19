@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     <meta-data
             android:name="app_key"
             android:value="9e7d0b81dd09d3a5c047c5ff841f8691"/>
@@ -31,6 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <service android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
+                 android:process=":player"/>
     </application>
 
 </manifest>

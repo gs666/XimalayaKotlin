@@ -3,6 +3,7 @@ package com.rickon.ximalayakotlin.adapter
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import com.rickon.ximalayakotlin.fragment.CategoryFrag
 import com.rickon.ximalayakotlin.fragment.RadioFragment
 import com.rickon.ximalayakotlin.fragment.RecommendFrag
 
@@ -26,7 +27,11 @@ class FragmentAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(mana
     }
 
     override fun getItem(position: Int): Fragment {
-        return if (position == 0) RecommendFrag() else RadioFragment()
+        return when (position) {
+            0 -> RecommendFrag()
+            1 -> RadioFragment()
+            else -> CategoryFrag()
+        }
     }
 
     override fun getCount(): Int {

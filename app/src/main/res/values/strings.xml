@@ -2,5 +2,6 @@
     <string name="app_name">喜马拉雅Kotlin</string>
     <string name="recommend">推荐</string>
     <string name="fm">广播</string>
+    <string name="category">分类</string>
 
 </resources>
