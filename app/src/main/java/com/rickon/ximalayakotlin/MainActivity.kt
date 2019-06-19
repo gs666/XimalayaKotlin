@@ -7,6 +7,9 @@ import android.support.v4.view.ViewPager
 import android.util.Log
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.adapter.FragmentAdapter
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
@@ -40,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initView()
+
+        //初始化播放器
         mPlayerManager = XmPlayerManager.getInstance(this)
         val mNotification = XmNotificationCreater.getInstanse(this)
             .initNotification<MainActivity>(this.applicationContext, MainActivity::class.java)
@@ -57,9 +62,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
         //打开广播界面
         id_tab_layout.getTabAt(1)!!.select()
+
+        //点击事件
+        id_play_or_pause.setOnClickListener {
+            if (mPlayerManager!!.isPlaying) mPlayerManager?.pause() else mPlayerManager?.play()
+        }
+        id_current_list.setOnClickListener { Toast.makeText(mContext, "暂未开发此功能", Toast.LENGTH_SHORT).show() }
 
     }
 
@@ -131,9 +141,9 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, "onSoundSwitch index:$curModel")
 
             val model = mPlayerManager?.currSound
-            var title: String? = null
-            var singer: String? = null
-            var coverUrl: String? = null
+            var title: String
+            var singer: String
+            var coverUrl: String
             when (model) {
                 is Track -> {
                     title = model.trackTitle
@@ -141,35 +151,28 @@ class MainActivity : AppCompatActivity() {
                     coverUrl = model.coverUrlLarge
                 }
                 is Schedule -> {
-                    val info = model as Schedule
-                    title = info.relatedProgram.programName
-                    coverUrl = info.relatedProgram.backPicUrl
+                    title = model.relatedProgram.programName
+                    singer = model.radioName
+                    coverUrl = model.relatedProgram.backPicUrl
                 }
                 is Radio -> {
-                    title = model.radioName
+                    title = model.programName
+                    singer = model.radioName
                     coverUrl = model.coverUrlLarge
+                }
+                else ->{
+                    title = ""
+                    singer = ""
+                    coverUrl = ""
                 }
             }
 
             id_play_bar_title.text = title
             id_play_bar_singer.text = singer
-            Glide.with(mContext).load(coverUrl).into(id_play_bar_image)
+            Glide.with(mContext)
+                .load(coverUrl).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                .into(id_play_bar_image)
 
-            updateButtonStatus()
-        }
-
-
-        private fun updateButtonStatus() {
-//            if (mPlayerManager.hasPreSound()) {
-//                mBtnPreSound.setEnabled(true)
-//            } else {
-//                mBtnPreSound.setEnabled(false)
-//            }
-//            if (mPlayerManager.hasNextSound()) {
-//                mBtnNextSound.setEnabled(true)
-//            } else {
-//                mBtnNextSound.setEnabled(false)
-//            }
         }
 
         override fun onPlayStop() {
@@ -183,17 +186,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPlayProgress(currPos: Int, duration: Int) {
-            var title = ""
             val info = mPlayerManager?.currSound
-//            if (info != null) {
-//                if (info is Track) {
-//                    title = (info as Track).trackTitle
-//                } else if (info is Schedule) {
-//                    title = (info as Schedule).relatedProgram.programName
-//                } else if (info is Radio) {
-//                    title = (info as Radio).radioName
-//                }
-//            }
+            val title: String = when (info) {
+                is Track -> {
+                    info.trackTitle
+                }
+                is Schedule -> {
+                    info.relatedProgram.programName
+                }
+                is Radio -> {
+                    info.radioName
+                }
+                else -> ""
+            }
 //            mTextView.setText(title + "[" + ToolUtil.formatTime(currPos) + "/" + ToolUtil.formatTime(duration) + "]")
 //            if (mUpdateProgress && duration != 0) {
 //                mSeekBar.setProgress((100 * currPos / duration.toFloat()).toInt())

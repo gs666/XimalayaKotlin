@@ -17,9 +17,9 @@ import com.ximalaya.ting.android.opensdk.model.live.provinces.Province
  */
 class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
 
-    private var mContext: Context? = null
-    private var provinceList: List<Province>? = null
-    private var itemClickListener: IKotlinItemClickListener? = null
+    private var mContext: Context
+    private var provinceList: List<Province>
+    private lateinit var itemClickListener: IKotlinItemClickListener
     private var selectItem = -1
 
     constructor(mContext: Context, list: List<Province>) {
@@ -46,12 +46,12 @@ class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
         if (position == selectItem) holder.provinceItemView.setBackgroundResource(R.color.selected_bg) else holder.provinceItemView.setBackgroundResource(R.color.white)
 
         holder.provinceItemView.setOnClickListener {
-            itemClickListener!!.onItemClickListener(position)
+            itemClickListener.onItemClickListener(position)
         }
     }
 
     override fun getItemCount(): Int {
-        return provinceList!!.size
+        return provinceList.size
     }
 
     // 提供set方法

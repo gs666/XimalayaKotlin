@@ -6,5 +6,4 @@ package com.rickon.ximalayakotlin.fragment
  * @CreateDate:  2019-06-17 13:00
  * @Email:       gaoshuo521@foxmail.com
  */
-class RecommendFrag():BaseFragment() {
-}
+class RecommendFrag:BaseFragment()

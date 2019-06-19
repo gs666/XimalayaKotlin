@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.ProvinceListAdapter
 import com.rickon.ximalayakotlin.adapter.RadioListAdapter
@@ -31,12 +32,14 @@ import kotlinx.android.synthetic.main.radio_frag_layout.*
  * @CreateDate:  2019-06-14 15:06
  * @Email:       gaoshuo521@foxmail.com
  */
-class RadioFragment() : BaseFragment() {
-    private var mContext: Context? = null
+class RadioFragment : BaseFragment() {
+    private lateinit var mContext: Context
     private var mProvinceList: List<Province>? = null
     private var mRadioList: List<Radio>? = null
 
-    private var provinceCode: Long? = 110000L
+    private lateinit var radioAdapter:RadioListAdapter
+
+    private var provinceCode: Long = 110000L
     private var mLoading = false
     private var currentRadioPos = Int.MAX_VALUE
     private var currentProvincePos = 0
@@ -52,7 +55,7 @@ class RadioFragment() : BaseFragment() {
                 LOAD_PROVINCE_SUCCESS -> {
 
                     recyclerview_provinces.layoutManager = LinearLayoutManager(mContext)
-                    val provinceAdapter = ProvinceListAdapter(mContext!!, mProvinceList!!)
+                    val provinceAdapter = ProvinceListAdapter(mContext, mProvinceList!!)
                     recyclerview_provinces.adapter = provinceAdapter
                     //默认选中第一项
                     provinceAdapter.setSelectItem(currentProvincePos)
@@ -76,7 +79,7 @@ class RadioFragment() : BaseFragment() {
 
                 LOAD_RADIO_SUCCESS -> {
                     recyclerview_radios.layoutManager = LinearLayoutManager(mContext)
-                    val radioAdapter = RadioListAdapter(mContext!!, mRadioList!!)
+                    radioAdapter = RadioListAdapter(mContext, mRadioList!!)
                     recyclerview_radios.adapter = radioAdapter
 
                     radioAdapter.setOnKotlinItemClickListener(object : RadioListAdapter.IKotlinItemClickListener {
@@ -91,8 +94,6 @@ class RadioFragment() : BaseFragment() {
                                 currentRadioPos = position
                                 radioAdapter.setSelectItem(position)
                                 radioAdapter.notifyDataSetChanged()
-                                //todo:播放电台
-
                             }
                         }
                     })
@@ -104,7 +105,7 @@ class RadioFragment() : BaseFragment() {
 
     private val mPlayerStatusListener = object : IXmPlayerStatusListener {
         override fun onSoundSwitch(laModel: PlayableModel?, curModel: PlayableModel) {
-            //notifyDataSetChanged
+            radioAdapter.notifyDataSetChanged()
         }
 
         override fun onSoundPrepared() {}
@@ -133,13 +134,12 @@ class RadioFragment() : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.radio_frag_layout, container, false)
-        return view
+        return inflater.inflate(R.layout.radio_frag_layout, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mContext = activity
+        mContext = activity!!
 
         mPlayerServiceManager = XmPlayerManager.getInstance(mContext)
         mPlayerServiceManager?.addPlayerStatusListener(mPlayerStatusListener)
@@ -147,6 +147,7 @@ class RadioFragment() : BaseFragment() {
         loadProvinceList()
         loadRadioList()
 
+        edit_text_main.setOnClickListener { Toast.makeText(mContext,"跳转搜索",Toast.LENGTH_SHORT).show() }
 
     }
 
@@ -157,7 +158,7 @@ class RadioFragment() : BaseFragment() {
     /**
      * 获取省份列表
      */
-    fun loadProvinceList() {
+    private fun loadProvinceList() {
         val map = java.util.HashMap<String, String>()
         CommonRequest.getProvinces(map, object : IDataCallBack<ProvinceList> {
             override fun onSuccess(provinceList: ProvinceList?) {

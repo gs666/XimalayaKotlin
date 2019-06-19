@@ -2,14 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="horizontal">
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview_provinces"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"/>
-
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview_radios"
+              android:orientation="vertical">
+    <RelativeLayout
+            android:id="@+id/search_zone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content">
+        <EditText
+                android:id="@+id/edit_text_main"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:background="@drawable/edit_style"
+                android:maxLines="1"
+                android:gravity="center|left"
+                android:hint="请输入搜索内容"
+                android:paddingLeft="40dp"
+                android:textSize="15dp"
+                android:textColorHint="#8f8e8e"/>
+
+        <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/search_img"/>
+    </RelativeLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="horizontal">
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_provinces"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"/>
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_radios"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+
 </LinearLayout>
