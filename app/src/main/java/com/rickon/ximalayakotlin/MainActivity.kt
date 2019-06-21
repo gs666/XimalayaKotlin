@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity() {
                     singer = model.radioName
                     coverUrl = model.coverUrlLarge
                 }
-                else ->{
+                else -> {
                     title = ""
                     singer = ""
                     coverUrl = ""
@@ -185,6 +185,7 @@ class MainActivity : AppCompatActivity() {
             id_play_or_pause.setImageResource(R.drawable.ic_pause)
         }
 
+        //播放进度回调
         override fun onPlayProgress(currPos: Int, duration: Int) {
             val info = mPlayerManager?.currSound
             val title: String = when (info) {
@@ -215,6 +216,7 @@ class MainActivity : AppCompatActivity() {
             Log.i(TAG, "onSoundPlayComplete")
             id_play_or_pause.setImageResource(R.drawable.ic_play)
             XmPlayerManager.getInstance(mContext).pause()
+            Toast.makeText(mContext, "播放完成", Toast.LENGTH_SHORT).show()
         }
 
         override fun onError(exception: XmPlayerException): Boolean {
@@ -248,7 +250,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onStartGetAdsInfo() {
             Log.i(TAG, "onStartGetAdsInfo")
-//            mBtnPlay.setEnabled(false)
+            id_play_or_pause.isEnabled = false
 //            mSeekBar.setEnabled(false)
         }
 
@@ -262,12 +264,14 @@ class MainActivity : AppCompatActivity() {
 
         override fun onCompletePlayAds() {
             Log.i(TAG, "onCompletePlayAds")
-//            mBtnPlay.setEnabled(true)
+            id_play_or_pause.isEnabled = true
 //            mSeekBar.setEnabled(true)
-//            val model = mPlayerManager.getCurrSound()
-//            if (model != null && model is Track) {
-//                x.image().bind(mSoundCover, (model as Track).coverUrlLarge)
-//            }
+            val model = mPlayerManager?.currSound
+            if (model is Track) {
+                Glide.with(mContext)
+                    .load(model.coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                    .into(id_play_bar_image)
+            }
         }
 
         override fun onAdsStopBuffering() {
