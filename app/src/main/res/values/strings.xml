@@ -4,4 +4,8 @@
     <string name="fm">广播</string>
     <string name="category">分类</string>
 
+    <string name="music">音乐</string>
+    <string name="entertainment">娱乐</string>
+    <string name="crosstalk">相声</string>
+
 </resources>

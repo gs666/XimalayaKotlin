@@ -1,16 +1,17 @@
-package com.rickon.ximalayakotlin
+package com.rickon.ximalayakotlin.activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
+import android.support.v4.app.Fragment
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.rickon.ximalayakotlin.adapter.FragmentAdapter
+import com.rickon.ximalayakotlin.R
+import com.rickon.ximalayakotlin.fragment.BoutiqueFrag
+import com.rickon.ximalayakotlin.fragment.CategoryFrag
+import com.rickon.ximalayakotlin.fragment.MineFragment
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
 import com.ximalaya.ting.android.opensdk.model.advertis.Advertis
@@ -25,7 +26,6 @@ import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.ArrayList
 
 /**
  * @Description:
@@ -33,21 +33,44 @@ import java.util.ArrayList
  * @CreateDate:  2019-06-14 15:06
  * @Email:       gaoshuo521@foxmail.com
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : BasicActivity(), View.OnClickListener {
 
     private val mContext = this
     private var mPlayerManager: XmPlayerManager? = null
+
+    val boutiqueFrag: BoutiqueFrag = BoutiqueFrag.newInstance()
+    val categoryFrag: CategoryFrag = CategoryFrag.newInstance()
+    val mineFragment: MineFragment = MineFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initView()
+        initListener()
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.id_fragment_container, boutiqueFrag, null)
+            .commit()
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.id_fragment_container, categoryFrag, null)
+            .commit()
+        supportFragmentManager.beginTransaction()
+            .hide(categoryFrag)
+            .commit()
+
+        supportFragmentManager.beginTransaction()
+            .add(R.id.id_fragment_container, mineFragment, null)
+            .commit()
+        supportFragmentManager.beginTransaction()
+            .hide(mineFragment)
+            .commit()
 
         //初始化播放器
         mPlayerManager = XmPlayerManager.getInstance(this)
         val mNotification = XmNotificationCreater.getInstanse(this)
-            .initNotification<MainActivity>(this.applicationContext, MainActivity::class.java)
+            .initNotification(this.applicationContext, MainActivity::class.java)
         // 如果之前贵方使用了 `XmPlayerManager.init(int id, Notification notification)` 这个初始化的方式
         // 请参考`4.8 播放器通知栏使用`重新添加新的通知栏布局,否则直接升级可能导致在部分手机播放时崩溃
         // 如果不想使用sdk内部搞好的notification,或者想自建notification 可以使用下面的  init()函数进行初始化
@@ -61,16 +84,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(mContext, "播放器初始化成功", Toast.LENGTH_SHORT).show()
             }
         })
-
-        //打开广播界面
-        id_tab_layout.getTabAt(1)!!.select()
-
-        //点击事件
-        id_play_or_pause.setOnClickListener {
-            if (mPlayerManager!!.isPlaying) mPlayerManager?.pause() else mPlayerManager?.play()
-        }
-        id_current_list.setOnClickListener { Toast.makeText(mContext, "暂未开发此功能", Toast.LENGTH_SHORT).show() }
-
     }
 
     override fun onStop() {
@@ -90,45 +103,66 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
 
-        var titleList: MutableList<String> = ArrayList()
-
-        titleList.add(getString(R.string.recommend))
-        titleList.add(getString(R.string.fm))
-        titleList.add(getString(R.string.category))
-
-        val fragmentAdapter = FragmentAdapter(supportFragmentManager)
-        id_view_pager.adapter = fragmentAdapter
-        id_tab_layout.setupWithViewPager(id_view_pager)
-
-        fragmentAdapter.setData(titleList)
-
-        id_view_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
-            }
-
-            override fun onPageSelected(p0: Int) {
-            }
-
-            override fun onPageScrollStateChanged(p0: Int) {
-
-            }
-        })
-
-        id_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
-            }
-        })
     }
 
+    private fun initListener() {
+        id_recommend_btn.setOnClickListener(this)
+        id_category_btn.setOnClickListener(this)
+        id_my_zone_btn.setOnClickListener(this)
+
+        id_play_or_pause.setOnClickListener(this)
+        id_current_list.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.id_recommend_btn -> {
+                Toast.makeText(this, "点击了精品", Toast.LENGTH_SHORT).show()
+                setContentFragment(boutiqueFrag)
+
+            }
+            R.id.id_category_btn -> {
+                Toast.makeText(this, "点击了分类", Toast.LENGTH_SHORT).show()
+                setContentFragment(categoryFrag)
+
+            }
+            R.id.id_my_zone_btn -> {
+                Toast.makeText(this, "点击了我的", Toast.LENGTH_SHORT).show()
+                setContentFragment(mineFragment)
+            }
+
+            R.id.id_play_or_pause -> if (mPlayerManager!!.isPlaying) mPlayerManager?.pause() else mPlayerManager?.play()
+            R.id.id_current_list -> Toast.makeText(mContext, "暂未开发此功能", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setContentFragment(fragment: Fragment) {
+        when(fragment){
+            is BoutiqueFrag->{
+                supportFragmentManager.beginTransaction().hide(categoryFrag).commit()
+                supportFragmentManager.beginTransaction().hide(mineFragment).commit()
+
+                supportFragmentManager.beginTransaction().show(boutiqueFrag).commit()
+            }
+            is CategoryFrag->{
+                supportFragmentManager.beginTransaction().hide(boutiqueFrag).commit()
+                supportFragmentManager.beginTransaction().hide(mineFragment).commit()
+
+                supportFragmentManager.beginTransaction().show(categoryFrag).commit()
+            }
+            is MineFragment->{
+                supportFragmentManager.beginTransaction().hide(boutiqueFrag).commit()
+                supportFragmentManager.beginTransaction().hide(categoryFrag).commit()
+
+                supportFragmentManager.beginTransaction().show(mineFragment).commit()
+            }
+
+        }
+        supportFragmentManager.beginTransaction()
+            .add(R.id.id_fragment_container, fragment, null)
+    }
+
+    //播放监听器
     private val mPlayerStatusListener = object : IXmPlayerStatusListener {
 
         override fun onSoundPrepared() {
@@ -187,19 +221,19 @@ class MainActivity : AppCompatActivity() {
 
         //播放进度回调
         override fun onPlayProgress(currPos: Int, duration: Int) {
-            val info = mPlayerManager?.currSound
-            val title: String = when (info) {
-                is Track -> {
-                    info.trackTitle
-                }
-                is Schedule -> {
-                    info.relatedProgram.programName
-                }
-                is Radio -> {
-                    info.radioName
-                }
-                else -> ""
-            }
+//            val info = mPlayerManager?.currSound
+//            val title: String = when (info) {
+//                is Track -> {
+//                    info.trackTitle
+//                }
+//                is Schedule -> {
+//                    info.relatedProgram.programName
+//                }
+//                is Radio -> {
+//                    info.radioName
+//                }
+//                else -> ""
+//            }
 //            mTextView.setText(title + "[" + ToolUtil.formatTime(currPos) + "/" + ToolUtil.formatTime(duration) + "]")
 //            if (mUpdateProgress && duration != 0) {
 //                mSeekBar.setProgress((100 * currPos / duration.toFloat()).toInt())
@@ -241,6 +275,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //喜马拉雅广告监听器
     private val mAdsListener = object : IXmAdsStatusListener {
 
         override fun onStartPlayAds(ad: Advertis?, position: Int) {

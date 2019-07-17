@@ -1,22 +1,26 @@
 package com.rickon.ximalayakotlin.fragment
 
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import com.rickon.ximalayakotlin.R
 
-/**
- * @Description:
- * @Author:      高烁
- * @CreateDate:  2019-06-17 13:00
- * @Email:       gaoshuo521@foxmail.com
- */
-class CategoryFrag : BaseFragment() {
+class MineFragment : BaseFragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Inflate the layout for this fragment
         Log.d(TAG, "onCreateView")
-        return inflater.inflate(R.layout.category_frag_layout, container, false)
+        return inflater.inflate(R.layout.fragment_mine_layout, container, false)
     }
 
     override fun onDestroy() {
@@ -25,11 +29,10 @@ class CategoryFrag : BaseFragment() {
     }
 
     companion object {
+        private const val TAG = "MineFragment"
 
-        private const val TAG = "CategoryFrag"
-
-        fun newInstance(): CategoryFrag {
-            return CategoryFrag()
+        fun newInstance(): MineFragment {
+            return MineFragment()
         }
     }
 }

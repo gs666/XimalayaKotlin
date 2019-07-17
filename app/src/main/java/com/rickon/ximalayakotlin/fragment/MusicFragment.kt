@@ -10,12 +10,13 @@ import com.rickon.ximalayakotlin.R
 /**
  * @Description:
  * @Author:      高烁
- * @CreateDate:  2019-07-17 15:45
+ * @CreateDate:  2019-07-17 15:53
  * @Email:       gaoshuo521@foxmail.com
  */
-class RecommendFrag : BaseFragment() {
+class MusicFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.recommend_frag_layout, container, false)
+        Log.d(TAG, "onCreateView")
+        return inflater.inflate(R.layout.music_frag_layout, container, false)
     }
 
     override fun onDestroy() {
@@ -27,8 +28,8 @@ class RecommendFrag : BaseFragment() {
 
         private const val TAG = "RecommendFrag"
 
-        fun newInstance(): RecommendFrag {
-            return RecommendFrag()
+        fun newInstance(): MusicFragment {
+            return MusicFragment()
         }
     }
 }

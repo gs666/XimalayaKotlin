@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+
     <meta-data
             android:name="app_key"
             android:value="9e7d0b81dd09d3a5c047c5ff841f8691"/>
@@ -18,15 +19,17 @@
             android:value="com.rickon.ximalayakotlin"/>
 
     <application
+            android:name=".TingApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:name=".TingApplication"
-            android:roundIcon="@mipmap/ic_launcher_round"
             android:networkSecurityConfig="@xml/network_security_config"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.BasicActivity">
+        </activity>
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -34,8 +37,9 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
-                 android:process=":player"/>
+        <service
+                android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
+                android:process=":player"/>
     </application>
 
 </manifest>

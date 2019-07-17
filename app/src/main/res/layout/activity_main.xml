@@ -5,25 +5,68 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".activities.MainActivity">
 
-    <android.support.design.widget.TabLayout
-            android:id="@+id/id_tab_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="100px"
-            android:layout_centerHorizontal="true"
-            app:tabIndicatorColor="@color/tab_selected"
-            app:tabBackground="@android:color/transparent"
-            app:tabGravity="center"
-            app:tabMode="fixed"
-            app:tabRippleColor="@android:color/transparent"/>
+    <RelativeLayout
+            android:id="@+id/id_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F7F8F7">
 
-    <android.support.v4.view.ViewPager
-            android:id="@+id/id_view_pager"
+        <ImageView
+                android:layout_width="180px"
+                android:layout_height="132px"
+                android:layout_alignParentLeft="true"
+                android:padding="35px"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_search"/>
+        <TextView
+                android:id="@+id/id_recommend_btn"
+                android:layout_width="180px"
+                android:layout_height="132px"
+                android:layout_marginRight="40px"
+                android:layout_toLeftOf="@id/id_category_btn"
+                android:text="精品"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/id_category_btn"
+                android:layout_width="180px"
+                android:layout_height="132px"
+                android:layout_centerHorizontal="true"
+                android:text="分类"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+        <TextView
+                android:id="@+id/id_my_zone_btn"
+                android:layout_width="180px"
+                android:layout_height="132px"
+                android:layout_toRightOf="@id/id_category_btn"
+                android:layout_marginLeft="40px"
+                android:text="我的"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+        <ImageView
+                android:layout_width="180px"
+                android:layout_height="132px"
+                android:padding="30px"
+                android:src="@drawable/ic_listen_history"
+                android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+            android:id="@+id/id_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/id_tab_layout"
-            android:layout_above="@id/id_control_zone"/>
+            android:layout_below="@id/id_action_bar"
+            android:layout_above="@id/id_control_zone">
+
+    </FrameLayout>
+
 
     <RelativeLayout
             android:id="@+id/id_control_zone"
@@ -38,7 +81,7 @@
                 android:layout_height="43dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_default_image"
-                android:layout_marginLeft="15dp"/>
+                android:layout_marginLeft="20dp"/>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,23 +116,25 @@
 
         <ImageView
                 android:id="@+id/id_play_or_pause"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/id_current_list"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/round_button_bg"
                 android:scaleType="center"
                 android:src="@drawable/ic_play"/>
         <ImageView
                 android:id="@+id/id_current_list"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="10dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="20dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/round_button_bg"
-                android:src="@drawable/ic_play_list"/>
+                android:background="@drawable/rectangle_button_bg"
+                android:src="@drawable/ic_list"/>
 
     </RelativeLayout>
 
