@@ -10,6 +10,7 @@
         tools:context=".activities.RadioActivity">
 
     <LinearLayout
+            android:id="@+id/radio_type_select_zone"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#FFFFFF">
@@ -47,6 +48,30 @@
                 android:gravity="center"
                 android:layout_weight="1"
                 android:text="@string/province_city_radio"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/radio_type_select_zone"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:text="@string/recommend_radio"
+                  android:textSize="15sp"
+                  android:textColor="@color/black"/>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/recommend_radio_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+        </android.support.v7.widget.RecyclerView>
+
 
     </LinearLayout>
 

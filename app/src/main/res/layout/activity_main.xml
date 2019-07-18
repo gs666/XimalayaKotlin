@@ -26,7 +26,7 @@
                 android:layout_height="132px"
                 android:layout_marginRight="40px"
                 android:layout_toLeftOf="@id/id_category_btn"
-                android:text="精品"
+                android:text="@string/boutique"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
@@ -35,7 +35,7 @@
                 android:layout_width="180px"
                 android:layout_height="132px"
                 android:layout_centerHorizontal="true"
-                android:text="分类"
+                android:text="@string/category"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
@@ -45,7 +45,7 @@
                 android:layout_height="132px"
                 android:layout_toRightOf="@id/id_category_btn"
                 android:layout_marginLeft="40px"
-                android:text="我的"
+                android:text="@string/mine"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"/>

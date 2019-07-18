@@ -2,7 +2,10 @@
     <string name="app_name">喜马拉雅Kotlin</string>
     <string name="recommend">推荐</string>
     <string name="fm">广播</string>
+
+    <string name="boutique">精品</string>
     <string name="category">分类</string>
+    <string name="mine">我的</string>
 
     <string name="music">音乐</string>
     <string name="entertainment">娱乐</string>
@@ -11,6 +14,7 @@
     <string name="jiangsu_province">江苏省</string>
     <string name="country_radio">国家台</string>
     <string name="province_city_radio">省市台</string>
+    <string name="recommend_radio">推荐电台</string>
 
 
 </resources>

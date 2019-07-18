@@ -41,7 +41,6 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
 
             }
             R.id.radio_btn -> {
-                Toast.makeText(context,"打开广播",Toast.LENGTH_SHORT).show()
                 val intent = Intent(context,RadioActivity::class.java)
                 context?.startActivity(intent)
             }
