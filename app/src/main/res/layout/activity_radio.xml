@@ -5,13 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F7F7F7"
-    android:padding="20dp"
+
     tools:context=".activities.RadioActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/radio_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:navigationIcon="@drawable/ic_return">
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/fm"
+            android:textColor="@color/black"
+            android:textSize="22sp"/>
+
+     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/radio_type_select_zone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/radio_toolbar"
         android:background="#FFFFFF">
 
         <TextView
@@ -60,6 +82,8 @@
         android:layout_height="match_parent"
         android:layout_below="@id/radio_type_select_zone"
         android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -68,13 +92,13 @@
             android:gravity="center"
             android:text="@string/recommend_radio"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recommend_radio_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="10dp">
 
 
         </androidx.recyclerview.widget.RecyclerView>

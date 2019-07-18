@@ -54,7 +54,7 @@ class RadioFragment : BaseFragment() {
             when (msg?.what) {
                 LOAD_PROVINCE_SUCCESS -> {
 
-                    recyclerview_provinces.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(mContext)
+                    recyclerview_provinces.layoutManager = LinearLayoutManager(mContext)
                     val provinceAdapter = ProvinceListAdapter(mContext, mProvinceList!!)
                     recyclerview_provinces.adapter = provinceAdapter
                     //默认选中第一项
@@ -78,7 +78,7 @@ class RadioFragment : BaseFragment() {
                 }
 
                 LOAD_RADIO_SUCCESS -> {
-                    recyclerview_radios.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(mContext)
+                    recyclerview_radios.layoutManager = LinearLayoutManager(mContext)
                     radioAdapter = RadioListAdapter(mContext, mRadioList!!)
                     recyclerview_radios.adapter = radioAdapter
 
