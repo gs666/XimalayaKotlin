@@ -27,6 +27,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".activities.RadioActivity">
+        </activity>
         <activity android:name=".activities.BasicActivity">
         </activity>
         <activity android:name=".activities.MainActivity">

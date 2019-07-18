@@ -12,6 +12,10 @@
             android:layout_centerHorizontal="true"
             app:tabGravity="center"
             app:tabIndicatorFullWidth="false"
+            app:tabIndicatorColor="#C6983F"
+            app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+            app:tabTextColor="#000000"
+            app:tabSelectedTextColor="#C6983F"
             app:tabMode="scrollable"
             app:tabRippleColor="@android:color/transparent"/>
 

@@ -8,4 +8,9 @@
     <string name="entertainment">娱乐</string>
     <string name="crosstalk">相声</string>
 
+    <string name="jiangsu_province">江苏省</string>
+    <string name="country_radio">国家台</string>
+    <string name="province_city_radio">省市台</string>
+
+
 </resources>

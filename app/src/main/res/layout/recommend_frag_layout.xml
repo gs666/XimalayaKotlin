@@ -1,12 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="推荐页面"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="10dp">
 
-</LinearLayout>
+        <LinearLayout
+                android:id="@+id/walkman_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <ImageView
+                    android:layout_width="135px"
+                    android:layout_height="135px"
+                    android:src="@drawable/ic_heart"
+                    android:padding="30px"
+                    android:layout_gravity="center"
+                    android:background="@drawable/round_four_bg"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="8dp"
+                      android:text="随心听"
+                      android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
+        <LinearLayout
+                android:id="@+id/radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <ImageView
+                    android:layout_width="135px"
+                    android:layout_height="135px"
+                    android:src="@drawable/ic_radio"
+                    android:padding="30px"
+                    android:background="@drawable/round_four_bg"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="8dp"
+                      android:text="广播"
+                      android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+        <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
+
+        <LinearLayout android:id="@+id/rank_list_btn"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <ImageView
+                    android:layout_width="135px"
+                    android:layout_height="135px"
+                    android:src="@drawable/ic_ranklist"
+                    android:padding="30px"
+                    android:background="@drawable/round_four_bg"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="8dp"
+                      android:text="排行榜"
+                      android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+        <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <ImageView
+                    android:id="@+id/lab_btn"
+                    android:layout_width="135px"
+                    android:layout_height="135px"
+                    android:src="@drawable/ic_headphone"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="30px"
+                    android:background="@drawable/round_four_bg"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="8dp"
+                      android:text="3D实验室"
+                      android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

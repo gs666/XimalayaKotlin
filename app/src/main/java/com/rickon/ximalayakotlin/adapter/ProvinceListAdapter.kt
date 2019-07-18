@@ -41,7 +41,7 @@ class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textViewTitle.text = provinceList!![position].provinceName
+        holder.textViewTitle.text = provinceList[position].provinceName
 
         if (position == selectItem) holder.provinceItemView.setBackgroundResource(R.color.selected_bg) else holder.provinceItemView.setBackgroundResource(R.color.white)
 

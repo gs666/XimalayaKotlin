@@ -48,11 +48,6 @@ class BoutiqueFrag : BaseFragment() {
 
         tab_layout.setupWithViewPager(view_pager)
 
-        val fragments = ArrayList<Fragment>()
-        fragments.add(RecommendFrag.newInstance())
-        fragments.add(MusicFragment.newInstance())
-
-
         val myFragmentPagerAdapter = MyFragmentPagerAdapter(childFragmentManager)
         view_pager.adapter = myFragmentPagerAdapter
         view_pager.offscreenPageLimit = 3
