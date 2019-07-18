@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -54,7 +54,7 @@ class RadioFragment : BaseFragment() {
             when (msg?.what) {
                 LOAD_PROVINCE_SUCCESS -> {
 
-                    recyclerview_provinces.layoutManager = LinearLayoutManager(mContext)
+                    recyclerview_provinces.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(mContext)
                     val provinceAdapter = ProvinceListAdapter(mContext, mProvinceList!!)
                     recyclerview_provinces.adapter = provinceAdapter
                     //默认选中第一项
@@ -78,7 +78,7 @@ class RadioFragment : BaseFragment() {
                 }
 
                 LOAD_RADIO_SUCCESS -> {
-                    recyclerview_radios.layoutManager = LinearLayoutManager(mContext)
+                    recyclerview_radios.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(mContext)
                     radioAdapter = RadioListAdapter(mContext, mRadioList!!)
                     recyclerview_radios.adapter = radioAdapter
 

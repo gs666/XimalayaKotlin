@@ -1,6 +1,6 @@
 package com.rickon.ximalayakotlin.fragment
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 /**
  * @Description:
@@ -8,6 +8,6 @@ import android.support.v4.app.Fragment
  * @CreateDate:  2019-06-14 15:08
  * @Email:       gaoshuo521@foxmail.com
  */
-open class BaseFragment() : Fragment() {
+open class BaseFragment() : androidx.fragment.app.Fragment() {
 
 }

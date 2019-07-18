@@ -1,7 +1,7 @@
 package com.rickon.ximalayakotlin.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +15,7 @@ import com.ximalaya.ting.android.opensdk.model.live.provinces.Province
  * @CreateDate: 2019-06-06 14:15
  * @Email: gaoshuo521@foxmail.com
  */
-class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
+class ProvinceListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ViewHolder> {
 
     private var mContext: Context
     private var provinceList: List<Province>
@@ -31,7 +31,7 @@ class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
         this.selectItem = selectItem
     }
 
-    class ViewHolder(var provinceItemView: View) : RecyclerView.ViewHolder(provinceItemView) {
+    class ViewHolder(var provinceItemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(provinceItemView) {
         var textViewTitle: TextView = provinceItemView.findViewById(R.id.id_textview)
     }
 

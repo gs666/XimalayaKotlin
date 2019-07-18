@@ -1,6 +1,6 @@
 package com.rickon.ximalayakotlin.activities
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.rickon.ximalayakotlin.R
@@ -15,7 +15,7 @@ class RadioActivity : AppCompatActivity(), View.OnClickListener {
         initListener()
     }
 
-    fun initListener() {
+    private fun initListener() {
         local_province_btn.setOnClickListener(this)
         country_btn.setOnClickListener(this)
         province_city_btn.setOnClickListener(this)

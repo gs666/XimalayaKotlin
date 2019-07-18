@@ -1,7 +1,6 @@
 package com.rickon.ximalayakotlin.activities
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -136,7 +135,7 @@ class MainActivity : BasicActivity(), View.OnClickListener {
         }
     }
 
-    private fun setContentFragment(fragment: Fragment) {
+    private fun setContentFragment(fragment: androidx.fragment.app.Fragment) {
         when(fragment){
             is BoutiqueFrag->{
                 supportFragmentManager.beginTransaction().hide(categoryFrag).commit()

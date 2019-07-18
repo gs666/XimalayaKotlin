@@ -1,7 +1,7 @@
 package com.rickon.ximalayakotlin.adapter
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +18,7 @@ import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
  * @CreateDate: 2019-06-06 14:46
  * @Email: gaoshuo521@foxmail.com
  */
-class RadioListAdapter : RecyclerView.Adapter<RadioListAdapter.ViewHolder> {
+class RadioListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<RadioListAdapter.ViewHolder> {
     private var mContext: Context
     private var radioList: List<Radio>
     private lateinit var itemClickListener: IKotlinItemClickListener
@@ -33,7 +33,7 @@ class RadioListAdapter : RecyclerView.Adapter<RadioListAdapter.ViewHolder> {
         this.selectItem = selectItem
     }
 
-    class ViewHolder(var radioItemView: View) : RecyclerView.ViewHolder(radioItemView) {
+    class ViewHolder(var radioItemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(radioItemView) {
         var imageCover:ImageView = radioItemView.findViewById(R.id.id_image_cover)
         var textViewTitle: TextView = radioItemView.findViewById(R.id.id_title_tv)
         var textViewIntro: TextView = radioItemView.findViewById(R.id.id_singer_tv)

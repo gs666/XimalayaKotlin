@@ -63,14 +63,14 @@
                   android:text="@string/recommend_radio"
                   android:textSize="15sp"
                   android:textColor="@color/black"/>
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recommend_radio_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
 
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
     </LinearLayout>

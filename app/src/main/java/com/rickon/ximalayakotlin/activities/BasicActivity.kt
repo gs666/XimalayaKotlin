@@ -1,5 +1,5 @@
 package com.rickon.ximalayakotlin.activities
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 open class BasicActivity : AppCompatActivity()
