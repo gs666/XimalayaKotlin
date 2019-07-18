@@ -1,41 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <RelativeLayout
-            android:id="@+id/search_zone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:id="@+id/search_zone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <EditText
-                android:id="@+id/edit_text_main"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_margin="10dp"
-                android:focusable="false"
-                android:focusableInTouchMode="true"
-                android:background="@drawable/edit_style"
-                android:maxLines="1"
-                android:gravity="center|left"
-                android:hint="请输入搜索内容"
-                android:paddingLeft="40dp"
-                android:textSize="15dp"
-                android:textColorHint="#8f8e8e"/>
+            android:id="@+id/edit_text_main"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/edit_style"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:gravity="center|left"
+            android:hint="请输入搜索内容"
+            android:maxLines="1"
+            android:paddingLeft="40dp"
+            android:textColorHint="#8f8e8e"
+            android:textSize="15dp" />
 
     </RelativeLayout>
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="horizontal">
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_provinces"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_radios"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+            android:id="@+id/recyclerview_provinces"
+            android:layout_width="80dp"
+            android:layout_height="match_parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_radios"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </LinearLayout>

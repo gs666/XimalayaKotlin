@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="80px"
-            android:layout_centerHorizontal="true"
-            app:tabGravity="center"
-            app:tabIndicatorFullWidth="false"
-            app:tabIndicatorColor="#C6983F"
-            app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-            app:tabTextColor="#000000"
-            app:tabSelectedTextColor="#C6983F"
-            app:tabMode="scrollable"
-            app:tabRippleColor="@android:color/transparent"/>
+        android:id="@+id/tab_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="80px"
+        android:layout_centerHorizontal="true"
+        app:tabGravity="center"
+        app:tabIndicatorColor="#C6983F"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="scrollable"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabSelectedTextColor="#C6983F"
+        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+        app:tabTextColor="#000000" />
 
     <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tab_layout"/>
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_layout" />
 
 </RelativeLayout>

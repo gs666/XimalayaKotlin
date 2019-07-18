@@ -1,140 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".activities.MainActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity">
 
     <RelativeLayout
-            android:id="@+id/id_action_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F7F8F7">
+        android:id="@+id/id_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F7F8F7">
 
         <ImageView
-                android:layout_width="180px"
-                android:layout_height="132px"
-                android:layout_alignParentLeft="true"
-                android:padding="35px"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_search"/>
+            android:layout_width="180px"
+            android:layout_height="132px"
+            android:layout_alignParentLeft="true"
+            android:padding="35px"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_search" />
+
         <TextView
-                android:id="@+id/id_recommend_btn"
-                android:layout_width="180px"
-                android:layout_height="132px"
-                android:layout_marginRight="40px"
-                android:layout_toLeftOf="@id/id_category_btn"
-                android:text="@string/boutique"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="center"/>
+            android:id="@+id/id_recommend_btn"
+            android:layout_width="180px"
+            android:layout_height="132px"
+            android:layout_marginRight="40px"
+            android:layout_toLeftOf="@id/id_category_btn"
+            android:gravity="center"
+            android:text="@string/boutique"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
         <TextView
-                android:id="@+id/id_category_btn"
-                android:layout_width="180px"
-                android:layout_height="132px"
-                android:layout_centerHorizontal="true"
-                android:text="@string/category"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="center"/>
+            android:id="@+id/id_category_btn"
+            android:layout_width="180px"
+            android:layout_height="132px"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/category"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
         <TextView
-                android:id="@+id/id_my_zone_btn"
-                android:layout_width="180px"
-                android:layout_height="132px"
-                android:layout_toRightOf="@id/id_category_btn"
-                android:layout_marginLeft="40px"
-                android:text="@string/mine"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="center"/>
+            android:id="@+id/id_my_zone_btn"
+            android:layout_width="180px"
+            android:layout_height="132px"
+            android:layout_marginLeft="40px"
+            android:layout_toRightOf="@id/id_category_btn"
+            android:gravity="center"
+            android:text="@string/mine"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
         <ImageView
-                android:layout_width="180px"
-                android:layout_height="132px"
-                android:padding="30px"
-                android:src="@drawable/ic_listen_history"
-                android:layout_alignParentRight="true"/>
+            android:layout_width="180px"
+            android:layout_height="132px"
+            android:layout_alignParentRight="true"
+            android:padding="30px"
+            android:src="@drawable/ic_listen_history" />
 
     </RelativeLayout>
 
     <FrameLayout
-            android:id="@+id/id_fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/id_action_bar"
-            android:layout_above="@id/id_control_zone">
+        android:id="@+id/id_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/id_control_zone"
+        android:layout_below="@id/id_action_bar">
 
     </FrameLayout>
 
 
     <RelativeLayout
-            android:id="@+id/id_control_zone"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+        android:id="@+id/id_control_zone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
         <ImageView
-                android:id="@+id/id_play_bar_image"
-                android:layout_width="43dp"
-                android:layout_height="43dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_default_image"
-                android:layout_marginLeft="20dp"/>
+            android:id="@+id/id_play_bar_image"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_default_image" />
+
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/id_play_bar_image"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="6dp"
-                android:layout_toLeftOf="@id/id_play_or_pause"
-                android:orientation="vertical">
-            <TextView
-                    android:id="@+id/id_play_bar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    android:maxLength="20"
-                    android:textSize="17dp"
-                    android:text="被驯服的象"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_toLeftOf="@id/id_play_or_pause"
+            android:layout_toRightOf="@id/id_play_bar_image"
+            android:orientation="vertical">
 
             <TextView
-                    android:id="@+id/id_play_bar_singer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:ellipsize="end"
-                    android:maxLength="20"
-                    android:maxLines="1"
-                    android:textSize="10dp"
-                    android:text="蔡健雅"/>
+                android:id="@+id/id_play_bar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="被驯服的象"
+                android:textSize="17dp" />
+
+            <TextView
+                android:id="@+id/id_play_bar_singer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:ellipsize="end"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:text="蔡健雅"
+                android:textSize="10dp" />
 
         </LinearLayout>
 
         <ImageView
-                android:id="@+id/id_play_or_pause"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/id_current_list"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/round_button_bg"
-                android:scaleType="center"
-                android:src="@drawable/ic_play"/>
+            android:id="@+id/id_play_or_pause"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/id_current_list"
+            android:background="@drawable/round_button_bg"
+            android:scaleType="center"
+            android:src="@drawable/ic_play" />
+
         <ImageView
-                android:id="@+id/id_current_list"
-                android:layout_width="25dp"
-                android:layout_height="30dp"
-                android:paddingHorizontal="5dp"
-                android:paddingVertical="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:layout_centerVertical="true"
-                android:background="@drawable/rectangle_button_bg"
-                android:src="@drawable/ic_list"/>
+            android:id="@+id/id_current_list"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rectangle_button_bg"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="10dp"
+            android:src="@drawable/ic_list" />
 
     </RelativeLayout>
 
