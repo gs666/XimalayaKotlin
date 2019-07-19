@@ -16,10 +16,10 @@ import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 /**
  * @Description:
  * @Author:      高烁
- * @CreateDate:  2019-07-18 14:38
+ * @CreateDate:  2019-07-19 11:44
  * @Email:       gaoshuo521@foxmail.com
  */
-class HoriRadioAdapter : RecyclerView.Adapter<HoriRadioAdapter.ViewHolder> {
+class RankRadioAdapter : RecyclerView.Adapter<RankRadioAdapter.ViewHolder> {
     private var mContext: Context
     private var radioList: List<Radio>
     private lateinit var itemClickListener: IKotlinItemClickListener
@@ -36,7 +36,7 @@ class HoriRadioAdapter : RecyclerView.Adapter<HoriRadioAdapter.ViewHolder> {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.vertical_radio_list_item, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.radio_list_item, parent, false)
         return ViewHolder(view)
     }
 

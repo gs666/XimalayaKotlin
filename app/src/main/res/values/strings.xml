@@ -16,5 +16,8 @@
     <string name="province_city_radio">省市台</string>
     <string name="recommend_radio">推荐电台</string>
 
+    <string name="rank_list">排行榜</string>
+    <string name="radio_rank_list">电台热播榜</string>
+
 
 </resources>

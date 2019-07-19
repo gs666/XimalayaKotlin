@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.activities.RadioActivity
+import com.rickon.ximalayakotlin.activities.RankListActivity
 import kotlinx.android.synthetic.main.recommend_frag_layout.*
 
 /**
@@ -45,7 +46,8 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
                 context?.startActivity(intent)
             }
             R.id.rank_list_btn -> {
-                Toast.makeText(context,"打开排行榜",Toast.LENGTH_SHORT).show()
+                val intent = Intent(context,RankListActivity::class.java)
+                context?.startActivity(intent)
             }
             R.id.lab_btn -> {
                 Toast.makeText(context,"暂未开发此功能",Toast.LENGTH_SHORT).show()

@@ -9,7 +9,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.HoriRadioAdapter
-import com.rickon.ximalayakotlin.adapter.RadioListAdapter
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
@@ -38,7 +37,7 @@ class RadioActivity : AppCompatActivity(), View.OnClickListener {
             when (msg?.what) {
                 LOAD_RADIO_SUCCESS -> {
                     recommend_radio_list.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
-                    val horiRadioAdapter = HoriRadioAdapter(applicationContext, mRecommendRadioList!!)
+                    horiRadioAdapter = HoriRadioAdapter(applicationContext, mRecommendRadioList!!)
                     recommend_radio_list.adapter = horiRadioAdapter
 
                     horiRadioAdapter.setOnKotlinItemClickListener(object : HoriRadioAdapter.IKotlinItemClickListener {
