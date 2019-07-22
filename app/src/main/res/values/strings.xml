@@ -19,5 +19,7 @@
     <string name="rank_list">排行榜</string>
     <string name="radio_rank_list">电台热播榜</string>
 
+    <string name="no_title">未知</string>
+
 
 </resources>
