@@ -6,69 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/id_action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F7F8F7">
 
-        <ImageView
-            android:layout_width="180px"
-            android:layout_height="132px"
-            android:layout_alignParentLeft="true"
-            android:padding="35px"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_search" />
+    <ImageView
+        android:layout_width="180px"
+        android:layout_height="132px"
+        android:layout_alignParentLeft="true"
+        android:padding="35px"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_search" />
 
-        <TextView
-            android:id="@+id/id_recommend_btn"
-            android:layout_width="180px"
-            android:layout_height="132px"
-            android:layout_marginRight="40px"
-            android:layout_toLeftOf="@id/id_category_btn"
-            android:gravity="center"
-            android:text="@string/boutique"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <ImageView
+        android:layout_width="180px"
+        android:layout_height="132px"
+        android:layout_alignParentRight="true"
+        android:padding="30px"
+        android:src="@drawable/ic_listen_history" />
 
-        <TextView
-            android:id="@+id/id_category_btn"
-            android:layout_width="180px"
-            android:layout_height="132px"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="@string/category"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/main_tab_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="132px"
+        android:layout_centerHorizontal="true"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabSelectedTextColor="#000000"
+        app:tabTextAppearance="@style/MainTabLayoutTextAppearance"
+        app:tabTextColor="#878787" />
 
-        <TextView
-            android:id="@+id/id_my_zone_btn"
-            android:layout_width="180px"
-            android:layout_height="132px"
-            android:layout_marginLeft="40px"
-            android:layout_toRightOf="@id/id_category_btn"
-            android:gravity="center"
-            android:text="@string/mine"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:layout_width="180px"
-            android:layout_height="132px"
-            android:layout_alignParentRight="true"
-            android:padding="30px"
-            android:src="@drawable/ic_listen_history" />
-
-    </RelativeLayout>
-
-    <FrameLayout
-        android:id="@+id/id_fragment_container"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/id_control_zone"
-        android:layout_below="@id/id_action_bar">
-
-    </FrameLayout>
+        android:layout_below="@id/main_tab_layout" />
 
 
     <RelativeLayout
@@ -138,9 +110,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:background="@drawable/rectangle_button_bg"
-            android:paddingHorizontal="5dp"
-            android:paddingVertical="10dp"
-            android:src="@drawable/ic_list" />
+            android:padding="5dp"
+            android:src="@drawable/ic_current_list" />
 
     </RelativeLayout>
 

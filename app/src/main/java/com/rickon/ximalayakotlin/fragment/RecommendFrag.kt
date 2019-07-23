@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.rickon.ximalayakotlin.R
+import com.rickon.ximalayakotlin.activities.PlayingActivity
 import com.rickon.ximalayakotlin.activities.RadioActivity
 import com.rickon.ximalayakotlin.activities.RankListActivity
 import kotlinx.android.synthetic.main.recommend_frag_layout.*
@@ -38,8 +39,8 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.walkman_btn -> {
-                Toast.makeText(context,"打开随心听",Toast.LENGTH_SHORT).show()
-
+                val intent = Intent(context,PlayingActivity::class.java)
+                context?.startActivity(intent)
             }
             R.id.radio_btn -> {
                 val intent = Intent(context,RadioActivity::class.java)

@@ -7,7 +7,9 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.tabs.TabLayout
 import com.rickon.ximalayakotlin.R
+import com.rickon.ximalayakotlin.adapter.MainFragmentPagerAdapter
 import com.rickon.ximalayakotlin.fragment.BoutiqueFrag
 import com.rickon.ximalayakotlin.fragment.CategoryFrag
 import com.rickon.ximalayakotlin.fragment.MineFragment
@@ -48,28 +50,11 @@ class MainActivity : BasicActivity(), View.OnClickListener {
         initView()
         initListener()
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.id_fragment_container, boutiqueFrag, null)
-            .commit()
-
-        supportFragmentManager.beginTransaction()
-            .add(R.id.id_fragment_container, categoryFrag, null)
-            .commit()
-        supportFragmentManager.beginTransaction()
-            .hide(categoryFrag)
-            .commit()
-
-        supportFragmentManager.beginTransaction()
-            .add(R.id.id_fragment_container, mineFragment, null)
-            .commit()
-        supportFragmentManager.beginTransaction()
-            .hide(mineFragment)
-            .commit()
 
         //初始化播放器
         mPlayerManager = XmPlayerManager.getInstance(this)
         val mNotification = XmNotificationCreater.getInstanse(this)
-            .initNotification(this.applicationContext, MainActivity::class.java)
+                .initNotification(this.applicationContext, MainActivity::class.java)
         // 如果之前贵方使用了 `XmPlayerManager.init(int id, Notification notification)` 这个初始化的方式
         // 请参考`4.8 播放器通知栏使用`重新添加新的通知栏布局,否则直接升级可能导致在部分手机播放时崩溃
         // 如果不想使用sdk内部搞好的notification,或者想自建notification 可以使用下面的  init()函数进行初始化
@@ -101,64 +86,36 @@ class MainActivity : BasicActivity(), View.OnClickListener {
     }
 
     private fun initView() {
+        main_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
 
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
+        })
+        main_tab_layout.setupWithViewPager(main_view_pager)
+
+        main_view_pager.adapter = MainFragmentPagerAdapter(supportFragmentManager)
+        main_view_pager.offscreenPageLimit = 2
     }
 
     private fun initListener() {
-        id_recommend_btn.setOnClickListener(this)
-        id_category_btn.setOnClickListener(this)
-        id_my_zone_btn.setOnClickListener(this)
-
         id_play_or_pause.setOnClickListener(this)
         id_current_list.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.id_recommend_btn -> {
-                Toast.makeText(this, "点击了精品", Toast.LENGTH_SHORT).show()
-                setContentFragment(boutiqueFrag)
-
-            }
-            R.id.id_category_btn -> {
-                Toast.makeText(this, "点击了分类", Toast.LENGTH_SHORT).show()
-                setContentFragment(categoryFrag)
-
-            }
-            R.id.id_my_zone_btn -> {
-                Toast.makeText(this, "点击了我的", Toast.LENGTH_SHORT).show()
-                setContentFragment(mineFragment)
-            }
 
             R.id.id_play_or_pause -> if (mPlayerManager!!.isPlaying) mPlayerManager?.pause() else mPlayerManager?.play()
             R.id.id_current_list -> Toast.makeText(mContext, "暂未开发此功能", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun setContentFragment(fragment: androidx.fragment.app.Fragment) {
-        when(fragment){
-            is BoutiqueFrag->{
-                supportFragmentManager.beginTransaction().hide(categoryFrag).commit()
-                supportFragmentManager.beginTransaction().hide(mineFragment).commit()
-
-                supportFragmentManager.beginTransaction().show(boutiqueFrag).commit()
-            }
-            is CategoryFrag->{
-                supportFragmentManager.beginTransaction().hide(boutiqueFrag).commit()
-                supportFragmentManager.beginTransaction().hide(mineFragment).commit()
-
-                supportFragmentManager.beginTransaction().show(categoryFrag).commit()
-            }
-            is MineFragment->{
-                supportFragmentManager.beginTransaction().hide(boutiqueFrag).commit()
-                supportFragmentManager.beginTransaction().hide(categoryFrag).commit()
-
-                supportFragmentManager.beginTransaction().show(mineFragment).commit()
-            }
-
-        }
-        supportFragmentManager.beginTransaction()
-            .add(R.id.id_fragment_container, fragment, null)
     }
 
     //播放监听器
@@ -203,8 +160,8 @@ class MainActivity : BasicActivity(), View.OnClickListener {
             id_play_bar_title.text = title
             id_play_bar_singer.text = singer
             Glide.with(mContext)
-                .load(coverUrl).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                .into(id_play_bar_image)
+                    .load(coverUrl).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                    .into(id_play_bar_image)
 
         }
 
@@ -303,8 +260,8 @@ class MainActivity : BasicActivity(), View.OnClickListener {
             val model = mPlayerManager?.currSound
             if (model is Track) {
                 Glide.with(mContext)
-                    .load(model.coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                    .into(id_play_bar_image)
+                        .load(model.coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                        .into(id_play_bar_image)
             }
         }
 

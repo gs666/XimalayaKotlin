@@ -1,23 +1,24 @@
 package com.rickon.ximalayakotlin.adapter
 
 import androidx.fragment.app.FragmentPagerAdapter
-import com.rickon.ximalayakotlin.fragment.MusicFragment
-import com.rickon.ximalayakotlin.fragment.RecommendFrag
+import com.rickon.ximalayakotlin.fragment.BoutiqueFrag
+import com.rickon.ximalayakotlin.fragment.CategoryFrag
+import com.rickon.ximalayakotlin.fragment.MineFragment
 
 /**
  * @Description:
  * @Author:      高烁
- * @CreateDate:  2019-07-17 17:04
+ * @CreateDate:  2019-07-23 15:57
  * @Email:       gaoshuo521@foxmail.com
  */
-class MyFragmentPagerAdapter : FragmentPagerAdapter {
-
+class MainFragmentPagerAdapter : FragmentPagerAdapter {
     var fragments: MutableList<androidx.fragment.app.Fragment> = ArrayList()
-    private val titleList = arrayOf("推荐", "音乐")
+    private val titleList = arrayOf("精品", "分类", "我的")
 
     constructor(fm: androidx.fragment.app.FragmentManager) : super(fm) {
-        fragments.add(RecommendFrag.newInstance())
-        fragments.add(MusicFragment.newInstance())
+        fragments.add(BoutiqueFrag.newInstance())
+        fragments.add(CategoryFrag.newInstance())
+        fragments.add(MineFragment.newInstance())
     }
 
     override fun getItem(position: Int): androidx.fragment.app.Fragment {
@@ -29,5 +30,4 @@ class MyFragmentPagerAdapter : FragmentPagerAdapter {
     override fun getPageTitle(position: Int): CharSequence? {
         return titleList[position]
     }
-
 }
