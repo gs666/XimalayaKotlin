@@ -39,10 +39,6 @@ class MainActivity : BasicActivity(), View.OnClickListener {
     private val mContext = this
     private var mPlayerManager: XmPlayerManager? = null
 
-    val boutiqueFrag: BoutiqueFrag = BoutiqueFrag.newInstance()
-    val categoryFrag: CategoryFrag = CategoryFrag.newInstance()
-    val mineFragment: MineFragment = MineFragment.newInstance()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

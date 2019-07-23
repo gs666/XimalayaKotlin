@@ -1,9 +1,11 @@
 package com.rickon.ximalayakotlin.adapter
 
 import androidx.fragment.app.FragmentPagerAdapter
+import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.fragment.BoutiqueFrag
 import com.rickon.ximalayakotlin.fragment.CategoryFrag
 import com.rickon.ximalayakotlin.fragment.MineFragment
+import com.rickon.ximalayakotlin.util.GlobalUtil
 
 /**
  * @Description:
@@ -13,7 +15,7 @@ import com.rickon.ximalayakotlin.fragment.MineFragment
  */
 class MainFragmentPagerAdapter : FragmentPagerAdapter {
     var fragments: MutableList<androidx.fragment.app.Fragment> = ArrayList()
-    private val titleList = arrayOf("精品", "分类", "我的")
+    private val titleList = arrayOf(GlobalUtil.getString(R.string.boutique), GlobalUtil.getString(R.string.recommend), GlobalUtil.getString(R.string.mine))
 
     constructor(fm: androidx.fragment.app.FragmentManager) : super(fm) {
         fragments.add(BoutiqueFrag.newInstance())

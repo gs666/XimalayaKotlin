@@ -1,6 +1,7 @@
 package com.rickon.ximalayakotlin
 
 import android.app.Application
+import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 
 
@@ -19,6 +20,8 @@ open class TingApplication : Application() {
         mXimalaya.setAppkey("9e7d0b81dd09d3a5c047c5ff841f8691")
         mXimalaya.setPackid("com.rickon.ximalayakotlin")
         mXimalaya.init(this, mAppSecret)
+
+        XimalayaKotlin.initialize(this)
     }
 
 }
