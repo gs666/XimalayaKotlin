@@ -19,6 +19,8 @@ package com.rickon.ximalayakotlin.util
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 
 /**
  * 判断设备当前网络状态的工具类。
@@ -30,21 +32,37 @@ object NetworkUtil {
 
     const val NO_NETWORK = 0
 
-    const val WIFI = 1
+    const val MOBILE = 1
 
-    const val MOBILE = 2
+    const val WIFI = 2
 
     const val UNKNOWN = -1
 
-    fun checkNetwork(): Int {
-        val manager = XimalayaKotlin.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-        val mobile = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
-        return when {
-            wifi.isConnected -> WIFI
-            mobile.isConnected -> MOBILE
-            else -> NO_NETWORK
+    fun getConnectionType(context: Context): Int {
+        var result = 0 // Returns connection type. 0: none; 1: mobile data; 2: wifi
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            cm?.run {
+                cm.getNetworkCapabilities(cm.activeNetwork)?.run {
+                    if (hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                        result = WIFI
+                    } else if (hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                        result = MOBILE
+                    }
+                }
+            }
+        } else {
+            cm?.run {
+                cm.activeNetworkInfo?.run {
+                    if (type == ConnectivityManager.TYPE_WIFI) {
+                        result = WIFI
+                    } else if (type == ConnectivityManager.TYPE_MOBILE) {
+                        result = MOBILE
+                    }
+                }
+            }
         }
+        return result
     }
 
 }
