@@ -1,8 +1,11 @@
 package com.rickon.ximalayakotlin.adapter
 
 import androidx.fragment.app.FragmentPagerAdapter
+import com.rickon.ximalayakotlin.R
+import com.rickon.ximalayakotlin.fragment.BookCityFragment
 import com.rickon.ximalayakotlin.fragment.MusicFragment
 import com.rickon.ximalayakotlin.fragment.RecommendFrag
+import com.rickon.ximalayakotlin.util.GlobalUtil
 
 /**
  * @Description:
@@ -13,10 +16,19 @@ import com.rickon.ximalayakotlin.fragment.RecommendFrag
 class MyFragmentPagerAdapter : FragmentPagerAdapter {
 
     var fragments: MutableList<androidx.fragment.app.Fragment> = ArrayList()
-    private val titleList = arrayOf("推荐", "音乐")
+    private val titleList = arrayOf(GlobalUtil.getString(R.string.recommend),
+            GlobalUtil.getString(R.string.book_city),
+            GlobalUtil.getString(R.string.feeling),
+            GlobalUtil.getString(R.string.music),
+            GlobalUtil.getString(R.string.crosstalk),
+            GlobalUtil.getString(R.string.parent_child),
+            GlobalUtil.getString(R.string.headline),
+            GlobalUtil.getString(R.string.entertainment),
+            GlobalUtil.getString(R.string.knowledge))
 
     constructor(fm: androidx.fragment.app.FragmentManager) : super(fm) {
         fragments.add(RecommendFrag.newInstance())
+        fragments.add(BookCityFragment.newInstance())
         fragments.add(MusicFragment.newInstance())
     }
 
