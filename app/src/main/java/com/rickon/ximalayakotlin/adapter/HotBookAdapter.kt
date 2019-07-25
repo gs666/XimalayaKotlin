@@ -1,6 +1,7 @@
 package com.rickon.ximalayakotlin.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,7 @@ class HotBookAdapter : RecyclerView.Adapter<HotBookAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textViewTitle.text = albumList[position].albumTitle
-        holder.textViewIntro.text = "正在播放：${albumList[position].albumIntro}"
+        holder.textViewIntro.text = "${albumList[position].albumIntro}"
         Glide.with(mContext)
                 .load(albumList[position].coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
                 .into(holder.imageCover)
