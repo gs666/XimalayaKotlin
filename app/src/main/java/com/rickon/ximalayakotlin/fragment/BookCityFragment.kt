@@ -1,6 +1,7 @@
 package com.rickon.ximalayakotlin.fragment
 
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.rickon.ximalayakotlin.R
+import com.rickon.ximalayakotlin.activities.AlbumActivity
 import com.rickon.ximalayakotlin.adapter.HotBookAdapter
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
@@ -50,6 +52,11 @@ class BookCityFragment : BaseFragment() {
                     hotBookAdapter.setOnKotlinItemClickListener(object : HotBookAdapter.IKotlinItemClickListener {
                         override fun onItemClickListener(position: Int) {
                             Log.d(TAG, position.toString())
+
+                            val intent = Intent(context, AlbumActivity::class.java)
+                            //传递一个 album
+                            intent.putExtra("album", hotBookAlbumList!![position])
+                            context?.startActivity(intent)
 
                             hotBookAdapter.notifyDataSetChanged()
                         }
@@ -89,7 +96,7 @@ class BookCityFragment : BaseFragment() {
         //最火
         CommonRequest.getAlbumList(map, object : IDataCallBack<AlbumList> {
             override fun onSuccess(p0: AlbumList?) {
-                if (p0?.albums!!.size > 0){
+                if (p0?.albums!!.size > 0) {
                     hotBookAlbumList = p0.albums
 
                     val msg = Message()

@@ -43,7 +43,7 @@ class HotBookAdapter : RecyclerView.Adapter<HotBookAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textViewTitle.text = albumList[position].albumTitle
-        holder.textViewIntro.text = "${albumList[position].albumIntro}"
+        holder.textViewIntro.text = albumList[position].albumIntro
         Glide.with(mContext)
                 .load(albumList[position].coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
                 .into(holder.imageCover)

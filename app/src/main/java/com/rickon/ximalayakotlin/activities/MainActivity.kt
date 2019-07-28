@@ -10,9 +10,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.tabs.TabLayout
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.MainFragmentPagerAdapter
-import com.rickon.ximalayakotlin.fragment.BoutiqueFrag
-import com.rickon.ximalayakotlin.fragment.CategoryFrag
-import com.rickon.ximalayakotlin.fragment.MineFragment
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
 import com.ximalaya.ting.android.opensdk.model.advertis.Advertis
@@ -34,7 +31,7 @@ import kotlinx.android.synthetic.main.activity_main.*
  * @CreateDate:  2019-06-14 15:06
  * @Email:       gaoshuo521@foxmail.com
  */
-class MainActivity : BasicActivity(), View.OnClickListener {
+class MainActivity : BaseActivity(), View.OnClickListener {
 
     private val mContext = this
     private var mPlayerManager: XmPlayerManager? = null

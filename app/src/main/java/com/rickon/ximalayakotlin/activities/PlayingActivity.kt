@@ -1,12 +1,11 @@
 package com.rickon.ximalayakotlin.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.rickon.ximalayakotlin.R
 import kotlinx.android.synthetic.main.activity_playing.*
 
-class PlayingActivity : AppCompatActivity(), View.OnClickListener {
+class PlayingActivity : BaseActivity(), View.OnClickListener {
 
     var isLiked: Boolean = false
 

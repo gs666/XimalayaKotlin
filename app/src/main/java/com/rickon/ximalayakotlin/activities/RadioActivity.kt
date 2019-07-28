@@ -1,6 +1,5 @@
 package com.rickon.ximalayakotlin.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -20,7 +19,7 @@ import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
 import kotlinx.android.synthetic.main.activity_radio.*
 
-class RadioActivity : AppCompatActivity(), View.OnClickListener {
+class RadioActivity : BaseActivity(), View.OnClickListener {
 
     private var mRecommendRadioList: List<Radio>? = null
     private var mLoading = false

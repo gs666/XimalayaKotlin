@@ -20,7 +20,7 @@ import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
 import kotlinx.android.synthetic.main.activity_rank_list.*
 
 
-class RankListActivity : AppCompatActivity() {
+class RankListActivity : BaseActivity() {
 
     private var mRankRadioList: List<Radio>? = null
     private lateinit var rankRadioAdapter: RankRadioAdapter

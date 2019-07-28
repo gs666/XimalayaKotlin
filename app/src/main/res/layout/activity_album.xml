@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AlbumActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar_zone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/cover_bg"
+            android:layout_width="match_parent"
+            android:layout_height="830px"
+            android:scaleType="centerCrop"
+            android:src="@color/grey" />
+
+        <ImageView
+            android:id="@+id/return_btn"
+            android:layout_width="144px"
+            android:layout_height="144px"
+            android:padding="15dp"
+            android:src="@drawable/ic_return_white" />
+
+
+        <ImageView
+            android:id="@+id/like_btn"
+            android:layout_width="160px"
+            android:layout_height="144px"
+            android:layout_toLeftOf="@id/download_btn"
+            android:padding="15dp"
+            android:src="@drawable/ic_like_white" />
+
+        <ImageView
+            android:id="@+id/download_btn"
+            android:layout_width="160px"
+            android:layout_height="144px"
+            android:layout_toLeftOf="@id/more_btn"
+            android:padding="15dp"
+            android:src="@drawable/ic_download_white" />
+
+        <ImageView
+            android:id="@+id/more_btn"
+            android:layout_width="160px"
+            android:layout_height="144px"
+            android:layout_alignParentEnd="true"
+            android:padding="15dp"
+            android:src="@drawable/ic_more_white" />
+
+
+        <TextView
+            android:id="@+id/album_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/return_btn"
+            android:layout_marginLeft="60px"
+            android:text="霸道总裁爱上我"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+        <ImageView
+            android:id="@+id/cover_image"
+            android:layout_width="315px"
+            android:layout_height="315px"
+            android:layout_below="@id/album_title"
+            android:layout_alignLeft="@id/album_title"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_default" />
+
+        <TextView
+            android:id="@+id/album_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/cover_image"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/cover_image"
+            android:text="主播：Messi"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/album_info_zone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/album_author"
+            android:layout_toRightOf="@id/cover_image"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/album_subscribe"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:text="订阅：20万"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/black" />
+
+            <TextView
+                android:id="@+id/album_play_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:text="10万"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/album_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="200px"
+            android:layout_below="@id/album_info_zone"
+            android:layout_alignLeft="@id/album_info_zone"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="60px"
+            android:text="绝路下她被迫接受天价交易，本以为钱货两清，没想到五年后再相逢。 他嘴上说着厌弃， ..."
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tracks_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_zone"
+        android:paddingRight="60px" />
+
+
+</RelativeLayout>
