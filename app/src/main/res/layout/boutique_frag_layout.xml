@@ -6,9 +6,10 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="80px"
         android:layout_centerHorizontal="true"
+        android:background="#EDEDED"
         app:tabGravity="center"
         app:tabIndicatorColor="#C6983F"
         app:tabIndicatorFullWidth="false"
