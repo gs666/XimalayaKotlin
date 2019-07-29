@@ -71,7 +71,7 @@ class RankListActivity : BaseActivity() {
         mPlayerServiceManager?.addPlayerStatusListener(mPlayerStatusListener)
     }
 
-    private fun initToolBar(){
+    private fun initToolBar() {
         setSupportActionBar(rank_list_toolbar)
         //禁止显示默认 title
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -98,6 +98,11 @@ class RankListActivity : BaseActivity() {
 
             }
         })
+    }
+
+    override fun onDestroy() {
+        mPlayerServiceManager?.removePlayerStatusListener(mPlayerStatusListener)
+        super.onDestroy()
     }
 
     private val mPlayerStatusListener = object : IXmPlayerStatusListener {

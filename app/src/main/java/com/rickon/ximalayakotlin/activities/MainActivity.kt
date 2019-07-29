@@ -52,6 +52,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         // 请参考`4.8 播放器通知栏使用`重新添加新的通知栏布局,否则直接升级可能导致在部分手机播放时崩溃
         // 如果不想使用sdk内部搞好的notification,或者想自建notification 可以使用下面的  init()函数进行初始化
         mPlayerManager?.init(System.currentTimeMillis().toInt(), mNotification)
+
         mPlayerManager?.addPlayerStatusListener(mPlayerStatusListener)
         mPlayerManager?.addAdsStatusListener(mAdsListener)
         mPlayerManager?.addOnConnectedListerner(object : XmPlayerManager.IConnectListener {

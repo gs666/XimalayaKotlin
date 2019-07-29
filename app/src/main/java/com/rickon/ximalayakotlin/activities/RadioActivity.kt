@@ -158,6 +158,11 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    override fun onDestroy() {
+        mPlayerServiceManager?.removePlayerStatusListener(mPlayerStatusListener)
+        super.onDestroy()
+    }
+
     companion object {
 
         private const val TAG = "RadioActivity"

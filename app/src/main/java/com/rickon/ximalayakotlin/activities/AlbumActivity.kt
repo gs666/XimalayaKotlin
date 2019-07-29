@@ -16,8 +16,13 @@ import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
+import com.ximalaya.ting.android.opensdk.model.PlayableModel
 import com.ximalaya.ting.android.opensdk.model.album.Album
+import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.model.track.TrackList
+import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
+import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
+import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
 import io.alterac.blurkit.BlurKit
 import kotlinx.android.synthetic.main.activity_album.*
 
@@ -26,8 +31,40 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
     private var currentAlbumId = ""
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var album: Album
-    private val res = XimalayaKotlin.context?.resources
+    private var isLoadSuccess = false
 
+    private var tracksList: List<Track>? = null
+
+    private var mPlayerServiceManager: XmPlayerManager? = null
+    private val mPlayerStatusListener = object : IXmPlayerStatusListener {
+        override fun onSoundSwitch(laModel: PlayableModel?, curModel: PlayableModel) {
+            trackAdapter.notifyDataSetChanged()
+        }
+
+        override fun onSoundPrepared() {}
+
+        override fun onSoundPlayComplete() {}
+
+        override fun onPlayStop() {}
+
+        override fun onPlayStart() {}
+
+        override fun onPlayProgress(currPos: Int, duration: Int) {}
+
+        override fun onPlayPause() {}
+
+        override fun onError(exception: XmPlayerException): Boolean {
+            return false
+
+        }
+
+        override fun onBufferingStop() {}
+
+        override fun onBufferingStart() {}
+
+        override fun onBufferProgress(percent: Int) {}
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +78,9 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
         loadTracksByAlbumId()
 
         initListener()
+
+        mPlayerServiceManager = XmPlayerManager.getInstance(applicationContext)
+        mPlayerServiceManager?.addPlayerStatusListener(mPlayerStatusListener)
     }
 
     private fun loadTracksByAlbumId() {
@@ -53,6 +93,8 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
         CommonRequest.getTracks(map, object : IDataCallBack<TrackList> {
             override fun onSuccess(p0: TrackList?) {
                 if (p0?.tracks!!.size > 0) {
+                    tracksList = p0.tracks
+                    isLoadSuccess = true
 
                     Glide.with(applicationContext)
                             .load(p0.coverUrlLarge)
@@ -85,6 +127,7 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
             }
 
             override fun onError(p0: Int, p1: String?) {
+                isLoadSuccess = false
             }
         })
     }
@@ -93,28 +136,37 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
         //专辑相关信息
         album_title.text = album.albumTitle
         album_author.text = album.announcer.nickname
-        album_subscribe.text = "已订阅：${GlobalUtil.formatNum(album.subscribeCount.toString(),false)}"
-        album_play_count.text = "播放${GlobalUtil.formatNum(album.playCount.toString(),false)}"
+        album_subscribe.text = "已订阅：${GlobalUtil.formatNum(album.subscribeCount.toString(), false)}"
+        album_play_count.text = "播放${GlobalUtil.formatNum(album.playCount.toString(), false)}"
         album_intro.text = album.albumIntro
     }
 
 
     private fun initListener() {
         return_btn.setOnClickListener(this)
-
+        play_all_btn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.return_btn -> finish()
-
+            R.id.play_all_btn -> {
+                if (isLoadSuccess && tracksList != null) {
+                    //播放列表
+                    mPlayerServiceManager?.playList(tracksList!!, 0)
+                }
+            }
         }
+    }
+
+    override fun onDestroy() {
+        mPlayerServiceManager?.removePlayerStatusListener(mPlayerStatusListener)
+        super.onDestroy()
     }
 
     companion object {
 
-        private const val TAG = "BookCityFragment"
-        private const val LOAD_SUCCESS = 1
+        private const val TAG = "AlbumActivity"
 
     }
 }

@@ -87,8 +87,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/album_author"
-            android:layout_toRightOf="@id/cover_image"
-            android:layout_marginLeft="20dp">
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/cover_image">
 
             <TextView
                 android:id="@+id/album_subscribe"
@@ -102,16 +102,16 @@
             <View
                 android:layout_width="1dp"
                 android:layout_height="10dp"
-                android:layout_marginLeft="10dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
                 android:background="@color/black" />
 
             <TextView
                 android:id="@+id/album_play_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
                 android:text="10万"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
@@ -133,11 +133,44 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/play_all_zone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_zone">
+
+        <ImageView
+            android:id="@+id/play_all_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="40px"
+            android:scaleType="center"
+            android:src="@drawable/ic_play_black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/return_btn"
+            android:gravity="center"
+            android:text="@string/play_all"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/play_all_zone"
+        android:layout_marginLeft="60px"
+        android:layout_marginRight="60px"
+        android:background="@color/split_line" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tracks_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar_zone"
+        android:layout_below="@id/play_all_zone"
         android:paddingRight="60px" />
 
 
