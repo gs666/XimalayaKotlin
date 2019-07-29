@@ -54,7 +54,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         mPlayerManager?.init(System.currentTimeMillis().toInt(), mNotification)
 
         mPlayerManager?.addPlayerStatusListener(mPlayerStatusListener)
-        mPlayerManager?.addAdsStatusListener(mAdsListener)
         mPlayerManager?.addOnConnectedListerner(object : XmPlayerManager.IConnectListener {
             override fun onConnected() {
                 mPlayerManager?.removeOnConnectedListerner(this)
@@ -223,49 +222,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 //            mProgress.setVisibility(View.GONE)
         }
 
-    }
-
-    //喜马拉雅广告监听器
-    private val mAdsListener = object : IXmAdsStatusListener {
-
-        override fun onStartPlayAds(ad: Advertis?, position: Int) {
-            Log.i(TAG, "onStartPlayAds, Ad:${ad?.name},pos:$position")
-            Glide.with(mContext).load(ad?.imageUrl).into(id_play_bar_image)
-        }
-
-        override fun onStartGetAdsInfo() {
-            Log.i(TAG, "onStartGetAdsInfo")
-            id_play_or_pause.isEnabled = false
-//            mSeekBar.setEnabled(false)
-        }
-
-        override fun onGetAdsInfo(ads: AdvertisList?) {
-            Log.i(TAG, "onGetAdsInfo " + (ads != null))
-        }
-
-        override fun onError(what: Int, extra: Int) {
-            Log.i(TAG, "onError what:$what, extra:$extra")
-        }
-
-        override fun onCompletePlayAds() {
-            Log.i(TAG, "onCompletePlayAds")
-            id_play_or_pause.isEnabled = true
-//            mSeekBar.setEnabled(true)
-            val model = mPlayerManager?.currSound
-            if (model is Track) {
-                Glide.with(mContext)
-                        .load(model.coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                        .into(id_play_bar_image)
-            }
-        }
-
-        override fun onAdsStopBuffering() {
-            Log.i(TAG, "onAdsStopBuffering")
-        }
-
-        override fun onAdsStartBuffering() {
-            Log.i(TAG, "onAdsStartBuffering")
-        }
     }
 
 }
