@@ -18,5 +18,8 @@
 
     </style>
 
+    <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
+    <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
+
 
 </resources>

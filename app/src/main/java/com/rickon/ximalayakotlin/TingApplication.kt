@@ -1,8 +1,13 @@
 package com.rickon.ximalayakotlin
 
 import android.app.Application
+import android.app.PendingIntent
+import android.content.Intent
+import com.rickon.ximalayakotlin.receiver.MyPlayerReceiver
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
+import com.ximalaya.ting.android.opensdk.player.appnotification.XmNotificationCreater
+import com.ximalaya.ting.android.opensdk.util.BaseUtil
 
 
 /**
@@ -22,6 +27,25 @@ open class TingApplication : Application() {
         mXimalaya.init(this, mAppSecret)
 
         XimalayaKotlin.initialize(this)
+
+        if (BaseUtil.getCurProcessName(this).contains(":player")) {
+            val instanse = XmNotificationCreater.getInstanse(this)
+
+            instanse.setNextPendingIntent(null as PendingIntent?)
+            instanse.setPrePendingIntent(null as PendingIntent?)
+
+            val actionName = "com.rickon.ximalayakotlin.Action_Close"
+            val intent = Intent(actionName)
+            intent.setClass(this, MyPlayerReceiver::class.java)
+            val broadcast = PendingIntent.getBroadcast(this, 0, intent, 0)
+            instanse.setClosePendingIntent(broadcast)
+
+            val pauseActionName = "com.rickon.ximalayakotlin.Action_PAUSE_START"
+            val intent1 = Intent(pauseActionName)
+            intent1.setClass(this, MyPlayerReceiver::class.java)
+            val broadcast1 = PendingIntent.getBroadcast(this, 0, intent1, 0)
+            instanse.setStartOrPausePendingIntent(broadcast1)
+        }
     }
 
 }

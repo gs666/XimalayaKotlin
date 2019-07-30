@@ -12,13 +12,11 @@ import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.MainFragmentPagerAdapter
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
-import com.ximalaya.ting.android.opensdk.model.advertis.Advertis
-import com.ximalaya.ting.android.opensdk.model.advertis.AdvertisList
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.model.live.schedule.Schedule
 import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
-import com.ximalaya.ting.android.opensdk.player.advertis.IXmAdsStatusListener
+import com.ximalaya.ting.android.opensdk.player.appnotification.NotificationColorUtils
 import com.ximalaya.ting.android.opensdk.player.appnotification.XmNotificationCreater
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl
@@ -46,6 +44,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         //初始化播放器
         mPlayerManager = XmPlayerManager.getInstance(this)
+
+        //初始化通知栏
+        //如果贵方的 targetSdkVersion >= 24 需要在 XmNotificationCreater 初始化之前执行下一句
+        NotificationColorUtils.isTargerSDKVersion24More = true
         val mNotification = XmNotificationCreater.getInstanse(this)
                 .initNotification(this.applicationContext, MainActivity::class.java)
         // 如果之前贵方使用了 `XmPlayerManager.init(int id, Notification notification)` 这个初始化的方式
@@ -63,9 +65,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         })
     }
 
-    override fun onStop() {
-        super.onStop()
-        Log.e(TAG, "onStop")
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e(TAG, "onDestroy")
 
         mPlayerManager?.removePlayerStatusListener(mPlayerStatusListener)
         XmPlayerManager.release()

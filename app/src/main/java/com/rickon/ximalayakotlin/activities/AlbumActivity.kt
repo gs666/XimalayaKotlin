@@ -108,7 +108,6 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
                                     cover_image.setImageDrawable(resource)
 
                                     cover_bg.setImageBitmap(BlurKit.getInstance().blur(cover_image,25))
-                                    cover_bg.background.alpha= 125
 
                                     return true
                                 }
@@ -118,8 +117,6 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
                             })
                             .apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
                             .submit()
-//                            .into(cover_image)
-
 
                     tracks_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
                     trackAdapter = TrackAdapter(applicationContext, p0.tracks)
