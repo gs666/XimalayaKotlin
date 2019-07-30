@@ -16,7 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="830px"
             android:scaleType="centerCrop"
-            android:src="@color/grey" />
+            android:src="@color/half_grey" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="830px"
+            android:scaleType="centerCrop"
+            android:src="@color/half_grey" />
 
         <ImageView
             android:id="@+id/return_btn"

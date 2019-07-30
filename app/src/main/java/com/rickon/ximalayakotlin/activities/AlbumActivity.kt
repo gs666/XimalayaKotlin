@@ -1,14 +1,17 @@
 package com.rickon.ximalayakotlin.activities
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.TrackAdapter
 import com.rickon.ximalayakotlin.util.GlobalUtil
@@ -96,16 +99,27 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
                     tracksList = p0.tracks
                     isLoadSuccess = true
 
+                    BlurKit.init(this@AlbumActivity)
+
                     Glide.with(applicationContext)
                             .load(p0.coverUrlLarge)
-                            .apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                            .into(cover_image)
+                            .listener(object : RequestListener<Drawable> {
+                                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                    cover_image.setImageDrawable(resource)
 
-//                    BlurKit.init(this@AlbumActivity)
-//
-//                    Glide.with(this@AlbumActivity)
-//                            .load(BlurKit.getInstance().blur(cover_image, 25))
-//                            .into(cover_bg)
+                                    cover_bg.setImageBitmap(BlurKit.getInstance().blur(cover_image,25))
+                                    cover_bg.background.alpha= 125
+
+                                    return true
+                                }
+                                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                    return true
+                                }
+                            })
+                            .apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                            .submit()
+//                            .into(cover_image)
+
 
                     tracks_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
                     trackAdapter = TrackAdapter(applicationContext, p0.tracks)
@@ -114,6 +128,8 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
                     trackAdapter.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {
                         override fun onItemClickListener(position: Int) {
                             Log.d(TAG, position.toString())
+
+                            mPlayerServiceManager?.playList(tracksList!!, position)
 
                             trackAdapter.notifyDataSetChanged()
 
