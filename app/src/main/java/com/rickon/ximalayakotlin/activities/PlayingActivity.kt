@@ -1,12 +1,15 @@
 package com.rickon.ximalayakotlin.activities
 
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
+import android.widget.SeekBar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.R
+import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.model.live.schedule.Schedule
@@ -77,7 +80,13 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
             play_pause_btn.setImageResource(R.drawable.ic_pause)
         }
 
-        override fun onPlayProgress(currPos: Int, duration: Int) {}
+        override fun onPlayProgress(currPos: Int, duration: Int) {
+            playing_current_time.text = DateUtils.formatElapsedTime(currPos/1000.toLong())
+            playing_duration.text = DateUtils.formatElapsedTime(duration/1000.toLong())
+            //设置进度条
+            playing_progress_bar.progress = currPos/1000
+            playing_progress_bar.max = duration/1000
+        }
 
         override fun onPlayPause() {
             play_pause_btn.setImageResource(R.drawable.ic_play)
@@ -123,6 +132,21 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
     private fun initView() {
         playing_title.text = track?.trackTitle
         playing_author.text = track?.announcer?.nickname
+
+        playing_progress_bar.max = track?.duration!!
+        playing_progress_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                mPlayerServiceManager.seekTo(seekBar!!.progress*1000)
+            }
+        })
+        //声音时长
+        playing_duration.text = DateUtils.formatElapsedTime(track?.duration!!.toLong())
 
         Glide.with(this)
                 .load(track?.coverUrlLarge)

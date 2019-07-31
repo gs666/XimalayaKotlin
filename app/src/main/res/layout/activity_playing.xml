@@ -41,9 +41,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60px"
                 android:layout_marginTop="105px"
+                android:ellipsize="marquee"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:ellipsize="marquee"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
@@ -64,11 +64,40 @@
 
         </RelativeLayout>
 
+        <SeekBar
+            android:id="@+id/playing_progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
+            android:maxHeight="10dp"
+            android:minHeight="10dp"
+            android:thumb="@null"
+            android:progress="0"
+            android:progressDrawable="@drawable/seekbar"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp">
-
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/playing_current_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zero_time"
+                android:textColor="@color/grey"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/playing_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zero_time"
+                android:textColor="@color/grey"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
