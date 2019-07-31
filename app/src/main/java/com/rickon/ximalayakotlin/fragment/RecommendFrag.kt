@@ -39,8 +39,7 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.walkman_btn -> {
-                val intent = Intent(context,PlayingActivity::class.java)
-                context?.startActivity(intent)
+
             }
             R.id.radio_btn -> {
                 val intent = Intent(context,RadioActivity::class.java)

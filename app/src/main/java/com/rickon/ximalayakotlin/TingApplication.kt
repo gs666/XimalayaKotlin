@@ -8,6 +8,7 @@ import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.player.appnotification.XmNotificationCreater
 import com.ximalaya.ting.android.opensdk.util.BaseUtil
+import org.litepal.LitePal
 
 
 /**
@@ -27,6 +28,8 @@ open class TingApplication : Application() {
         mXimalaya.init(this, mAppSecret)
 
         XimalayaKotlin.initialize(this)
+        //初始化LitePal数据库
+        LitePal.initialize(this)
 
         if (BaseUtil.getCurProcessName(this).contains(":player")) {
             val instanse = XmNotificationCreater.getInstanse(this)

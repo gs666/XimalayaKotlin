@@ -13,6 +13,7 @@
         android:background="#EDEDED">
 
         <ImageView
+            android:id="@+id/serach_btn"
             android:layout_width="180px"
             android:layout_height="132px"
             android:layout_alignParentLeft="true"
@@ -21,6 +22,7 @@
             android:src="@drawable/ic_search" />
 
         <ImageView
+            android:id="@+id/history_btn"
             android:layout_width="180px"
             android:layout_height="132px"
             android:layout_alignParentRight="true"

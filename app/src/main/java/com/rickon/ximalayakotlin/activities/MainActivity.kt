@@ -1,5 +1,6 @@
 package com.rickon.ximalayakotlin.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -69,7 +70,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         super.onDestroy()
         Log.e(TAG, "onDestroy")
 
-        mPlayerManager?.removePlayerStatusListener(mPlayerStatusListener)
+        mPlayerManager.removePlayerStatusListener(mPlayerStatusListener)
         XmPlayerManager.release()
         CommonRequest.release()
     }
@@ -103,6 +104,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private fun initListener() {
         id_play_or_pause.setOnClickListener(this)
         id_current_list.setOnClickListener(this)
+        history_btn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -110,6 +112,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
             R.id.id_play_or_pause -> if (mPlayerManager.isPlaying) mPlayerManager.pause() else mPlayerManager.play()
             R.id.id_current_list -> Toast.makeText(mContext, "暂未开发此功能", Toast.LENGTH_SHORT).show()
+            R.id.history_btn -> {
+                val intent = Intent(this,HistoryActivity::class.java)
+                this.startActivity(intent)
+            }
         }
     }
 

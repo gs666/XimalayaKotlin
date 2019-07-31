@@ -30,4 +30,6 @@
     <string name="hottest_rank">热听榜</string>
 
     <string name="play_all">播放全部</string>
+    <string name="recent_history">最近收听</string>
+    <string name="clear_all">清空</string>
 </resources>

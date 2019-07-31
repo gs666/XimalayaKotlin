@@ -27,7 +27,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.AlbumActivity"></activity>
+        <activity android:name=".activities.HistoryActivity"></activity>
+        <activity android:name=".activities.AlbumActivity" />
         <activity android:name=".activities.PlayingActivity" />
         <activity android:name=".activities.RankListActivity" />
         <activity android:name=".activities.RadioActivity" />
@@ -43,8 +44,11 @@
         <service
             android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
             android:process=":player" />
+
         <receiver
-            android:name="com.ximalaya.ting.android.opensdk.player.receive.PlayerReceiver" android:exported="true" android:process=":player">
+            android:name="com.ximalaya.ting.android.opensdk.player.receive.PlayerReceiver"
+            android:exported="true"
+            android:process=":player">
             <intent-filter>
                 <action android:name="com.ximalaya.ting.android.ACTION_CONTROL_START_PAUSE" />
                 <action android:name="com.ximalaya.ting.android.ACTION_CONTROL_PLAY_PRE" />
@@ -53,11 +57,12 @@
                 <action android:name="com.ximalaya.ting.android.ACTION_CONTROL_RELEASE_SERVICE" />
             </intent-filter>
         </receiver>
-
-        <receiver android:name=".receiver.MyPlayerReceiver" android:exported="true">
+        <receiver
+            android:name=".receiver.MyPlayerReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.rickon.ximalayakotlin.Action_Close"/>
-                <action android:name="com.rickon.ximalayakotlin.Action_PAUSE_START"/>
+                <action android:name="com.rickon.ximalayakotlin.Action_Close" />
+                <action android:name="com.rickon.ximalayakotlin.Action_PAUSE_START" />
             </intent-filter>
         </receiver>
     </application>

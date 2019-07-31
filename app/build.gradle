@@ -30,6 +30,9 @@ android {
             jni.srcDirs = []
         }
     }
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
@@ -44,5 +47,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'io.alterac.blurkit:blurkit:1.1.1'
-    implementation files('libs/TingPhoneOpenSDK_7.0.6.jar')
+    implementation 'org.litepal.android:kotlin:3.0.0'
 }
