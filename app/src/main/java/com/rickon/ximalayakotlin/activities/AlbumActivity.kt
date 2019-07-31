@@ -1,5 +1,6 @@
 package com.rickon.ximalayakotlin.activities
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -29,6 +30,12 @@ import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
 import io.alterac.blurkit.BlurKit
 import kotlinx.android.synthetic.main.activity_album.*
 
+/**
+ * @Description:专辑列表页面
+ * @Author:      高烁
+ * @CreateDate:  2019-06-14 15:06
+ * @Email:       gaoshuo521@foxmail.com
+ */
 class AlbumActivity : BaseActivity(), View.OnClickListener {
 
     private var currentAlbumId = ""
@@ -38,7 +45,7 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
 
     private var tracksList: List<Track>? = null
 
-    private var mPlayerServiceManager: XmPlayerManager? = null
+    private lateinit var mPlayerServiceManager: XmPlayerManager
     private val mPlayerStatusListener = object : IXmPlayerStatusListener {
         override fun onSoundSwitch(laModel: PlayableModel?, curModel: PlayableModel) {
             trackAdapter.notifyDataSetChanged()
@@ -83,7 +90,7 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
         initListener()
 
         mPlayerServiceManager = XmPlayerManager.getInstance(applicationContext)
-        mPlayerServiceManager?.addPlayerStatusListener(mPlayerStatusListener)
+        mPlayerServiceManager.addPlayerStatusListener(mPlayerStatusListener)
     }
 
     private fun loadTracksByAlbumId() {
@@ -125,8 +132,13 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
                     trackAdapter.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {
                         override fun onItemClickListener(position: Int) {
                             Log.d(TAG, position.toString())
+                            mPlayerServiceManager.playList(tracksList!!, position)
 
-                            mPlayerServiceManager?.playList(tracksList!!, position)
+                            //跳转PlayingActivity
+                            val intent = Intent(this@AlbumActivity, PlayingActivity::class.java)
+                            //传递一个 album
+                            intent.putExtra("track", tracksList!![position])
+                            this@AlbumActivity.startActivity(intent)
 
                             trackAdapter.notifyDataSetChanged()
 
@@ -166,14 +178,14 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
             R.id.play_all_btn -> {
                 if (isLoadSuccess && tracksList != null) {
                     //播放列表
-                    mPlayerServiceManager?.playList(tracksList!!, 0)
+                    mPlayerServiceManager.playList(tracksList!!, 0)
                 }
             }
         }
     }
 
     override fun onDestroy() {
-        mPlayerServiceManager?.removePlayerStatusListener(mPlayerStatusListener)
+        mPlayerServiceManager.removePlayerStatusListener(mPlayerStatusListener)
         super.onDestroy()
     }
 

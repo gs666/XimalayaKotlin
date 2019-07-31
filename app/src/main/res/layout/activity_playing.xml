@@ -20,7 +20,12 @@
                 android:id="@+id/image_cover"
                 android:layout_width="match_parent"
                 android:layout_height="1080px"
-                android:background="@color/design_default_color_primary" />
+                android:background="@color/half_grey" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="340px"
+                android:background="@drawable/gradient_black_shape" />
 
             <ImageView
                 android:id="@+id/close_playing_btn"
@@ -30,13 +35,20 @@
                 android:scaleType="center"
                 android:src="@drawable/ic_down_close" />
 
-            <TextView
+            <com.rickon.ximalayakotlin.view.MarqueeTextView
                 android:id="@+id/playing_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60px"
                 android:layout_marginTop="105px"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:text="@string/no_title"
+                android:textColor="@color/white"
                 android:textSize="30sp" />
 
             <TextView

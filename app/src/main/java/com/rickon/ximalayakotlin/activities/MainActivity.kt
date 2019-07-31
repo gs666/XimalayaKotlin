@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : BaseActivity(), View.OnClickListener {
 
     private val mContext = this
-    private var mPlayerManager: XmPlayerManager? = null
+    private lateinit var mPlayerManager: XmPlayerManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,13 +53,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         // 如果之前贵方使用了 `XmPlayerManager.init(int id, Notification notification)` 这个初始化的方式
         // 请参考`4.8 播放器通知栏使用`重新添加新的通知栏布局,否则直接升级可能导致在部分手机播放时崩溃
         // 如果不想使用sdk内部搞好的notification,或者想自建notification 可以使用下面的  init()函数进行初始化
-        mPlayerManager?.init(System.currentTimeMillis().toInt(), mNotification)
+        mPlayerManager.init(System.currentTimeMillis().toInt(), mNotification)
 
-        mPlayerManager?.addPlayerStatusListener(mPlayerStatusListener)
-        mPlayerManager?.addOnConnectedListerner(object : XmPlayerManager.IConnectListener {
+        mPlayerManager.addPlayerStatusListener(mPlayerStatusListener)
+        mPlayerManager.addOnConnectedListerner(object : XmPlayerManager.IConnectListener {
             override fun onConnected() {
-                mPlayerManager?.removeOnConnectedListerner(this)
-                mPlayerManager?.playMode = XmPlayListControl.PlayMode.PLAY_MODEL_LIST_LOOP
+                mPlayerManager.removeOnConnectedListerner(this)
+                mPlayerManager.playMode = XmPlayListControl.PlayMode.PLAY_MODEL_LIST_LOOP
                 Toast.makeText(mContext, "播放器初始化成功", Toast.LENGTH_SHORT).show()
             }
         })
@@ -108,7 +108,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
 
-            R.id.id_play_or_pause -> if (mPlayerManager!!.isPlaying) mPlayerManager?.pause() else mPlayerManager?.play()
+            R.id.id_play_or_pause -> if (mPlayerManager.isPlaying) mPlayerManager.pause() else mPlayerManager.play()
             R.id.id_current_list -> Toast.makeText(mContext, "暂未开发此功能", Toast.LENGTH_SHORT).show()
         }
     }
@@ -125,14 +125,14 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         override fun onSoundSwitch(laModel: PlayableModel?, curModel: PlayableModel) {
             Log.i(TAG, "onSoundSwitch index:$curModel")
 
-            val model = mPlayerManager?.currSound
+            val model = mPlayerManager.currSound
             var title: String
             var singer: String
             var coverUrl: String
             when (model) {
                 is Track -> {
                     title = model.trackTitle
-                    singer = model.trackIntro
+                    singer = model.announcer.nickname
                     coverUrl = model.coverUrlLarge
                 }
                 is Schedule -> {
