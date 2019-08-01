@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.HistoryAdapter
 import com.rickon.ximalayakotlin.model.HistoryItem
+import com.ximalaya.ting.android.opensdk.model.PlayableModel
+import com.ximalaya.ting.android.opensdk.model.track.Track
+import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import kotlinx.android.synthetic.main.activity_history.*
 import org.litepal.LitePal
 import kotlin.collections.ArrayList
@@ -33,6 +36,20 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
         history_recycler.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         historyAdapter = HistoryAdapter(applicationContext, historyList)
         history_recycler.adapter = historyAdapter
+
+        historyAdapter.setOnKotlinItemClickListener(object : HistoryAdapter.IKotlinItemClickListener{
+            override fun onItemClickListener(position: Int) {
+                val track = Track()
+                track.kind = PlayableModel.KIND_TRACK
+                track.trackTitle = historyList[position].trackTitle
+                track.announcer.nickname = historyList[position].albumAuthor
+                track.coverUrlLarge = historyList[position].itemImagePath
+                track.dataId = historyList[position].trackId.toLong()
+                val tracks:MutableList<Track> = ArrayList()
+                tracks.add(track)
+                XmPlayerManager.getInstance(this@HistoryActivity).playList(tracks ,0)
+            }
+        })
     }
 
     private fun initView() {

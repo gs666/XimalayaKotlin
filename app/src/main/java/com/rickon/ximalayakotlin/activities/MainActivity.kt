@@ -132,9 +132,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             Log.i(TAG, "onSoundSwitch index:$curModel")
 
             val model = mPlayerManager.currSound
-            var title: String
-            var singer: String
-            var coverUrl: String
+            val title: String?
+            val singer: String?
+            val coverUrl: String?
             when (model) {
                 is Track -> {
                     title = model.trackTitle
