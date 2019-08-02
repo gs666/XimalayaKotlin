@@ -110,6 +110,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         id_play_or_pause.setOnClickListener(this)
         id_current_list.setOnClickListener(this)
         history_btn.setOnClickListener(this)
+
+        id_control_zone.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -120,6 +122,10 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             R.id.history_btn -> {
                 val intent = Intent(this,HistoryActivity::class.java)
                 this.startActivity(intent)
+            }
+            R.id.id_control_zone -> {
+//                val intent = Intent(this,PlayingActivity::class.java)
+//                this.startActivity(intent)
             }
         }
     }

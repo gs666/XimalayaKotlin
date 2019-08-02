@@ -29,7 +29,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.HistoryActivity"></activity>
         <activity android:name=".activities.AlbumActivity" />
-        <activity android:name=".activities.PlayingActivity" />
+        <activity
+            android:name=".activities.PlayingActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".activities.RankListActivity" />
         <activity android:name=".activities.RadioActivity" />
         <activity android:name=".activities.BaseActivity" />
