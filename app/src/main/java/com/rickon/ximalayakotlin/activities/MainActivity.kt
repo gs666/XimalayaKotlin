@@ -44,7 +44,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
 
         //初始化播放器
-        mPlayerManager = XmPlayerManager.getInstance(this)
+        mPlayerManager = XmPlayerManager.getInstance(this.applicationContext)
 
         //初始化通知栏
         //如果贵方的 targetSdkVersion >= 24 需要在 XmNotificationCreater 初始化之前执行下一句
@@ -54,7 +54,12 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         // 如果之前贵方使用了 `XmPlayerManager.init(int id, Notification notification)` 这个初始化的方式
         // 请参考`4.8 播放器通知栏使用`重新添加新的通知栏布局,否则直接升级可能导致在部分手机播放时崩溃
         // 如果不想使用sdk内部搞好的notification,或者想自建notification 可以使用下面的  init()函数进行初始化
-        mPlayerManager.init(System.currentTimeMillis().toInt(), mNotification)
+        val notificationId = System.currentTimeMillis().toInt()
+        mPlayerManager.init(notificationId, mNotification)
+
+        XmPlayerManager.getInstance(this).init(notificationId,
+                XmNotificationCreater.getInstanse(this).createNotification(this,
+                                MainActivity::class.java))
 
         mPlayerManager.addPlayerStatusListener(mPlayerStatusListener)
         mPlayerManager.addOnConnectedListerner(object : XmPlayerManager.IConnectListener {

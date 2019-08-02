@@ -33,7 +33,6 @@ open class TingApplication : Application() {
 
         if (BaseUtil.getCurProcessName(this).contains(":player")) {
             val instanse = XmNotificationCreater.getInstanse(this)
-
             instanse.setNextPendingIntent(null as PendingIntent?)
             instanse.setPrePendingIntent(null as PendingIntent?)
 
