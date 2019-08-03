@@ -35,7 +35,8 @@
         <activity android:name=".activities.RankListActivity" />
         <activity android:name=".activities.RadioActivity" />
         <activity android:name=".activities.BaseActivity" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

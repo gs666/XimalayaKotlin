@@ -1,5 +1,7 @@
 package com.rickon.ximalayakotlin.fragment
 
+import android.content.Context
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 
 /**
@@ -8,6 +10,16 @@ import androidx.fragment.app.Fragment
  * @CreateDate:  2019-06-14 15:08
  * @Email:       gaoshuo521@foxmail.com
  */
-open class BaseFragment() : androidx.fragment.app.Fragment() {
+open class BaseFragment() : Fragment() {
+    lateinit var mContext: Context
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        mContext = context!!
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
 }

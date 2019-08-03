@@ -5,23 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.tabs.TabLayout
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.MainFragmentPagerAdapter
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
-import com.ximalaya.ting.android.opensdk.model.PlayableModel
-import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
-import com.ximalaya.ting.android.opensdk.model.live.schedule.Schedule
-import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import com.ximalaya.ting.android.opensdk.player.appnotification.NotificationColorUtils
 import com.ximalaya.ting.android.opensdk.player.appnotification.XmNotificationCreater
-import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl
-import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -59,9 +50,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
         XmPlayerManager.getInstance(this).init(notificationId,
                 XmNotificationCreater.getInstanse(this).createNotification(this,
-                                MainActivity::class.java))
+                        MainActivity::class.java))
 
-        mPlayerManager.addPlayerStatusListener(mPlayerStatusListener)
         mPlayerManager.addOnConnectedListerner(object : XmPlayerManager.IConnectListener {
             override fun onConnected() {
                 mPlayerManager.removeOnConnectedListerner(this)
@@ -75,7 +65,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         super.onDestroy()
         Log.e(TAG, "onDestroy")
 
-        mPlayerManager.removePlayerStatusListener(mPlayerStatusListener)
         XmPlayerManager.release()
         CommonRequest.release()
     }
@@ -107,140 +96,17 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun initListener() {
-        id_play_or_pause.setOnClickListener(this)
-        id_current_list.setOnClickListener(this)
         history_btn.setOnClickListener(this)
 
-        id_control_zone.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-
-            R.id.id_play_or_pause -> if (mPlayerManager.isPlaying) mPlayerManager.pause() else mPlayerManager.play()
-            R.id.id_current_list -> Toast.makeText(mContext, "暂未开发此功能", Toast.LENGTH_SHORT).show()
             R.id.history_btn -> {
-                val intent = Intent(this,HistoryActivity::class.java)
+                val intent = Intent(this, HistoryActivity::class.java)
                 this.startActivity(intent)
             }
-            R.id.id_control_zone -> {
-//                val intent = Intent(this,PlayingActivity::class.java)
-//                this.startActivity(intent)
-            }
         }
-    }
-
-    //播放监听器
-    private val mPlayerStatusListener = object : IXmPlayerStatusListener {
-
-        override fun onSoundPrepared() {
-            Log.i(TAG, "onSoundPrepared")
-//            mSeekBar.setEnabled(true)
-//            mProgress.setVisibility(View.GONE)
-        }
-
-        override fun onSoundSwitch(laModel: PlayableModel?, curModel: PlayableModel) {
-            Log.i(TAG, "onSoundSwitch index:$curModel")
-
-            val model = mPlayerManager.currSound
-            val title: String?
-            val singer: String?
-            val coverUrl: String?
-            when (model) {
-                is Track -> {
-                    title = model.trackTitle
-                    singer = model.announcer.nickname
-                    coverUrl = model.coverUrlLarge
-                }
-                is Schedule -> {
-                    title = model.relatedProgram.programName
-                    singer = model.radioName
-                    coverUrl = model.relatedProgram.backPicUrl
-                }
-                is Radio -> {
-                    title = model.programName
-                    singer = model.radioName
-                    coverUrl = model.coverUrlLarge
-                }
-                else -> {
-                    title = ""
-                    singer = ""
-                    coverUrl = ""
-                }
-            }
-
-            id_play_bar_title.text = title
-            id_play_bar_singer.text = singer
-            Glide.with(mContext)
-                    .load(coverUrl).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                    .into(id_play_bar_image)
-
-        }
-
-        override fun onPlayStop() {
-            Log.i(TAG, "onPlayStop")
-            id_play_or_pause.setImageResource(R.drawable.ic_play)
-        }
-
-        override fun onPlayStart() {
-            Log.i(TAG, "onPlayStart")
-            id_play_or_pause.setImageResource(R.drawable.ic_pause)
-        }
-
-        //播放进度回调
-        override fun onPlayProgress(currPos: Int, duration: Int) {
-//            val info = mPlayerManager?.currSound
-//            val title: String = when (info) {
-//                is Track -> {
-//                    info.trackTitle
-//                }
-//                is Schedule -> {
-//                    info.relatedProgram.programName
-//                }
-//                is Radio -> {
-//                    info.radioName
-//                }
-//                else -> ""
-//            }
-//            mTextView.setText(title + "[" + ToolUtil.formatTime(currPos) + "/" + ToolUtil.formatTime(duration) + "]")
-//            if (mUpdateProgress && duration != 0) {
-//                mSeekBar.setProgress((100 * currPos / duration.toFloat()).toInt())
-//            }
-        }
-
-        override fun onPlayPause() {
-            Log.i(TAG, "onPlayPause")
-            id_play_or_pause.setImageResource(R.drawable.ic_play)
-
-        }
-
-        override fun onSoundPlayComplete() {
-            Log.i(TAG, "onSoundPlayComplete")
-            id_play_or_pause.setImageResource(R.drawable.ic_play)
-            XmPlayerManager.getInstance(mContext).pause()
-            Toast.makeText(mContext, "播放完成", Toast.LENGTH_SHORT).show()
-        }
-
-        override fun onError(exception: XmPlayerException): Boolean {
-            Log.i(TAG, "onError:${exception.message}")
-            id_play_or_pause.setImageResource(R.drawable.ic_play)
-            return false
-        }
-
-        override fun onBufferProgress(position: Int) {
-//            mSeekBar.setSecondaryProgress(position)
-        }
-
-        override fun onBufferingStart() {
-//            mSeekBar.setEnabled(false)
-//            mProgress.setVisibility(View.VISIBLE)
-        }
-
-        override fun onBufferingStop() {
-//            mSeekBar.setEnabled(true)
-//            mProgress.setVisibility(View.GONE)
-        }
-
     }
 
 }

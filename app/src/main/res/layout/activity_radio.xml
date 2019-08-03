@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         app:navigationIcon="@drawable/ic_return">
+
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
@@ -22,18 +23,18 @@
             android:gravity="center"
             android:text="@string/fm"
             android:textColor="@color/black"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
 
-     </androidx.appcompat.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/radio_type_select_zone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
         android:layout_below="@id/radio_toolbar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
         android:background="#FFFFFF">
 
         <TextView
@@ -82,9 +83,9 @@
         android:layout_height="match_parent"
         android:layout_below="@id/radio_type_select_zone"
         android:layout_marginTop="20dp"
+        android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:orientation="vertical">
+        android:paddingRight="20dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -105,5 +106,11 @@
 
 
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

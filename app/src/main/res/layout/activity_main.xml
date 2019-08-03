@@ -48,80 +48,14 @@
         android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/id_control_zone"
+        android:layout_above="@id/bottom_container"
         android:layout_below="@id/tab_layout_zone" />
 
-
-    <RelativeLayout
-        android:id="@+id/id_control_zone"
+    <FrameLayout
+        android:id="@+id/bottom_container"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:layout_alignParentBottom="true" />
 
-        <ImageView
-            android:id="@+id/id_play_bar_image"
-            android:layout_width="43dp"
-            android:layout_height="43dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_default_image" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:layout_toLeftOf="@id/id_play_or_pause"
-            android:layout_toRightOf="@id/id_play_bar_image"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/id_play_bar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="被驯服的象"
-                android:textSize="17dp" />
-
-            <TextView
-                android:id="@+id/id_play_bar_singer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:ellipsize="end"
-                android:maxLength="20"
-                android:maxLines="1"
-                android:text="蔡健雅"
-                android:textSize="10dp" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/id_play_or_pause"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@id/id_current_list"
-            android:background="@drawable/round_button_bg"
-            android:scaleType="center"
-            android:src="@drawable/ic_play" />
-
-        <ImageView
-            android:id="@+id/id_current_list"
-            android:layout_width="25dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/rectangle_button_bg"
-            android:padding="5dp"
-            android:src="@drawable/ic_current_list" />
-
-    </RelativeLayout>
 
 </RelativeLayout>
