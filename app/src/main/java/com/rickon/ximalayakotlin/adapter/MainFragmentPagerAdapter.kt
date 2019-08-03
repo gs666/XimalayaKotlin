@@ -15,7 +15,7 @@ import com.rickon.ximalayakotlin.util.GlobalUtil
  */
 class MainFragmentPagerAdapter : FragmentPagerAdapter {
     var fragments: MutableList<androidx.fragment.app.Fragment> = ArrayList()
-    private val titleList = arrayOf(GlobalUtil.getString(R.string.boutique), GlobalUtil.getString(R.string.recommend), GlobalUtil.getString(R.string.mine))
+    private val titleList = arrayOf(GlobalUtil.getString(R.string.boutique), GlobalUtil.getString(R.string.category), GlobalUtil.getString(R.string.mine))
 
     constructor(fm: androidx.fragment.app.FragmentManager) : super(fm) {
         fragments.add(BoutiqueFrag.newInstance())

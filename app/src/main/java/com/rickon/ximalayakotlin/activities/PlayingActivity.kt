@@ -113,8 +113,11 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
         mPlayerServiceManager = XmPlayerManager.getInstance(applicationContext)
         mPlayerServiceManager.addPlayerStatusListener(mPlayerStatusListener)
 
-        track = intent.getParcelableExtra("track")
-        radio = intent.getParcelableExtra("radio")
+        if(intent.extras != null){
+            track = intent.getParcelableExtra("track")
+            radio = intent.getParcelableExtra("radio")
+        }
+
 
         initListener()
 
@@ -130,27 +133,33 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun initView() {
-        playing_title.text = track?.trackTitle
-        playing_author.text = track?.announcer?.nickname
+        if (track!=null){
+            playing_title.text = track?.trackTitle
+            playing_author.text = track?.announcer?.nickname
 
-        playing_progress_bar.max = track?.duration!!
-        playing_progress_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            }
+            playing_progress_bar.max = track?.duration!!
+            playing_progress_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                }
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                mPlayerServiceManager.seekTo(seekBar!!.progress*1000)
-            }
-        })
-        //声音时长
-        playing_duration.text = DateUtils.formatElapsedTime(track?.duration!!.toLong())
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    mPlayerServiceManager.seekTo(seekBar!!.progress*1000)
+                }
+            })
+            //声音时长
+            playing_duration.text = DateUtils.formatElapsedTime(track?.duration!!.toLong())
 
-        Glide.with(this)
-                .load(track?.coverUrlLarge)
-                .into(image_cover)
+            Glide.with(this)
+                    .load(track?.coverUrlLarge)
+                    .into(image_cover)
+        }
+    }
+
+    override fun showQuickControl(show: Boolean) {
+//        super.showQuickControl(show)
     }
 
     override fun onClick(v: View?) {

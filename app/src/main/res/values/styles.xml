@@ -19,7 +19,13 @@
     </style>
 
     <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
+
     <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
 
+    <style name="XimalayaAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:background">@color/white</item>
+    </style>
 
 </resources>

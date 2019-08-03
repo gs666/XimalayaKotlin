@@ -176,7 +176,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/play_all_zone"
+        android:layout_above="@id/bottom_container"
         android:paddingRight="60px" />
+
+    <FrameLayout
+        android:id="@+id/bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true" />
 
 
 </RelativeLayout>
