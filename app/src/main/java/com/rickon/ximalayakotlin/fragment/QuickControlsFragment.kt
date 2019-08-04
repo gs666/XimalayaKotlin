@@ -14,6 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.activities.PlayingActivity
+import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
@@ -30,9 +31,9 @@ class QuickControlsFragment : BaseFragment() {
 
     private lateinit var playOrPauseBtn: ImageView
     private lateinit var currentListBtn: ImageView
-    private lateinit var currentTitle:TextView
-    private lateinit var currentSinger:TextView
-    private lateinit var playBarCover:ImageView
+    private lateinit var currentTitle: TextView
+    private lateinit var currentSinger: TextView
+    private lateinit var playBarCover: ImageView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +56,12 @@ class QuickControlsFragment : BaseFragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
+        initView(view)
+
+        initData()
+    }
+
+    private fun initView(view: View) {
         playOrPauseBtn = view.findViewById(R.id.id_play_or_pause)
         currentListBtn = view.findViewById(R.id.id_current_list)
         currentTitle = view.findViewById(R.id.id_play_bar_title)
@@ -77,6 +84,42 @@ class QuickControlsFragment : BaseFragment() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             XimalayaKotlin.context!!.startActivity(intent)
         }
+    }
+
+    private fun initData() {
+        val model = mPlayerManager.currSound
+        val title: String?
+        val singer: String?
+        val coverUrl: String?
+        when (model) {
+            is Track -> {
+                title = model.trackTitle
+                singer = model.announcer.nickname
+                coverUrl = model.coverUrlLarge
+            }
+            is Schedule -> {
+                title = model.relatedProgram.programName
+                singer = model.radioName
+                coverUrl = model.relatedProgram.backPicUrl
+            }
+            is Radio -> {
+                title = model.programName
+                singer = model.radioName
+                coverUrl = model.coverUrlLarge
+            }
+            else -> {
+                title = GlobalUtil.getString(R.string.no_title)
+                singer = GlobalUtil.getString(R.string.no_title)
+                coverUrl = ""
+            }
+        }
+
+        currentTitle.text = title
+        currentSinger.text = singer
+        Glide.with(XimalayaKotlin.context!!)
+                .load(coverUrl).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                .placeholder(R.drawable.ic_default_image)
+                .into(playBarCover)
     }
 
 
