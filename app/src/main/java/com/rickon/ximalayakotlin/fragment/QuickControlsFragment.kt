@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -20,12 +22,17 @@ import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
-import kotlinx.android.synthetic.main.bottom_nav.*
 
 class QuickControlsFragment : BaseFragment() {
 
     private lateinit var rootView: View
     private lateinit var mPlayerManager: XmPlayerManager
+
+    private lateinit var playOrPauseBtn: ImageView
+    private lateinit var currentListBtn: ImageView
+    private lateinit var currentTitle:TextView
+    private lateinit var currentSinger:TextView
+    private lateinit var playBarCover:ImageView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -40,17 +47,26 @@ class QuickControlsFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d(TAG, "onViewCreated")
         //按键相关使用需要在onViewCreated，否则空对象
+
         //添加播放器监听
         mPlayerManager.addPlayerStatusListener(mPlayerStatusListener)
 
         super.onViewCreated(view, savedInstanceState)
+
+        playOrPauseBtn = view.findViewById(R.id.id_play_or_pause)
+        currentListBtn = view.findViewById(R.id.id_current_list)
+        currentTitle = view.findViewById(R.id.id_play_bar_title)
+        currentSinger = view.findViewById(R.id.id_play_bar_singer)
+        playBarCover = view.findViewById(R.id.id_play_bar_image)
+
         //暂停/播放
-        id_play_or_pause.setOnClickListener {
+        playOrPauseBtn.setOnClickListener {
             if (mPlayerManager.isPlaying) mPlayerManager.pause() else mPlayerManager.play()
         }
 
-        id_current_list.setOnClickListener {
+        currentListBtn.setOnClickListener {
             Toast.makeText(XimalayaKotlin.context, "暂未开发此功能", Toast.LENGTH_SHORT).show()
         }
 
@@ -101,22 +117,22 @@ class QuickControlsFragment : BaseFragment() {
                 }
             }
 
-            id_play_bar_title.text = title
-            id_play_bar_singer.text = singer
+            currentTitle.text = title
+            currentSinger.text = singer
             Glide.with(XimalayaKotlin.context!!)
                     .load(coverUrl).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                    .into(id_play_bar_image)
+                    .into(playBarCover)
 
         }
 
         override fun onPlayStop() {
             Log.i(TAG, "onPlayStop")
-            id_play_or_pause.setImageResource(R.drawable.ic_play)
+            playOrPauseBtn.setImageResource(R.drawable.ic_play)
         }
 
         override fun onPlayStart() {
             Log.i(TAG, "onPlayStart")
-            id_play_or_pause.setImageResource(R.drawable.ic_pause)
+            playOrPauseBtn.setImageResource(R.drawable.ic_pause)
         }
 
         //播放进度回调
@@ -126,20 +142,20 @@ class QuickControlsFragment : BaseFragment() {
 
         override fun onPlayPause() {
             Log.i(TAG, "onPlayPause")
-            id_play_or_pause.setImageResource(R.drawable.ic_play)
+            playOrPauseBtn.setImageResource(R.drawable.ic_play)
 
         }
 
         override fun onSoundPlayComplete() {
             Log.i(TAG, "onSoundPlayComplete")
-            id_play_or_pause.setImageResource(R.drawable.ic_play)
+            playOrPauseBtn.setImageResource(R.drawable.ic_play)
             XmPlayerManager.getInstance(context).pause()
-            Toast.makeText(context, "播放完成", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "播放完成")
         }
 
         override fun onError(exception: XmPlayerException): Boolean {
             Log.i(TAG, "onError:${exception.message}")
-            id_play_or_pause.setImageResource(R.drawable.ic_play)
+            playOrPauseBtn.setImageResource(R.drawable.ic_play)
             return false
         }
 

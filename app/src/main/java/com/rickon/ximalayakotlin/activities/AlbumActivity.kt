@@ -136,8 +136,6 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
 
                             //跳转PlayingActivity
                             val intent = Intent(this@AlbumActivity, PlayingActivity::class.java)
-                            //传递一个 album
-                            intent.putExtra("track", tracksList!![position])
                             this@AlbumActivity.startActivity(intent)
 
                             trackAdapter.notifyDataSetChanged()

@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.R
-import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.model.live.schedule.Schedule
@@ -17,15 +16,11 @@ import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_playing.*
 
 class PlayingActivity : BaseActivity(), View.OnClickListener {
 
-    private var track: Track? = null
-    private var radio: Radio? = null
-
-    var isLiked: Boolean = false
+    private var isLiked: Boolean = false
 
     private lateinit var mPlayerServiceManager: XmPlayerManager
     private val mPlayerStatusListener = object : IXmPlayerStatusListener {
@@ -81,11 +76,11 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
         }
 
         override fun onPlayProgress(currPos: Int, duration: Int) {
-            playing_current_time.text = DateUtils.formatElapsedTime(currPos/1000.toLong())
-            playing_duration.text = DateUtils.formatElapsedTime(duration/1000.toLong())
+            playing_current_time.text = DateUtils.formatElapsedTime(currPos / 1000.toLong())
+            playing_duration.text = DateUtils.formatElapsedTime(duration / 1000.toLong())
             //设置进度条
-            playing_progress_bar.progress = currPos/1000
-            playing_progress_bar.max = duration/1000
+            playing_progress_bar.progress = currPos / 1000
+            playing_progress_bar.max = duration / 1000
         }
 
         override fun onPlayPause() {
@@ -113,12 +108,6 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
         mPlayerServiceManager = XmPlayerManager.getInstance(applicationContext)
         mPlayerServiceManager.addPlayerStatusListener(mPlayerStatusListener)
 
-        if(intent.extras != null){
-            track = intent.getParcelableExtra("track")
-            radio = intent.getParcelableExtra("radio")
-        }
-
-
         initListener()
 
         initView()
@@ -133,29 +122,58 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun initView() {
-        if (track!=null){
-            playing_title.text = track?.trackTitle
-            playing_author.text = track?.announcer?.nickname
+        val model = mPlayerServiceManager.currSound
+        val title: String?
+        val singer: String?
+        val coverUrl: String?
+        val duration: Int?
+        when (model) {
+            is Track -> {
+                title = model.trackTitle
+                singer = model.announcer.nickname
+                coverUrl = model.coverUrlLarge
 
-            playing_progress_bar.max = track?.duration!!
-            playing_progress_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                }
-
-                override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                }
-
-                override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                    mPlayerServiceManager.seekTo(seekBar!!.progress*1000)
-                }
-            })
-            //声音时长
-            playing_duration.text = DateUtils.formatElapsedTime(track?.duration!!.toLong())
-
-            Glide.with(this)
-                    .load(track?.coverUrlLarge)
-                    .into(image_cover)
+                duration = model.duration
+                playing_progress_bar.max = duration
+                //声音时长
+                playing_duration.text = DateUtils.formatElapsedTime(duration.toLong())
+            }
+            is Schedule -> {
+                title = model.relatedProgram.programName
+                singer = model.radioName
+                coverUrl = model.relatedProgram.backPicUrl
+            }
+            is Radio -> {
+                title = model.programName
+                singer = model.radioName
+                coverUrl = model.coverUrlLarge
+            }
+            else -> {
+                title = ""
+                singer = ""
+                coverUrl = ""
+            }
         }
+
+        playing_title.text = title
+        playing_author.text = singer
+
+        playing_progress_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                mPlayerServiceManager.seekTo(seekBar!!.progress * 1000)
+            }
+        })
+
+        Glide.with(this)
+                .load(coverUrl)
+                .into(image_cover)
+
     }
 
     override fun showQuickControl(show: Boolean) {
