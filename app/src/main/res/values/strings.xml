@@ -36,4 +36,13 @@
     <string name="confirm_to_clear_all_history">清空全部收听</string>
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
+
+    <string name="no_countdown">不开启定时器</string>
+    <string name="play_program_over">播放完当前节目</string>
+    <string name="countdown_15min">15分钟</string>
+    <string name="countdown_30min">30分钟</string>
+    <string name="countdown_60min">60分钟</string>
+    <string name="countdown_90min">90分钟</string>
+    <string name="diy">自定义</string>
+
 </resources>

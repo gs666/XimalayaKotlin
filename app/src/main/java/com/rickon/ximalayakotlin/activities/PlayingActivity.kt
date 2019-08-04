@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.R
+import com.rickon.ximalayakotlin.fragment.SimpleMoreFragment
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.model.live.schedule.Schedule
@@ -115,6 +116,8 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
 
     private fun initListener() {
         like_btn.setOnClickListener(this)
+        countdown_btn.setOnClickListener (this)
+
         play_pause_btn.setOnClickListener(this)
         close_playing_btn.setOnClickListener(this)
         previous_btn.setOnClickListener(this)
@@ -191,6 +194,11 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
                     isLiked = false
                 }
             }
+            R.id.countdown_btn ->{
+                val moreFragment = SimpleMoreFragment.newInstance()
+                moreFragment.show(supportFragmentManager,"countdown")
+            }
+
             R.id.close_playing_btn -> {
                 finish()
             }

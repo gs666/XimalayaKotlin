@@ -12,7 +12,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.model.HistoryItem
-import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 
 /**
  * @Description:

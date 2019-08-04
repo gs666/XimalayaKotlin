@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Message
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.RankRadioAdapter
 import com.ximalaya.ting.android.opensdk.model.live.radio.RadioList
@@ -35,7 +36,7 @@ class RankListActivity : BaseActivity() {
             super.handleMessage(msg)
             when (msg?.what) {
                 LOAD_RADIO_RANK_SUCCESS -> {
-                    rank_radio_list.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+                    rank_radio_list.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
                     rankRadioAdapter = RankRadioAdapter(applicationContext, mRankRadioList!!)
                     rank_radio_list.adapter = rankRadioAdapter
 
