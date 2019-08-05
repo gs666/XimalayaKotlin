@@ -11,6 +11,7 @@ import com.rickon.ximalayakotlin.adapter.HistoryAdapter
 import com.rickon.ximalayakotlin.model.HistoryItem
 import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
+import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import kotlinx.android.synthetic.main.activity_history.*
@@ -31,29 +32,8 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
 
         initListener()
 
-//        val historyItem = HistoryItem()
-//
-//        historyItem.itemId = "23594540"
-//        historyItem.isAlbum = true
-//        historyItem.itemTitle = "大叔爱上我（免费双播总裁）"
-//        historyItem.itemImagePath = "http://imagev2.xmcdn.com/group58/M0B/B1/07/wKgLc1zcuL7zxcRGAAP7ri3seV4878.jpg!op_type=3&columns=180&rows=180"
-//        historyItem.lastListenTime = Date()
-//        historyItem.trackId = "184071832"
-//        historyItem.trackTitle = "大叔爱上我片花（喜欢我就订阅我）"
-//        historyItem.lastBreakTime = 61
-//        historyItem.save()
-//
-//        historyItem.itemId = "19383749"
-//        historyItem.isAlbum = true
-//        historyItem.itemTitle = "大叔爱上我（免费双播总裁）"
-//        historyItem.itemImagePath = "http://imagev2.xmcdn.com/group58/M0B/B1/07/wKgLc1zcuL7zxcRGAAP7ri3seV4878.jpg!op_type=3&columns=180&rows=180"
-//        historyItem.lastListenTime = Date()
-//        historyItem.trackId = "184071832"
-//        historyItem.trackTitle = "大叔爱上我片花（喜欢我就订阅我）"
-//        historyItem.lastBreakTime = 61
-//        historyItem.save()
-
-        LitePal.findAll(HistoryItem::class.java).forEach {
+        //按照时间排序，先展示最新的
+        LitePal.order("lastListenTime DESC").find(HistoryItem::class.java).forEach {
             historyList.add(it)
             Log.d(TAG, it.toString())
         }
@@ -62,17 +42,28 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
         historyAdapter = HistoryAdapter(applicationContext, historyList)
         history_recycler.adapter = historyAdapter
 
+
         historyAdapter.setOnKotlinItemClickListener(object : HistoryAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
-                val track = Track()
-                track.kind = PlayableModel.KIND_TRACK
-                track.trackTitle = historyList[position].trackTitle
-                track.announcer.nickname = historyList[position].albumAuthor
-                track.coverUrlLarge = historyList[position].itemImagePath
-                track.dataId = historyList[position].trackId.toLong()
-                val tracks: MutableList<Track> = ArrayList()
-                tracks.add(track)
-                XmPlayerManager.getInstance(this@HistoryActivity).playList(tracks, 0)
+                if (historyList[position].isAlbum) {
+                    val track = Track()
+                    track.kind = PlayableModel.KIND_TRACK
+                    track.trackTitle = historyList[position].trackTitle
+                    track.announcer.nickname = historyList[position].albumAuthor
+                    track.coverUrlLarge = historyList[position].itemImagePath
+                    track.dataId = historyList[position].trackId.toLong()
+                    val tracks: MutableList<Track> = ArrayList()
+                    tracks.add(track)
+                    XmPlayerManager.getInstance(this@HistoryActivity).playList(tracks, 0)
+
+                } else {
+                    val tempRadio = Radio()
+                    tempRadio.dataId = historyList[position].itemId.toLong()
+                    tempRadio.kind = PlayableModel.KIND_RADIO
+                    tempRadio.radioName = historyList[position].itemTitle
+                    tempRadio.coverUrlLarge = historyList[position].itemImagePath
+                    XmPlayerManager.getInstance(this@HistoryActivity).playLiveRadioForSDK(tempRadio, -1, -1)
+                }
             }
         })
     }

@@ -2,6 +2,7 @@ package com.rickon.ximalayakotlin.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.activities.PlayingActivity
+import com.rickon.ximalayakotlin.model.HistoryItem
 import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
@@ -23,6 +25,9 @@ import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
+import org.litepal.LitePal
+import org.litepal.extension.find
+import java.util.*
 
 class QuickControlsFragment : BaseFragment() {
 
@@ -116,6 +121,10 @@ class QuickControlsFragment : BaseFragment() {
 
         currentTitle.text = title
         currentSinger.text = singer
+        if (mPlayerManager.isPlaying)
+            playOrPauseBtn.setImageResource(R.drawable.ic_pause)
+        else
+            playOrPauseBtn.setImageResource(R.drawable.ic_play)
         Glide.with(XimalayaKotlin.context!!)
                 .load(coverUrl).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
                 .placeholder(R.drawable.ic_default_image)
@@ -176,6 +185,38 @@ class QuickControlsFragment : BaseFragment() {
         override fun onPlayStart() {
             Log.i(TAG, "onPlayStart")
             playOrPauseBtn.setImageResource(R.drawable.ic_pause)
+
+            if (mPlayerManager.currSound is Schedule) {
+                //添加电台播放记录
+                val schedule: Schedule = mPlayerManager.currSound as Schedule
+                Log.d(TAG, "Schedule查询是否存在此电台信息，${schedule.radioId}")
+                val queryResult = LitePal
+                        .where("itemId = ?", schedule.radioId.toString())
+                        .find<HistoryItem>()
+                Log.d(TAG, "查询当前电台：$queryResult")
+
+                if (queryResult.isEmpty()) {
+                    Log.d(TAG, "添加记录")
+                    val historyItem = HistoryItem()
+
+                    historyItem.itemId = schedule.radioId.toString()
+                    historyItem.isAlbum = false
+                    historyItem.itemTitle = schedule.radioName
+                    historyItem.itemImagePath = schedule.relatedProgram.backPicUrl
+                    historyItem.lastListenTime = System.currentTimeMillis()
+                    historyItem.trackId = ""
+                    historyItem.trackTitle = ""
+                    historyItem.lastBreakTime = 0
+                    historyItem.save()
+                    Log.d(TAG, historyItem.toString())
+                } else {
+                    //更新电台记录
+                    val updateHistoryItem = HistoryItem()
+                    updateHistoryItem.lastListenTime = System.currentTimeMillis()
+                    updateHistoryItem.updateAll("itemId = ?", schedule.radioId.toString())
+                }
+
+            }
         }
 
         //播放进度回调

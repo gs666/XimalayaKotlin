@@ -39,12 +39,10 @@
         android:id="@+id/history_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_container"
         android:layout_below="@id/recent_history_toolbar"
         android:layout_marginLeft="60px"
-        android:layout_marginRight="60px">
-
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginRight="60px" />
 
     <FrameLayout
         android:id="@+id/bottom_container"

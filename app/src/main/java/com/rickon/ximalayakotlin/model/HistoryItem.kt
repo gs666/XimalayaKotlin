@@ -29,7 +29,7 @@ class HistoryItem : LitePalSupport() {
     var itemImagePath = ""
 
     //最后收听时间
-    var lastListenTime = Date()
+    var lastListenTime:Long = 0
 
     //声音ID
     var trackId = ""
