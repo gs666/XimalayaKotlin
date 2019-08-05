@@ -27,6 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
             android:layout_toLeftOf="@id/id_play_or_pause"
+            android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/id_play_bar_image"
             android:orientation="vertical">
 
@@ -39,7 +40,8 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="三体"
-                android:textSize="17dp" />
+                android:textSize="17dp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/id_play_bar_singer"
@@ -50,7 +52,8 @@
                 android:maxLength="20"
                 android:maxLines="1"
                 android:text="刘慈欣"
-                android:textSize="10dp" />
+                android:textSize="10dp"
+                android:textColor="@color/grey"/>
 
         </LinearLayout>
 
