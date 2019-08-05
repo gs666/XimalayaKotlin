@@ -126,6 +126,8 @@ class SimpleMoreFragment : DialogFragment() {
                     }
                     6 -> {
                         //自定义
+                        Toast.makeText(mContext,"暂未开发此功能",Toast.LENGTH_SHORT).show()
+                        dismiss()
                     }
                     7 -> {
                         //取消计划
