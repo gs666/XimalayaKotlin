@@ -6,6 +6,11 @@
 - 本地播放历史
 
 ## Screenshots
+![首页](https://user-images.githubusercontent.com/16437749/62532662-84ca9a00-b877-11e9-9097-8e15a6092784.png)
+![排行榜](https://user-images.githubusercontent.com/16437749/62532628-68c6f880-b877-11e9-986c-2e47fe0be377.png)
+![播放页面](https://user-images.githubusercontent.com/16437749/62532656-81cfa980-b877-11e9-8b35-36aea023ac86.png)
+![最近收听](https://user-images.githubusercontent.com/16437749/62532673-8b591180-b877-11e9-9862-dad2e87b0f83.png)
+![专辑](https://user-images.githubusercontent.com/16437749/62532677-8dbb6b80-b877-11e9-9f26-2732ce2e2476.png)
 
 ## Thanks to the open source project
 
