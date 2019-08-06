@@ -10,14 +10,16 @@ import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.HistoryAdapter
 import com.rickon.ximalayakotlin.model.HistoryItem
 import com.rickon.ximalayakotlin.util.GlobalUtil
+import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
+import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
+import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
+import com.ximalaya.ting.android.opensdk.model.track.LastPlayTrackList
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import kotlinx.android.synthetic.main.activity_history.*
 import org.litepal.LitePal
 import kotlin.collections.ArrayList
-
-
 
 
 class HistoryActivity : BaseActivity(), View.OnClickListener {
@@ -47,16 +49,7 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
         historyAdapter.setOnKotlinItemClickListener(object : HistoryAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
                 if (historyList[position].isAlbum) {
-//                    val track = Track()
-//                    track.kind = PlayableModel.KIND_TRACK
-//                    track.trackTitle = historyList[position].trackTitle
-//                    track.announcer.nickname = historyList[position].albumAuthor
-//                    track.coverUrlLarge = historyList[position].itemImagePath
-//                    track.dataId = historyList[position].trackId.toLong()
-//                    val tracks: MutableList<Track> = ArrayList()
-//                    tracks.add(track)
-//                    XmPlayerManager.getInstance(this@HistoryActivity).playList(tracks, 0)
-
+                    loadLastPlayList(historyList[position].itemId, historyList[position].trackId)
                 } else {
                     val tempRadio = Radio()
                     tempRadio.dataId = historyList[position].itemId.toLong()
@@ -80,6 +73,32 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
 
     private fun initListener() {
         clear_all_btn.setOnClickListener(this)
+    }
+
+    private fun loadLastPlayList(albumId: String, trackId: String) {
+        val map = HashMap<String, String>()
+        map[DTransferConstants.ALBUM_ID] = albumId
+        map[DTransferConstants.TRACK_ID] = trackId
+        map[DTransferConstants.PAGE_SIZE] = 40.toString()
+
+        CommonRequest.getLastPlayTracks(map, object : IDataCallBack<LastPlayTrackList> {
+
+            override fun onSuccess(p0: LastPlayTrackList?) {
+                var startIndex = 0
+                for (it in p0?.tracks!!) {
+                    if (it.dataId.toString() == trackId) {
+                        XmPlayerManager.getInstance(this@HistoryActivity).playList(p0.tracks, startIndex)
+                        break
+                    }
+                    startIndex++
+                }
+
+            }
+
+            override fun onError(p0: Int, p1: String?) {
+
+            }
+        })
     }
 
     override fun onClick(v: View?) {
