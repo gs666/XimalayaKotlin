@@ -12,17 +12,10 @@ import com.rickon.ximalayakotlin.model.HistoryItem
 import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
-import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import kotlinx.android.synthetic.main.activity_history.*
 import org.litepal.LitePal
 import kotlin.collections.ArrayList
-import com.ximalaya.ting.android.opensdk.model.track.LastPlayTrackList
-import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
-import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
-import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
-import javax.swing.UIManager.put
-import android.R
 
 
 
