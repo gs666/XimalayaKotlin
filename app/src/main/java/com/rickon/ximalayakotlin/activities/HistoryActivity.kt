@@ -17,6 +17,14 @@ import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import kotlinx.android.synthetic.main.activity_history.*
 import org.litepal.LitePal
 import kotlin.collections.ArrayList
+import com.ximalaya.ting.android.opensdk.model.track.LastPlayTrackList
+import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
+import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
+import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
+import javax.swing.UIManager.put
+import android.R
+
+
 
 
 class HistoryActivity : BaseActivity(), View.OnClickListener {
@@ -46,15 +54,15 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
         historyAdapter.setOnKotlinItemClickListener(object : HistoryAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
                 if (historyList[position].isAlbum) {
-                    val track = Track()
-                    track.kind = PlayableModel.KIND_TRACK
-                    track.trackTitle = historyList[position].trackTitle
-                    track.announcer.nickname = historyList[position].albumAuthor
-                    track.coverUrlLarge = historyList[position].itemImagePath
-                    track.dataId = historyList[position].trackId.toLong()
-                    val tracks: MutableList<Track> = ArrayList()
-                    tracks.add(track)
-                    XmPlayerManager.getInstance(this@HistoryActivity).playList(tracks, 0)
+//                    val track = Track()
+//                    track.kind = PlayableModel.KIND_TRACK
+//                    track.trackTitle = historyList[position].trackTitle
+//                    track.announcer.nickname = historyList[position].albumAuthor
+//                    track.coverUrlLarge = historyList[position].itemImagePath
+//                    track.dataId = historyList[position].trackId.toLong()
+//                    val tracks: MutableList<Track> = ArrayList()
+//                    tracks.add(track)
+//                    XmPlayerManager.getInstance(this@HistoryActivity).playList(tracks, 0)
 
                 } else {
                     val tempRadio = Radio()

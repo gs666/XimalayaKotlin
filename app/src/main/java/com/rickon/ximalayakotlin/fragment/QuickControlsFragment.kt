@@ -19,6 +19,8 @@ import com.rickon.ximalayakotlin.model.HistoryItem
 import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
+import com.ximalaya.ting.android.opensdk.model.album.Album
+import com.ximalaya.ting.android.opensdk.model.album.SubordinatedAlbum
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.model.live.schedule.Schedule
 import com.ximalaya.ting.android.opensdk.model.track.Track
@@ -121,6 +123,7 @@ class QuickControlsFragment : BaseFragment() {
 
         currentTitle.text = title
         currentSinger.text = singer
+        //初始化播放/暂停图标状态
         if (mPlayerManager.isPlaying)
             playOrPauseBtn.setImageResource(R.drawable.ic_pause)
         else
@@ -190,8 +193,7 @@ class QuickControlsFragment : BaseFragment() {
                 //添加电台播放记录
                 val schedule: Schedule = mPlayerManager.currSound as Schedule
                 Log.d(TAG, "Schedule查询是否存在此电台信息，${schedule.radioId}")
-                val queryResult = LitePal
-                        .where("itemId = ?", schedule.radioId.toString())
+                val queryResult = LitePal.where("itemId = ?", schedule.radioId.toString())
                         .find<HistoryItem>()
                 Log.d(TAG, "查询当前电台：$queryResult")
 
@@ -214,6 +216,37 @@ class QuickControlsFragment : BaseFragment() {
                     val updateHistoryItem = HistoryItem()
                     updateHistoryItem.lastListenTime = System.currentTimeMillis()
                     updateHistoryItem.updateAll("itemId = ?", schedule.radioId.toString())
+                }
+            } else if (mPlayerManager.currSound is Track) {
+                //添加新记录
+                val tempTrack = mPlayerManager.currSound as Track
+                val queryAlbumResult = LitePal.where("itemId = ?", tempTrack.album?.albumId.toString())
+                        .find<HistoryItem>()
+                Log.d(TAG, queryAlbumResult.toString())
+                if (queryAlbumResult.isEmpty()) {
+                    val albumHistoryItem = HistoryItem()
+                    val tempAlbum: SubordinatedAlbum? = tempTrack.album
+                    albumHistoryItem.itemId = tempAlbum?.albumId.toString()
+                    albumHistoryItem.isAlbum = true
+                    if(tempAlbum == null){
+                        albumHistoryItem.itemTitle = ""
+                    } else {
+                        albumHistoryItem.itemTitle = tempAlbum.albumTitle
+                    }
+                    albumHistoryItem.albumAuthor = tempTrack.announcer.nickname
+                    albumHistoryItem.itemImagePath = tempTrack.coverUrlLarge
+                    albumHistoryItem.lastListenTime = System.currentTimeMillis()
+                    albumHistoryItem.trackId = tempTrack.dataId.toString()
+                    albumHistoryItem.trackTitle = tempTrack.trackTitle
+                    albumHistoryItem.lastBreakTime = 0
+                    albumHistoryItem.save()
+                } else {
+                    //更新专辑记录
+                    val updateAlbumItem = HistoryItem()
+                    updateAlbumItem.lastListenTime = System.currentTimeMillis()
+                    updateAlbumItem.trackId = tempTrack.dataId.toString()
+                    updateAlbumItem.trackTitle = tempTrack.trackTitle
+                    updateAlbumItem.updateAll("itemId = ?", tempTrack.album?.albumId.toString())
                 }
 
             }

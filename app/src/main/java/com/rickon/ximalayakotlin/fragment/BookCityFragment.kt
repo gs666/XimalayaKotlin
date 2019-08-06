@@ -91,7 +91,7 @@ class BookCityFragment : BaseFragment() {
         map[DTransferConstants.CATEGORY_ID] = "3"
         //有声书
         map[DTransferConstants.CALC_DIMENSION] = "1"
-        map[DTransferConstants.PAGE_SIZE] = "3"
+        map[DTransferConstants.PAGE_SIZE] = "10"
 
         //最火
         CommonRequest.getAlbumList(map, object : IDataCallBack<AlbumList> {

@@ -36,6 +36,7 @@
             android:id="@+id/id_current_track"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:ellipsize="marquee"
             android:focusable="true"
             android:focusableInTouchMode="true"

@@ -160,6 +160,11 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
 
         playing_title.text = title
         playing_author.text = singer
+        //初始化播放/暂停图标状态
+        if (mPlayerServiceManager.isPlaying)
+            play_pause_btn.setImageResource(R.drawable.ic_pause)
+        else
+            play_pause_btn.setImageResource(R.drawable.ic_play)
 
         playing_progress_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
