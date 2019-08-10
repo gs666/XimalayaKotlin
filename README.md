@@ -6,9 +6,9 @@
 - 本地播放历史
 
 ## Screenshots
-<a href="screenshots/00.jpg"><img src="screenshots/00.jpg" width="30%"/></a> <a href="screenshots/01.jpg"><img src="screenshots/01.jpg" width="30%"/></a> <a href="screenshots/02.jpg"><img src="screenshots/02.jpg" width="30%"/></a>
+<a href="screenshots/00.png"><img src="screenshots/00.png" width="30%"/></a> <a href="screenshots/01.jpg"><img src="screenshots/01.jpg" width="30%"/></a> <a href="screenshots/02.jpg"><img src="screenshots/02.jpg" width="30%"/></a>
 
-<a href="screenshots/03.jpg"><img src="screenshots/03.jpg" width="30%"/></a> <a href="screenshots/04.jpg"><img src="screenshots/04.jpg" width="30%"/></a> 
+<a href="screenshots/03.jpg"><img src="screenshots/03.jpg" width="30%"/></a> <a href="screenshots/04.jpg"><img src="screenshots/04.jpg" width="30%"/></a> <a href="screenshots/05.jpg"><img src="screenshots/05.jpg" width="30%"/></a>
 ## Thanks to the open source project
 
 * [glide](https://github.com/bumptech/glide)
