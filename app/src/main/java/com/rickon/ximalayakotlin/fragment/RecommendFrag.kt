@@ -1,17 +1,30 @@
 package com.rickon.ximalayakotlin.fragment
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.Nullable
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.rickon.ximalayakotlin.R
-import com.rickon.ximalayakotlin.activities.PlayingActivity
+import com.rickon.ximalayakotlin.activities.AlbumActivity
 import com.rickon.ximalayakotlin.activities.RadioActivity
 import com.rickon.ximalayakotlin.activities.RankListActivity
+import com.rickon.ximalayakotlin.adapter.HotBookAdapter
+import com.rickon.ximalayakotlin.util.XimalayaKotlin
+import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
+import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
+import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
+import com.ximalaya.ting.android.opensdk.model.album.Album
+import com.ximalaya.ting.android.opensdk.model.album.GussLikeAlbumList
 import kotlinx.android.synthetic.main.recommend_frag_layout.*
+import java.util.ArrayList
+import java.util.HashMap
 
 /**
  * @Description:
@@ -20,6 +33,10 @@ import kotlinx.android.synthetic.main.recommend_frag_layout.*
  * @Email:       gaoshuo521@foxmail.com
  */
 class RecommendFrag : BaseFragment(), View.OnClickListener {
+
+    private var mAlbumList: List<Album> = ArrayList()
+    private lateinit var hotBookAdapter: HotBookAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.recommend_frag_layout, container, false)
     }
@@ -27,6 +44,8 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initListener()
+
+        loadGuessLikeAlbum()
     }
 
     private fun initListener() {
@@ -36,21 +55,64 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
         lab_btn.setOnClickListener(this)
     }
 
+    private fun loadGuessLikeAlbum() {
+        val maps = HashMap<String, String>()
+        maps[DTransferConstants.LIKE_COUNT] = PAGE_SIZE
+
+        CommonRequest.getGuessLikeAlbum(maps, object : IDataCallBack<GussLikeAlbumList> {
+            override fun onSuccess(@Nullable gussLikeAlbumList: GussLikeAlbumList?) {
+                if (gussLikeAlbumList != null) {
+                    mAlbumList = gussLikeAlbumList.albumList
+
+                    guess_like_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
+                    //下面代码解决滑动无惯性的问题
+                    guess_like_recycler.isNestedScrollingEnabled = false
+                    hotBookAdapter = HotBookAdapter(XimalayaKotlin.context!!, mAlbumList)
+                    guess_like_recycler.adapter = hotBookAdapter
+
+                    guess_like_recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
+                        override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+                            super.getItemOffsets(outRect, view, parent, state)
+                            outRect.top = 20
+                        }
+                    })
+
+                    hotBookAdapter.setOnKotlinItemClickListener(object : HotBookAdapter.IKotlinItemClickListener {
+                        override fun onItemClickListener(position: Int) {
+                            Log.d(TAG, position.toString())
+
+                            val intent = Intent(context, AlbumActivity::class.java)
+                            //传递一个 album
+                            intent.putExtra("album", mAlbumList[position])
+                            context?.startActivity(intent)
+
+                            hotBookAdapter.notifyDataSetChanged()
+                        }
+                    })
+                }
+            }
+
+            override fun onError(i: Int, s: String) {
+
+            }
+        })
+    }
+
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.walkman_btn -> {
 
             }
             R.id.radio_btn -> {
-                val intent = Intent(context,RadioActivity::class.java)
+                val intent = Intent(context, RadioActivity::class.java)
                 context?.startActivity(intent)
             }
             R.id.rank_list_btn -> {
-                val intent = Intent(context,RankListActivity::class.java)
+                val intent = Intent(context, RankListActivity::class.java)
                 context?.startActivity(intent)
             }
             R.id.lab_btn -> {
-                Toast.makeText(context,"暂未开发此功能",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "暂未开发此功能", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -63,6 +125,7 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
     companion object {
 
         private const val TAG = "RecommendFrag"
+        private const val PAGE_SIZE = "50"
 
         fun newInstance(): RecommendFrag {
             return RecommendFrag()

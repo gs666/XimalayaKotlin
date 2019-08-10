@@ -1,115 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:scrollbars="none">
 
-    <LinearLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <LinearLayout
-            android:id="@+id/walkman_btn"
-            android:layout_width="wrap_content"
+            android:id="@+id/top_zone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="10dp">
 
-            <ImageView
-                android:layout_width="135px"
-                android:layout_height="135px"
-                android:layout_gravity="center"
-                android:background="@drawable/round_four_bg"
-                android:padding="30px"
-                android:src="@drawable/ic_heart" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/walkman_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="随心听" />
-        </LinearLayout>
+                android:orientation="vertical">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+                <ImageView
+                    android:layout_width="135px"
+                    android:layout_height="135px"
+                    android:layout_gravity="center"
+                    android:background="@drawable/round_four_bg"
+                    android:padding="30px"
+                    android:src="@drawable/ic_heart" />
 
-        <LinearLayout
-            android:id="@+id/radio_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:text="随心听" />
+            </LinearLayout>
 
-            <ImageView
-                android:layout_width="135px"
-                android:layout_height="135px"
-                android:background="@drawable/round_four_bg"
-                android:padding="30px"
-                android:src="@drawable/ic_radio" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/radio_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="广播" />
-        </LinearLayout>
+                android:orientation="vertical">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+                <ImageView
+                    android:layout_width="135px"
+                    android:layout_height="135px"
+                    android:background="@drawable/round_four_bg"
+                    android:padding="30px"
+                    android:src="@drawable/ic_radio" />
 
-        <LinearLayout
-            android:id="@+id/rank_list_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:text="广播" />
+            </LinearLayout>
 
-            <ImageView
-                android:layout_width="135px"
-                android:layout_height="135px"
-                android:background="@drawable/round_four_bg"
-                android:padding="30px"
-                android:src="@drawable/ic_ranklist" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/rank_list_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="排行榜" />
-        </LinearLayout>
+                android:orientation="vertical">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+                <ImageView
+                    android:layout_width="135px"
+                    android:layout_height="135px"
+                    android:background="@drawable/round_four_bg"
+                    android:padding="30px"
+                    android:src="@drawable/ic_ranklist" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:text="排行榜" />
+            </LinearLayout>
 
-            <ImageView
-                android:id="@+id/lab_btn"
-                android:layout_width="135px"
-                android:layout_height="135px"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/round_four_bg"
-                android:padding="30px"
-                android:src="@drawable/ic_headphone" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="3D实验室" />
-        </LinearLayout>
-    </LinearLayout>
+                android:orientation="vertical">
 
-</RelativeLayout>
+                <ImageView
+                    android:id="@+id/lab_btn"
+                    android:layout_width="135px"
+                    android:layout_height="135px"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/round_four_bg"
+                    android:padding="30px"
+                    android:src="@drawable/ic_headphone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:text="3D实验室" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/guess_like_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/top_zone"
+            android:layout_marginTop="10dp" />
+    </RelativeLayout>
+
+</ScrollView>
