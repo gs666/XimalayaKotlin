@@ -16,4 +16,6 @@
     <color name="half_grey">#88808080</color>
 
     <color name="logo_medium_background">#ffdbb76c</color>
+    <color name="white_text">#fafafa</color>
+    <color name="test_color">#696969</color>
 </resources>

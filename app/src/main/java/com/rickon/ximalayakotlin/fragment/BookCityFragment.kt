@@ -39,6 +39,8 @@ class BookCityFragment : BaseFragment() {
             when (msg?.what) {
                 LOAD_SUCCESS -> {
                     hot_books_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
+                    //下面代码解决滑动无惯性的问题
+                    hot_books_recycler.isNestedScrollingEnabled = false
                     hotBookAdapter = HotBookAdapter(XimalayaKotlin.context!!, hotBookAlbumList!!)
                     hot_books_recycler.adapter = hotBookAdapter
 

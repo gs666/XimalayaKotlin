@@ -97,11 +97,15 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private fun initListener() {
         history_btn.setOnClickListener(this)
-
+        search_btn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
+            R.id.search_btn -> {
+                val historyIntent = Intent(this, SearchActivity::class.java)
+                this.startActivity(historyIntent)
+            }
             R.id.history_btn -> {
                 val intent = Intent(this, HistoryActivity::class.java)
                 this.startActivity(intent)

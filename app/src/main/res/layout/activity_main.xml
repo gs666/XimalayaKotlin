@@ -13,7 +13,7 @@
         android:background="#EDEDED">
 
         <ImageView
-            android:id="@+id/serach_btn"
+            android:id="@+id/search_btn"
             android:layout_width="180px"
             android:layout_height="132px"
             android:layout_alignParentLeft="true"

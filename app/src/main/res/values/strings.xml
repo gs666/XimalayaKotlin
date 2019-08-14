@@ -37,6 +37,10 @@
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
 
+    <string name="search">搜索</string>
+    <string name="popular_search">热门搜索:</string>
+    <string name="search_hint">搜索节目/音乐/主播/广播</string>
+
     <string name="no_countdown">不开启定时器</string>
     <string name="play_program_over">播放完当前节目</string>
     <string name="countdown_15min">15分钟</string>
