@@ -10,22 +10,25 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="26dp"
-        android:text="热门搜索"
-        android:textSize="14sp" />
+        android:text="@string/popular_search"
+        android:textSize="16sp" />
 
     <FrameLayout
         android:id="@+id/hot_words"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="56dp">
 
         <TextView
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/hot_words_select"
-            android:padding="7dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -35,7 +38,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/hot_words_select"
-            android:padding="7dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -45,7 +51,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/hot_words_select"
-            android:padding="7dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -55,7 +64,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/hot_words_select"
-            android:padding="7dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -65,7 +77,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/hot_words_select"
-            android:padding="7dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -75,7 +90,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/hot_words_select"
-            android:padding="7dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -85,7 +103,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/hot_words_select"
-            android:padding="7dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -95,7 +116,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/hot_words_select"
-            android:padding="7dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -105,7 +129,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/hot_words_select"
-            android:padding="7dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -115,7 +142,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/hot_words_select"
-            android:padding="7dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -130,11 +160,11 @@
         android:background="#E0E0E0" />
 
     <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/recyclerview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@+id/layout_line"-->
-        <!--android:layout_marginTop="16dp" />-->
+    <!--android:id="@+id/recyclerview"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_below="@+id/layout_line"-->
+    <!--android:layout_marginTop="16dp" />-->
 
 
 </RelativeLayout>

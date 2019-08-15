@@ -18,4 +18,5 @@
     <color name="logo_medium_background">#ffdbb76c</color>
     <color name="white_text">#fafafa</color>
     <color name="test_color">#696969</color>
+    <color name="hot_word_bg">#F3EBDD</color>
 </resources>
