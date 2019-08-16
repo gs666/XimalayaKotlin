@@ -17,7 +17,7 @@
             android:layout_width="180px"
             android:layout_height="132px"
             android:layout_alignParentLeft="true"
-            android:padding="35px"
+            android:padding="32px"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_search" />
 

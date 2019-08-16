@@ -126,7 +126,7 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
                             .submit()
 
                     tracks_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
-                    trackAdapter = TrackAdapter(applicationContext, p0.tracks)
+                    trackAdapter = TrackAdapter(applicationContext, p0.tracks,false)
                     tracks_recycler.adapter = trackAdapter
 
                     trackAdapter.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {

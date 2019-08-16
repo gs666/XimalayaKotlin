@@ -13,24 +13,31 @@
         android:background="#FFFFFF"
         app:contentInsetStart="0dp"
         app:navigationIcon="@drawable/ic_return">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/id_search_view"
-            android:layout_width="248dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:gravity="start"
-            style="@style/MySearchViewStyle"/>
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/id_search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/search_btn"
+                android:layout_gravity="start"
+                android:gravity="start"
+                style="@style/MySearchViewStyle"/>
 
-        <TextView
-            android:id="@+id/search_btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:gravity="center"
-            android:text="@string/search"
-            android:textColor="@color/grey"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/search_btn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:text="@string/search"
+                android:textColor="@color/grey"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+
 
     </androidx.appcompat.widget.Toolbar>
 

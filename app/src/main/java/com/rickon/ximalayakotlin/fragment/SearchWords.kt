@@ -1,7 +1,10 @@
 package com.rickon.ximalayakotlin.fragment
 
 /**
- * Created by wm on 2016/5/21.
+ * @Description:
+ * @Author:      高烁
+ * @CreateDate:  2019-06-10 20:06
+ * @Email:       gaoshuo521@foxmail.com
  */
 interface SearchWords {
     fun onSearch(t: String)

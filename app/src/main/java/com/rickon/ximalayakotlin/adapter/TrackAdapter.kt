@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.ximalaya.ting.android.opensdk.model.track.Track
@@ -21,11 +24,13 @@ import com.ximalaya.ting.android.opensdk.model.track.Track
 class TrackAdapter : RecyclerView.Adapter<TrackAdapter.ViewHolder> {
     private var mContext: Context
     private var trackList: List<Track>
+    private var showImageCover = false
     private lateinit var itemClickListener: IKotlinItemClickListener
 
-    constructor(mContext: Context, list: List<Track>) {
+    constructor(mContext: Context, list: List<Track>, showImageCover: Boolean) {
         this.mContext = mContext
         this.trackList = list
+        this.showImageCover = showImageCover
     }
 
     class ViewHolder(var trackItemView: View) : RecyclerView.ViewHolder(trackItemView) {
@@ -44,9 +49,12 @@ class TrackAdapter : RecyclerView.Adapter<TrackAdapter.ViewHolder> {
         holder.textViewTitle.text = trackList[position].trackTitle
         holder.textViewPlayCount.text = GlobalUtil.formatNum(trackList[position].playCount.toString(), false)
         holder.textViewDuration.text = DateUtils.formatElapsedTime(trackList[position].duration.toLong())
-//        Glide.with(mContext)
-//                .load(trackList[position].coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-//                .into(holder.imageCover)
+        if (showImageCover) {
+            Glide.with(mContext)
+                    .load(trackList[position].coverUrlLarge)
+                    .apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                    .into(holder.imageCover)
+        }
 
         holder.trackItemView.setOnClickListener {
             itemClickListener.onItemClickListener(position)

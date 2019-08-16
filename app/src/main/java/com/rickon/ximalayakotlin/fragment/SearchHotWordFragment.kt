@@ -1,7 +1,6 @@
 package com.rickon.ximalayakotlin.fragment
 
 import android.content.Context
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.RecyclerView
 import com.rickon.ximalayakotlin.R
-import com.rickon.ximalayakotlin.util.NetworkUtil
 import com.rickon.ximalayakotlin.view.WidgetController
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
@@ -21,18 +19,15 @@ import com.ximalaya.ting.android.opensdk.model.word.HotWordList
 import java.util.ArrayList
 
 /**
- * Created by wm on 2016/5/21.
+ * @Description:
+ * @Author:      高烁
+ * @CreateDate:  2019-06-14 15:06
+ * @Email:       gaoshuo521@foxmail.com
  */
 class SearchHotWordFragment : BaseFragment(), View.OnClickListener, SearchWords {
     private var texts = arrayOfNulls<String>(10)
     private var views = ArrayList<TextView>()
     private var searchWords: SearchWords? = null
-    //    private var adapter: RecentSearchAdapter? = null
-    private var recyclerView: RecyclerView? = null
-    private var isFromCache = true
-
-    //    private val searchResults = emptyList()
-//    private val songList = ArrayList<SearchSongInfo>()
     private lateinit var loadView: View
     private lateinit var frameLayout: FrameLayout
 
@@ -42,34 +37,24 @@ class SearchHotWordFragment : BaseFragment(), View.OnClickListener, SearchWords 
         frameLayout = view.findViewById(R.id.id_load_frame)
         loadView = LayoutInflater.from(mContext).inflate(R.layout.loading, frameLayout, false)
         frameLayout.addView(loadView)
-//        loadWords()
 
         loadHotWords()
-
-//        initData()
 
         return view
     }
 
     private fun initData() {
         val view = LayoutInflater.from(mContext).inflate(R.layout.fragment_search_hot_words, frameLayout, false)
-//                recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
-//                recyclerView!!.layoutManager = LinearLayoutManager(mContext)
-//                recyclerView!!.setHasFixedSize(true)
-//                adapter = RecentSearchAdapter(mContext)
-//                adapter!!.setListenter(this@SearchHotWordFragment)
-//                recyclerView!!.setAdapter(adapter)
-
-        val text1 = view.findViewById(R.id.text1) as TextView
-        val text2 = view.findViewById(R.id.text2) as TextView
-        val text3 = view.findViewById(R.id.text3) as TextView
-        val text4 = view.findViewById(R.id.text4) as TextView
-        val text5 = view.findViewById(R.id.text5) as TextView
-        val text6 = view.findViewById(R.id.text6) as TextView
-        val text7 = view.findViewById(R.id.text7) as TextView
-        val text8 = view.findViewById(R.id.text8) as TextView
-        val text9 = view.findViewById(R.id.text9) as TextView
-        val text10 = view.findViewById(R.id.text10) as TextView
+        val text1: TextView = view.findViewById(R.id.text1)
+        val text2: TextView = view.findViewById(R.id.text2)
+        val text3: TextView = view.findViewById(R.id.text3)
+        val text4: TextView = view.findViewById(R.id.text4)
+        val text5: TextView = view.findViewById(R.id.text5)
+        val text6: TextView = view.findViewById(R.id.text6)
+        val text7: TextView = view.findViewById(R.id.text7)
+        val text8: TextView = view.findViewById(R.id.text8)
+        val text9: TextView = view.findViewById(R.id.text9)
+        val text10: TextView = view.findViewById(R.id.text10)
         views.add(text1)
         views.add(text2)
         views.add(text3)
@@ -81,33 +66,32 @@ class SearchHotWordFragment : BaseFragment(), View.OnClickListener, SearchWords 
         views.add(text9)
         views.add(text10)
 
-
         frameLayout.removeAllViews()
         frameLayout.addView(view)
 
         val w = mContext.resources.displayMetrics.widthPixels
-        var xdistance = -1
-        var ydistance = 0
+        var xDistance = -1
+        var yDistance = 0
         val distance = dip2px(mContext, 16f)
         var i = 0
         while (i < 10) {
             views[i].setOnClickListener(this@SearchHotWordFragment)
             views[i].text = texts[i]
-            if (xdistance == -1) {
-                xdistance = 0
-                WidgetController.setLayout(views[i], xdistance, ydistance)
+            if (xDistance == -1) {
+                xDistance = 0
+                WidgetController.setLayout(views[i], xDistance, yDistance)
                 i++
                 continue
             }
-            xdistance += WidgetController.getWidth(views[i - 1]) + distance
-            if (xdistance + WidgetController.getWidth(views[i]) + distance > w) {
-                xdistance = -1
-                ydistance += 120
+            xDistance += WidgetController.getWidth(views[i - 1]) + distance
+            if (xDistance + WidgetController.getWidth(views[i]) + distance > w) {
+                xDistance = -1
+                yDistance += 120
                 i--
                 i++
                 continue
             }
-            WidgetController.setLayout(views[i], xdistance, ydistance)
+            WidgetController.setLayout(views[i], xDistance, yDistance)
             i++
         }
     }
