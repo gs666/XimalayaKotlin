@@ -8,6 +8,7 @@
         android:id="@+id/id_image_cover"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:padding="10dp"
         android:layout_centerVertical="true"
         android:scaleType="center"
         android:src="@drawable/ic_plus" />
