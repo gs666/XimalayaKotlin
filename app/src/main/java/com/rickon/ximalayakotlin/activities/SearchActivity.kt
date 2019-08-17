@@ -49,6 +49,14 @@ class SearchActivity : BaseActivity(), SearchView.OnQueryTextListener, View.OnTo
 
         mImm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
+        search_btn.setOnClickListener {
+            if(id_search_view.query.isNotEmpty()){
+                Log.d(TAG,"开始搜索")
+                val ftt = supportFragmentManager.beginTransaction()
+                val fragment = SearchTabPagerFragment.newInstance(0, id_search_view.query.toString())
+                ftt.replace(R.id.search_frame, fragment).commitAllowingStateLoss()
+            }
+        }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
