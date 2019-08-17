@@ -15,7 +15,7 @@ import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.activities.AlbumActivity
 import com.rickon.ximalayakotlin.activities.RadioActivity
 import com.rickon.ximalayakotlin.activities.RankListActivity
-import com.rickon.ximalayakotlin.adapter.HotBookAdapter
+import com.rickon.ximalayakotlin.adapter.AlbumAdapter
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
@@ -35,7 +35,7 @@ import java.util.HashMap
 class RecommendFrag : BaseFragment(), View.OnClickListener {
 
     private var mAlbumList: List<Album> = ArrayList()
-    private lateinit var hotBookAdapter: HotBookAdapter
+    private lateinit var albumAdapter: AlbumAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.recommend_frag_layout, container, false)
@@ -67,8 +67,8 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
                     guess_like_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
                     //下面代码解决滑动无惯性的问题
                     guess_like_recycler.isNestedScrollingEnabled = false
-                    hotBookAdapter = HotBookAdapter(XimalayaKotlin.context!!, mAlbumList)
-                    guess_like_recycler.adapter = hotBookAdapter
+                    albumAdapter = AlbumAdapter(XimalayaKotlin.context!!, mAlbumList)
+                    guess_like_recycler.adapter = albumAdapter
 
                     guess_like_recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
                         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
@@ -77,7 +77,7 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
                         }
                     })
 
-                    hotBookAdapter.setOnKotlinItemClickListener(object : HotBookAdapter.IKotlinItemClickListener {
+                    albumAdapter.setOnKotlinItemClickListener(object : AlbumAdapter.IKotlinItemClickListener {
                         override fun onItemClickListener(position: Int) {
                             Log.d(TAG, position.toString())
 
@@ -86,7 +86,7 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
                             intent.putExtra("album", mAlbumList[position])
                             context?.startActivity(intent)
 
-                            hotBookAdapter.notifyDataSetChanged()
+                            albumAdapter.notifyDataSetChanged()
                         }
                     })
                 }

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.activities.AlbumActivity
-import com.rickon.ximalayakotlin.adapter.HotBookAdapter
+import com.rickon.ximalayakotlin.adapter.AlbumAdapter
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_book_city.*
 
 class BookCityFragment : BaseFragment() {
 
-    private lateinit var hotBookAdapter: HotBookAdapter
+    private lateinit var albumAdapter: AlbumAdapter
     private var hotBookAlbumList: List<Album>? = null
 
 
@@ -41,8 +41,8 @@ class BookCityFragment : BaseFragment() {
                     hot_books_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
                     //下面代码解决滑动无惯性的问题
                     hot_books_recycler.isNestedScrollingEnabled = false
-                    hotBookAdapter = HotBookAdapter(XimalayaKotlin.context!!, hotBookAlbumList!!)
-                    hot_books_recycler.adapter = hotBookAdapter
+                    albumAdapter = AlbumAdapter(XimalayaKotlin.context!!, hotBookAlbumList!!)
+                    hot_books_recycler.adapter = albumAdapter
 
                     hot_books_recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
                         override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
@@ -51,7 +51,7 @@ class BookCityFragment : BaseFragment() {
                         }
                     })
 
-                    hotBookAdapter.setOnKotlinItemClickListener(object : HotBookAdapter.IKotlinItemClickListener {
+                    albumAdapter.setOnKotlinItemClickListener(object : AlbumAdapter.IKotlinItemClickListener {
                         override fun onItemClickListener(position: Int) {
                             Log.d(TAG, position.toString())
 
@@ -60,7 +60,7 @@ class BookCityFragment : BaseFragment() {
                             intent.putExtra("album", hotBookAlbumList!![position])
                             context?.startActivity(intent)
 
-                            hotBookAdapter.notifyDataSetChanged()
+                            albumAdapter.notifyDataSetChanged()
                         }
                     })
                 }

@@ -9,12 +9,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rickon.ximalayakotlin.R
-import com.rickon.ximalayakotlin.activities.PlayingActivity
-import com.rickon.ximalayakotlin.adapter.RankRadioAdapter
-import com.rickon.ximalayakotlin.adapter.TrackAdapter
+import com.rickon.ximalayakotlin.activities.AlbumActivity
+import com.rickon.ximalayakotlin.adapter.AlbumAdapter
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
+import com.ximalaya.ting.android.opensdk.model.album.Album
 import com.ximalaya.ting.android.opensdk.model.track.Track
-import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import java.util.ArrayList
 
 /**
@@ -23,33 +22,32 @@ import java.util.ArrayList
  * @CreateDate:  2019-06-10 20:06
  * @Email:       gaoshuo521@foxmail.com
  */
-class SearchTrackFragment : BaseFragment() {
+class SearchAlbumFragment : BaseFragment() {
 
-    private var mAdapter: TrackAdapter? = null
-    private lateinit var tracksList: ArrayList<Track>
+    private var mAdapter: AlbumAdapter? = null
+    private lateinit var albumsList: ArrayList<Album>
     private var recyclerView: RecyclerView? = null
     private var layoutManager: LinearLayoutManager? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.recylerview, container, false)
         if (arguments != null) {
-            tracksList = (arguments as Bundle).getParcelableArrayList("searchMusic")
+            albumsList = (arguments as Bundle).getParcelableArrayList("searchAlbum")
         }
 
         recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
-
         layoutManager = LinearLayoutManager(mContext)
         recyclerView!!.layoutManager = layoutManager
-        mAdapter = TrackAdapter(XimalayaKotlin.context!!, tracksList, true)
-        mAdapter!!.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {
+        mAdapter = AlbumAdapter(XimalayaKotlin.context!!, albumsList)
+        mAdapter!!.setOnKotlinItemClickListener(object : AlbumAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
-                XmPlayerManager.getInstance(mContext).playList(tracksList, position)
-                val intent = Intent(context, PlayingActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                val intent = Intent(context, AlbumActivity::class.java)
+                //传递一个 album
+                intent.putExtra("album", albumsList[position])
                 context?.startActivity(intent)
-                //todo:跳转之后将播放列表改为当前声音所在专辑列表
             }
         })
+
         recyclerView!!.adapter = mAdapter
         recyclerView!!.setHasFixedSize(true)
         recyclerView!!.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
@@ -58,10 +56,10 @@ class SearchTrackFragment : BaseFragment() {
     }
 
     companion object {
-        fun newInstance(list: ArrayList<Track>): SearchTrackFragment {
-            val fragment = SearchTrackFragment()
+        fun newInstance(list: ArrayList<Album>): SearchAlbumFragment {
+            val fragment = SearchAlbumFragment()
             val bundle = Bundle()
-            bundle.putParcelableArrayList("searchMusic", list)
+            bundle.putParcelableArrayList("searchAlbum", list)
             fragment.arguments = bundle
             return fragment
         }

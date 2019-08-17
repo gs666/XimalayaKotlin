@@ -1,7 +1,6 @@
 package com.rickon.ximalayakotlin.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,7 @@ import com.ximalaya.ting.android.opensdk.model.album.Album
  * @CreateDate:  2019-07-24 17:24
  * @Email:       gaoshuo521@foxmail.com
  */
-class HotBookAdapter : RecyclerView.Adapter<HotBookAdapter.ViewHolder> {
+class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
     private var mContext: Context
     private var albumList: List<Album>
     private lateinit var itemClickListener: IKotlinItemClickListener

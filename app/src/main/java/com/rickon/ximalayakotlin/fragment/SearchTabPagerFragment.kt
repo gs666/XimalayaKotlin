@@ -87,7 +87,9 @@ class SearchTabPagerFragment : BaseFragment() {
                     viewPager = contentView.findViewById<View>(R.id.viewpager) as ViewPager
 
                     val adapter = Adapter(childFragmentManager)
-                    adapter.addFragment(SearchTrackFragment.newInstance(trackResults), "单曲")
+                    adapter.addFragment(SearchTrackFragment.newInstance(trackResults), getString(R.string.track))
+                    adapter.addFragment(SearchAlbumFragment.newInstance(albumResults), getString(R.string.album))
+                    adapter.addFragment(SearchRadioFragment.newInstance(radioResults), getString(R.string.fm))
                     viewPager.adapter = adapter
                     viewPager.offscreenPageLimit = 3
 
