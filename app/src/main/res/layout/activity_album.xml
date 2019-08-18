@@ -17,6 +17,7 @@
             android:layout_height="830px"
             android:scaleType="centerCrop"
             android:src="@color/half_grey" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="830px"
@@ -167,17 +168,32 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_below="@id/play_all_zone"
-        android:layout_marginLeft="60px"
-        android:layout_marginRight="60px"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@color/split_line" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/tracks_recycler"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/play_all_zone"
-        android:layout_above="@id/bottom_container"
-        android:paddingRight="60px" />
+        android:layout_above="@id/bottom_container">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tracks_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/try_to_get_info"
+            android:layout_marginRight="20dp" />
+
+        <TextView
+            android:id="@+id/try_to_get_info"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/trying_to_get"
+            android:textSize="12sp"/>
+
+    </RelativeLayout>
 
     <FrameLayout
         android:id="@+id/bottom_container"

@@ -5,7 +5,10 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.*
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -36,14 +39,17 @@ import kotlinx.android.synthetic.main.activity_album.*
  * @CreateDate:  2019-06-14 15:06
  * @Email:       gaoshuo521@foxmail.com
  */
-class AlbumActivity : BaseActivity(), View.OnClickListener {
+class AlbumActivity : BaseActivity(), OnClickListener {
 
     private var currentAlbumId = ""
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var album: Album
     private var isLoadSuccess = false
 
-    private var tracksList: List<Track>? = null
+    private var tracksList: MutableList<Track>? = null
+
+    private var addTracksList: MutableList<Track>? = null
+    private var currentPage = 1
 
     private lateinit var mPlayerServiceManager: XmPlayerManager
     private val mPlayerStatusListener = object : IXmPlayerStatusListener {
@@ -98,6 +104,7 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
         map[DTransferConstants.ALBUM_ID] = currentAlbumId
         //有声书
         map[DTransferConstants.SORT] = "asc"
+        map[DTransferConstants.PAGE_SIZE] = PAGE_SIZE
 
         //最火
         CommonRequest.getTracks(map, object : IDataCallBack<TrackList> {
@@ -114,10 +121,11 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
                                 override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                                     cover_image.setImageDrawable(resource)
 
-                                    cover_bg.setImageBitmap(BlurKit.getInstance().blur(cover_image,25))
+                                    cover_bg.setImageBitmap(BlurKit.getInstance().blur(cover_image, 25))
 
                                     return true
                                 }
+
                                 override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
                                     return true
                                 }
@@ -126,7 +134,7 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
                             .submit()
 
                     tracks_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
-                    trackAdapter = TrackAdapter(applicationContext, p0.tracks,false)
+                    trackAdapter = TrackAdapter(applicationContext, p0.tracks, false)
                     tracks_recycler.adapter = trackAdapter
 
                     trackAdapter.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {
@@ -162,6 +170,52 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
         album_subscribe.text = "已订阅：${GlobalUtil.formatNum(album.subscribeCount.toString(), false)}"
         album_play_count.text = "播放${GlobalUtil.formatNum(album.playCount.toString(), false)}"
         album_intro.text = album.albumIntro
+
+        tracks_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollVertically(1)) {
+//                    getData(url);//网络请求的方法
+                    currentPage++
+                    updateTrackList(currentPage)
+                    try_to_get_info.visibility = VISIBLE
+
+
+                    Log.d(TAG, "拉到底部")
+
+                }
+            }
+        })
+    }
+
+    private fun updateTrackList(currentPage: Int) {
+        val map = HashMap<String, String>()
+        map[DTransferConstants.ALBUM_ID] = currentAlbumId
+        //有声书
+        map[DTransferConstants.SORT] = "asc"
+        map[DTransferConstants.PAGE_SIZE] = PAGE_SIZE
+        map[DTransferConstants.PAGE] = currentPage.toString()
+
+        //最火
+        CommonRequest.getTracks(map, object : IDataCallBack<TrackList> {
+            override fun onSuccess(p0: TrackList?) {
+                if (p0?.tracks!!.size > 0) {
+                    addTracksList = p0.tracks
+                    tracksList?.addAll(addTracksList!!)
+                    trackAdapter.notifyDataSetChanged()
+                    try_to_get_info.visibility = GONE
+                } else {
+                    //没有内容
+                    try_to_get_info.visibility = GONE
+                    Toast.makeText(XimalayaKotlin.context, "没有更多啦", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onError(p0: Int, p1: String?) {
+                try_to_get_info.visibility = GONE
+                Toast.makeText(XimalayaKotlin.context, "加载出错啦", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
 
@@ -188,8 +242,7 @@ class AlbumActivity : BaseActivity(), View.OnClickListener {
     }
 
     companion object {
-
         private const val TAG = "AlbumActivity"
-
+        private const val PAGE_SIZE = "20"
     }
 }
