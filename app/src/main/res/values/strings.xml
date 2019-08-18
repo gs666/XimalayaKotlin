@@ -43,6 +43,11 @@
     <string name="track">节目</string>
     <string name="album">专辑</string>
     <string name="host">主播</string>
+
+    <string name="my_download">我的下载</string>
+    <string name="my_like">我的收藏</string>
+    <string name="setting">设置</string>
+
     <string name="no_countdown">不开启定时器</string>
     <string name="play_program_over">播放完当前节目</string>
     <string name="countdown_15min">15分钟</string>
