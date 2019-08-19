@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hottest_rank_tv"
-            android:padding="20dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 

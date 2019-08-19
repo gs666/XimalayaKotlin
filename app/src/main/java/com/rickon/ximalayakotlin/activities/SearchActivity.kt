@@ -41,10 +41,10 @@ class SearchActivity : BaseActivity(), SearchView.OnQueryTextListener, View.OnTo
         id_search_view.isIconified = false
         id_search_view.setOnQueryTextListener(this)
 
-        val f = SearchHotWordFragment()
-        f.searchWords(this@SearchActivity)
+        val searchHotWordFragment = SearchHotWordFragment()
+        searchHotWordFragment.searchWords(this@SearchActivity)
         val ft = supportFragmentManager.beginTransaction()
-        ft.add(R.id.search_frame, f)
+        ft.add(R.id.search_frame, searchHotWordFragment)
         ft.commit()
 
         mImm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -52,6 +52,7 @@ class SearchActivity : BaseActivity(), SearchView.OnQueryTextListener, View.OnTo
         search_btn.setOnClickListener {
             if(id_search_view.query.isNotEmpty()){
                 Log.d(TAG,"开始搜索")
+                hideInputManager()
                 val ftt = supportFragmentManager.beginTransaction()
                 val fragment = SearchTabPagerFragment.newInstance(0, id_search_view.query.toString())
                 ftt.replace(R.id.search_frame, fragment).commitAllowingStateLoss()

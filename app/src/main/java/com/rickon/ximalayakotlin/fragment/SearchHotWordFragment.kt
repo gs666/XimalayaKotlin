@@ -69,26 +69,30 @@ class SearchHotWordFragment : BaseFragment(), View.OnClickListener, SearchWords 
         frameLayout.removeAllViews()
         frameLayout.addView(view)
 
+        //获取当前屏幕实际宽度（px）
         val w = mContext.resources.displayMetrics.widthPixels
         var xDistance = -1
         var yDistance = 0
+        //标签间隔16dp
         val distance = dip2px(mContext, 16f)
         var i = 0
         while (i < 10) {
             views[i].setOnClickListener(this@SearchHotWordFragment)
             views[i].text = texts[i]
             if (xDistance == -1) {
+                //每行的第一个标签
                 xDistance = 0
                 WidgetController.setLayout(views[i], xDistance, yDistance)
                 i++
                 continue
             }
+            //获取前一个标签宽度+16dp作为下一个标签横坐标
             xDistance += WidgetController.getWidth(views[i - 1]) + distance
             if (xDistance + WidgetController.getWidth(views[i]) + distance > w) {
+                //加上新标签的宽度大于屏幕宽度时换行
                 xDistance = -1
+                //换行时y坐标向下一行
                 yDistance += 120
-                i--
-                i++
                 continue
             }
             WidgetController.setLayout(views[i], xDistance, yDistance)

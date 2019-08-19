@@ -45,6 +45,7 @@ class AlbumActivity : BaseActivity(), OnClickListener {
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var album: Album
     private var isLoadSuccess = false
+    private var haveMore = true
 
     private var tracksList: MutableList<Track>? = null
 
@@ -171,16 +172,14 @@ class AlbumActivity : BaseActivity(), OnClickListener {
         album_play_count.text = "播放${GlobalUtil.formatNum(album.playCount.toString(), false)}"
         album_intro.text = album.albumIntro
 
+        try_to_get_info.visibility = GONE
         tracks_recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)) {
-//                    getData(url);//网络请求的方法
+                if (!recyclerView.canScrollVertically(1) && haveMore) {
                     currentPage++
                     updateTrackList(currentPage)
                     try_to_get_info.visibility = VISIBLE
-
-
                     Log.d(TAG, "拉到底部")
 
                 }
@@ -188,13 +187,13 @@ class AlbumActivity : BaseActivity(), OnClickListener {
         })
     }
 
-    private fun updateTrackList(currentPage: Int) {
+    private fun updateTrackList(currentPages: Int) {
         val map = HashMap<String, String>()
         map[DTransferConstants.ALBUM_ID] = currentAlbumId
         //有声书
         map[DTransferConstants.SORT] = "asc"
         map[DTransferConstants.PAGE_SIZE] = PAGE_SIZE
-        map[DTransferConstants.PAGE] = currentPage.toString()
+        map[DTransferConstants.PAGE] = currentPages.toString()
 
         //最火
         CommonRequest.getTracks(map, object : IDataCallBack<TrackList> {
@@ -206,6 +205,7 @@ class AlbumActivity : BaseActivity(), OnClickListener {
                     try_to_get_info.visibility = GONE
                 } else {
                     //没有内容
+                    haveMore = false
                     try_to_get_info.visibility = GONE
                     Toast.makeText(XimalayaKotlin.context, "没有更多啦", Toast.LENGTH_SHORT).show()
                 }
@@ -213,6 +213,7 @@ class AlbumActivity : BaseActivity(), OnClickListener {
 
             override fun onError(p0: Int, p1: String?) {
                 try_to_get_info.visibility = GONE
+                currentPage--
                 Toast.makeText(XimalayaKotlin.context, "加载出错啦", Toast.LENGTH_SHORT).show()
             }
         })

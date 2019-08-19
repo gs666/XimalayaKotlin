@@ -55,15 +55,10 @@ object WidgetController {
      * 设置控件所在的位置YY，并且不改变宽高，
      * XY为绝对位置
      */
-    fun setLayout(view: View, x: Int, y: Int) { //ViewGroup.MarginLayoutParams margin = new ViewGroup.MarginLayoutParams(group.getLayoutParams());
+    fun setLayout(view: View, x: Int, y: Int) {
         val margin = ViewGroup.MarginLayoutParams(view.layoutParams)
         margin.setMargins(x, y, 0, 0)
         val layoutParams = FrameLayout.LayoutParams(margin)
-        //        RelativeLayout.LayoutParams vlp = new RelativeLayout.LayoutParams(
-        //                ViewGroup.LayoutParams.WRAP_CONTENT,
-        //                ViewGroup.LayoutParams.WRAP_CONTENT);
-        //        vlp.setMargins(x,y, x+margin.width, y+margin.height);
         view.layoutParams = layoutParams
-        // view.setLayoutParams(vlp);
     }
 }
