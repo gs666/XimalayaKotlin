@@ -1,16 +1,14 @@
 package com.rickon.ximalayakotlin.fragment
 
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.rickon.ximalayakotlin.R
+import com.rickon.ximalayakotlin.activities.DownloadActivity
 import com.rickon.ximalayakotlin.activities.HistoryActivity
 import kotlinx.android.synthetic.main.fragment_mine_layout.*
 
@@ -45,7 +43,8 @@ class MineFragment : BaseFragment(), View.OnClickListener {
                 this.startActivity(intent)
             }
             R.id.my_download_btn -> {
-
+                val downLoadIntent = Intent(mContext, DownloadActivity::class.java)
+                this.startActivity(downLoadIntent)
             }
             R.id.my_like_btn -> {
 

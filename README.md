@@ -12,6 +12,16 @@
 <a href="screenshots/03.jpg"><img src="screenshots/03.jpg" width="30%"/></a> <a href="screenshots/04.jpg"><img src="screenshots/04.jpg" width="30%"/></a> <a href="screenshots/05.jpg"><img src="screenshots/05.jpg" width="30%"/></a>
 
 <a href="screenshots/06.png"><img src="screenshots/06.png" width="30%"/></a> <a href="screenshots/07.png"><img src="screenshots/07.png" width="30%"/></a>
+
+# How to build
+```
+Step1. Fork or download 'XimalayaKotlin' project.
+Step2. Import 'XimalayaKotlin' project into Android Studio.
+Step3. Build 'XimalayaKotlin' project with Android Studio.
+```
+## Contribution Guidelines
+Public contributions are welcomed in the form of pull requests with a clear description of your changes and if they relate to any open issues.
+
 ## Thanks to the open source project
 
 * [glide](https://github.com/bumptech/glide)
