@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.rickon.ximalayakotlin.R
-import com.rickon.ximalayakotlin.adapter.MainFragmentPagerAdapter
+import com.rickon.ximalayakotlin.adapter.CommonFragmentPagerAdapter
+import com.rickon.ximalayakotlin.fragment.BoutiqueFrag
+import com.rickon.ximalayakotlin.fragment.CategoryFrag
+import com.rickon.ximalayakotlin.fragment.MineFragment
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import com.ximalaya.ting.android.opensdk.player.appnotification.NotificationColorUtils
@@ -69,12 +73,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         CommonRequest.release()
     }
 
-    companion object {
-
-        private const val TAG = "MainActivity"
-
-    }
-
     private fun initView() {
         main_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -91,7 +89,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         })
         main_tab_layout.setupWithViewPager(main_view_pager)
 
-        main_view_pager.adapter = MainFragmentPagerAdapter(supportFragmentManager)
+        val titleList = mutableListOf(getString(R.string.boutique),
+                getString(R.string.category),
+                getString(R.string.mine))
+        val fragmentList = mutableListOf(BoutiqueFrag.newInstance() as Fragment,
+                CategoryFrag.newInstance() as Fragment,
+                MineFragment.newInstance() as Fragment)
+        main_view_pager.adapter = CommonFragmentPagerAdapter(supportFragmentManager, titleList, fragmentList)
         main_view_pager.offscreenPageLimit = 2
     }
 
@@ -111,6 +115,12 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 this.startActivity(intent)
             }
         }
+    }
+
+    companion object {
+
+        private const val TAG = "MainActivity"
+
     }
 
 }

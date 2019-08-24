@@ -46,6 +46,9 @@
     <string name="host">主播</string>
 
     <string name="my_download">我的下载</string>
+    <string name="had_download">已下载</string>
+    <string name="downloading">下载中</string>
+
     <string name="my_like">我的收藏</string>
     <string name="setting">设置</string>
 

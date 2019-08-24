@@ -35,20 +35,18 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <TableLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/id_down_tab"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@id/download_toolbar">
+        android:layout_below="@id/download_toolbar" />
 
-    </TableLayout>
     <androidx.viewpager.widget.ViewPager
+        android:id="@+id/down_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/id_down_tab"
-        android:layout_above="@id/bottom_container">
-
-    </androidx.viewpager.widget.ViewPager>
+        android:layout_above="@id/bottom_container"
+        android:layout_below="@id/id_down_tab" />
 
     <FrameLayout
         android:id="@+id/bottom_container"
