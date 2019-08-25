@@ -88,7 +88,7 @@ class SimpleMoreFragment : DialogFragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
 
-        val simpleItemAdapter = SimpleItemAdapter(mContext!!, countDownList.toList())
+        val simpleItemAdapter = SimpleItemAdapter(mContext, countDownList.toList())
         recyclerView.adapter = simpleItemAdapter
 
         simpleItemAdapter.setOnKotlinItemClickListener(object : SimpleItemAdapter.IKotlinItemClickListener {

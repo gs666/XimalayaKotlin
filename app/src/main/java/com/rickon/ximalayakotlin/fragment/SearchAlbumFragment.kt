@@ -38,7 +38,7 @@ class SearchAlbumFragment : BaseFragment() {
         recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
         layoutManager = LinearLayoutManager(mContext)
         recyclerView!!.layoutManager = layoutManager
-        mAdapter = AlbumAdapter(XimalayaKotlin.context!!, albumsList)
+        mAdapter = AlbumAdapter(XimalayaKotlin.context, albumsList)
         mAdapter!!.setOnKotlinItemClickListener(object : AlbumAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
                 val intent = Intent(context, AlbumActivity::class.java)

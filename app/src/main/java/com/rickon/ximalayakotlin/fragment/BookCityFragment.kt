@@ -41,7 +41,7 @@ class BookCityFragment : BaseFragment() {
                     hot_books_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
                     //下面代码解决滑动无惯性的问题
                     hot_books_recycler.isNestedScrollingEnabled = false
-                    albumAdapter = AlbumAdapter(XimalayaKotlin.context!!, hotBookAlbumList!!)
+                    albumAdapter = AlbumAdapter(XimalayaKotlin.context, hotBookAlbumList!!)
                     hot_books_recycler.adapter = albumAdapter
 
                     hot_books_recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {

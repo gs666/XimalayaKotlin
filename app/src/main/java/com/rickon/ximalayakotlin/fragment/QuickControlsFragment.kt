@@ -89,7 +89,7 @@ class QuickControlsFragment : BaseFragment() {
         rootView.setOnClickListener {
             val intent = Intent(context, PlayingActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            XimalayaKotlin.context!!.startActivity(intent)
+            XimalayaKotlin.context.startActivity(intent)
         }
     }
 
@@ -128,7 +128,7 @@ class QuickControlsFragment : BaseFragment() {
             playOrPauseBtn.setImageResource(R.drawable.ic_pause)
         else
             playOrPauseBtn.setImageResource(R.drawable.ic_play)
-        Glide.with(XimalayaKotlin.context!!)
+        Glide.with(XimalayaKotlin.context)
                 .load(coverUrl).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
                 .placeholder(R.drawable.ic_default_image)
                 .into(playBarCover)
@@ -174,7 +174,7 @@ class QuickControlsFragment : BaseFragment() {
 
             currentTitle.text = title
             currentSinger.text = singer
-            Glide.with(XimalayaKotlin.context!!)
+            Glide.with(XimalayaKotlin.context)
                     .load(coverUrl).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
                     .into(playBarCover)
 

@@ -43,7 +43,7 @@ object GlobalUtil {
      * @return 当前应用程序的包名。
      */
     val appPackage: String
-        get() = XimalayaKotlin.context!!.packageName
+        get() = XimalayaKotlin.context.packageName
 
     /**
      * 获取当前时间的字符串，格式为yyyyMMddHHmmss。
@@ -124,7 +124,7 @@ object GlobalUtil {
      * @return 字符串资源id对应的字符串内容。
      */
     fun getString(resId: Int): String {
-        return XimalayaKotlin.context!!.resources.getString(resId)
+        return XimalayaKotlin.context.resources.getString(resId)
     }
 
     /**
@@ -137,7 +137,7 @@ object GlobalUtil {
      * @return 指定资源名的资源id。
      */
     fun getResourceId(name: String, type: String): Int {
-        return XimalayaKotlin.context!!.resources.getIdentifier(name, type, appPackage)
+        return XimalayaKotlin.context.resources.getIdentifier(name, type, appPackage)
     }
 
     /**
@@ -149,7 +149,7 @@ object GlobalUtil {
     fun getApplicationMetaData(key: String): String? {
         var applicationInfo: ApplicationInfo? = null
         try {
-            applicationInfo = XimalayaKotlin.context!!.packageManager.getApplicationInfo(appPackage, PackageManager.GET_META_DATA)
+            applicationInfo = XimalayaKotlin.context.packageManager.getApplicationInfo(appPackage, PackageManager.GET_META_DATA)
         } catch (e: PackageManager.NameNotFoundException) {
 //            logWarn(TAG, e.message, e)
         }
@@ -244,7 +244,7 @@ object GlobalUtil {
      */
     fun isInstalled(packageName: String): Boolean {
         val packageInfo: PackageInfo? = try {
-            XimalayaKotlin.context!!.packageManager.getPackageInfo(packageName, 0)
+            XimalayaKotlin.context.packageManager.getPackageInfo(packageName, 0)
         } catch (e: PackageManager.NameNotFoundException) {
             null
         }
@@ -255,7 +255,7 @@ object GlobalUtil {
      * 获取当前应用程序的图标。
      */
     fun getAppIcon(): Drawable {
-        val packageManager = XimalayaKotlin.context!!.packageManager
+        val packageManager = XimalayaKotlin.context.packageManager
         val applicationInfo = packageManager.getApplicationInfo(appPackage, 0)
         return packageManager.getApplicationIcon(applicationInfo)
     }

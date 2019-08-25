@@ -36,8 +36,7 @@ object XimalayaKotlin {
      *
      * @return 全局Context对象。
      */
-    @SuppressLint("StaticFieldLeak")
-    var context: Context? = null
+    lateinit var context: Context
 
     /**
      * 获取创建在主线程上的Handler对象。
@@ -51,7 +50,7 @@ object XimalayaKotlin {
      * 返回当前应用的包名。
      */
     val packageName: String
-        get() = context!!.packageName
+        get() = context.packageName
 
     /**
      * 初始化接口。这里会进行应用程序的初始化操作，一定要在代码执行的最开始调用。

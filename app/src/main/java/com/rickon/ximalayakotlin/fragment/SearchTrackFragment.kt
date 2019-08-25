@@ -40,7 +40,7 @@ class SearchTrackFragment : BaseFragment() {
 
         layoutManager = LinearLayoutManager(mContext)
         recyclerView!!.layoutManager = layoutManager
-        mAdapter = TrackAdapter(XimalayaKotlin.context!!, tracksList, true)
+        mAdapter = TrackAdapter(XimalayaKotlin.context, tracksList, true)
         mAdapter!!.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
                 XmPlayerManager.getInstance(mContext).playList(tracksList, position)

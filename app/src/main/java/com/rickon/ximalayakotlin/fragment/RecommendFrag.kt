@@ -67,7 +67,7 @@ class RecommendFrag : BaseFragment(), View.OnClickListener {
                     guess_like_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
                     //下面代码解决滑动无惯性的问题
                     guess_like_recycler.isNestedScrollingEnabled = false
-                    albumAdapter = AlbumAdapter(XimalayaKotlin.context!!, mAlbumList)
+                    albumAdapter = AlbumAdapter(XimalayaKotlin.context, mAlbumList)
                     guess_like_recycler.adapter = albumAdapter
 
                     guess_like_recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {

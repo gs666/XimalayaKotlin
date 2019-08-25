@@ -37,7 +37,7 @@ class SearchRadioFragment : BaseFragment() {
         recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
         layoutManager = LinearLayoutManager(mContext)
         recyclerView!!.layoutManager = layoutManager
-        mAdapter = RankRadioAdapter(XimalayaKotlin.context!!, radiosList)
+        mAdapter = RankRadioAdapter(XimalayaKotlin.context, radiosList)
         mAdapter!!.setOnKotlinItemClickListener(object : RankRadioAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
                 val radio = radiosList[position]
