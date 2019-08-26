@@ -85,12 +85,14 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
 
             override fun onSuccess(p0: LastPlayTrackList?) {
                 var startIndex = 0
-                for (it in p0?.tracks!!) {
-                    if (it.dataId.toString() == trackId) {
-                        XmPlayerManager.getInstance(this@HistoryActivity).playList(p0.tracks, startIndex)
-                        break
+                p0?.tracks?.let {
+                    for (item in it) {
+                        if (item.dataId.toString() == trackId) {
+                            XmPlayerManager.getInstance(this@HistoryActivity).playList(p0.tracks, startIndex)
+                            break
+                        }
+                        startIndex++
                     }
-                    startIndex++
                 }
 
             }

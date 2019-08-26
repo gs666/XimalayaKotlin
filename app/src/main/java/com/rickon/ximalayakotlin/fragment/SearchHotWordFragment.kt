@@ -25,9 +25,9 @@ import java.util.ArrayList
  * @Email:       gaoshuo521@foxmail.com
  */
 class SearchHotWordFragment : BaseFragment(), View.OnClickListener, SearchWords {
-    private var texts = arrayOfNulls<String>(10)
+    private val texts = mutableListOf<String>()
     private var views = ArrayList<TextView>()
-    private var searchWords: SearchWords? = null
+    private lateinit var searchWords: SearchWords
     private lateinit var loadView: View
     private lateinit var frameLayout: FrameLayout
 
@@ -106,8 +106,8 @@ class SearchHotWordFragment : BaseFragment(), View.OnClickListener, SearchWords 
         CommonRequest.getHotWords(map, object : IDataCallBack<HotWordList> {
             override fun onSuccess(p0: HotWordList?) {
                 var index = 0
-                p0!!.hotWordList.forEach {
-                    texts[index] = it.searchword
+                p0?.hotWordList?.forEach {
+                    texts.add(it.searchword)
                     index++
                 }
                 initData()
@@ -126,21 +126,21 @@ class SearchHotWordFragment : BaseFragment(), View.OnClickListener, SearchWords 
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.text1 -> searchWords!!.onSearch(texts[0]!!)
-            R.id.text2 -> searchWords!!.onSearch(texts[1]!!)
-            R.id.text3 -> searchWords!!.onSearch(texts[2]!!)
-            R.id.text4 -> searchWords!!.onSearch(texts[3]!!)
-            R.id.text5 -> searchWords!!.onSearch(texts[4]!!)
-            R.id.text6 -> searchWords!!.onSearch(texts[5]!!)
-            R.id.text7 -> searchWords!!.onSearch(texts[6]!!)
-            R.id.text8 -> searchWords!!.onSearch(texts[7]!!)
-            R.id.text9 -> searchWords!!.onSearch(texts[8]!!)
-            R.id.text10 -> searchWords!!.onSearch(texts[9]!!)
+            R.id.text1 -> searchWords.onSearch(texts[0])
+            R.id.text2 -> searchWords.onSearch(texts[1])
+            R.id.text3 -> searchWords.onSearch(texts[2])
+            R.id.text4 -> searchWords.onSearch(texts[3])
+            R.id.text5 -> searchWords.onSearch(texts[4])
+            R.id.text6 -> searchWords.onSearch(texts[5])
+            R.id.text7 -> searchWords.onSearch(texts[6])
+            R.id.text8 -> searchWords.onSearch(texts[7])
+            R.id.text9 -> searchWords.onSearch(texts[8])
+            R.id.text10 -> searchWords.onSearch(texts[9])
         }
     }
 
     override fun onSearch(t: String) {
-        if (searchWords != null) searchWords!!.onSearch(t)
+        searchWords.onSearch(t)
     }
 
     companion object {

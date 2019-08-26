@@ -25,10 +25,10 @@ import java.util.ArrayList
  */
 class SearchTrackFragment : BaseFragment() {
 
-    private var mAdapter: TrackAdapter? = null
+    private lateinit var mAdapter: TrackAdapter
     private lateinit var tracksList: ArrayList<Track>
-    private var recyclerView: RecyclerView? = null
-    private var layoutManager: LinearLayoutManager? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.recylerview, container, false)
@@ -39,9 +39,9 @@ class SearchTrackFragment : BaseFragment() {
         recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
 
         layoutManager = LinearLayoutManager(mContext)
-        recyclerView!!.layoutManager = layoutManager
+        recyclerView.layoutManager = layoutManager
         mAdapter = TrackAdapter(XimalayaKotlin.context, tracksList, true)
-        mAdapter!!.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {
+        mAdapter.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
                 XmPlayerManager.getInstance(mContext).playList(tracksList, position)
                 val intent = Intent(context, PlayingActivity::class.java)
@@ -50,9 +50,9 @@ class SearchTrackFragment : BaseFragment() {
                 //todo:跳转之后将播放列表改为当前声音所在专辑列表
             }
         })
-        recyclerView!!.adapter = mAdapter
-        recyclerView!!.setHasFixedSize(true)
-        recyclerView!!.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
+        recyclerView.adapter = mAdapter
+        recyclerView.setHasFixedSize(true)
+        recyclerView.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
 
         return view
     }

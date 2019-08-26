@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_rank_list.*
 
 class RankListActivity : BaseActivity() {
 
-    private var mRankRadioList: List<Radio>? = null
+    private lateinit var mRankRadioList: List<Radio>
     private lateinit var rankRadioAdapter: RankRadioAdapter
     private var currentRadioPos = Integer.MAX_VALUE
 
@@ -37,7 +37,7 @@ class RankListActivity : BaseActivity() {
             when (msg?.what) {
                 LOAD_RADIO_RANK_SUCCESS -> {
                     rank_radio_list.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
-                    rankRadioAdapter = RankRadioAdapter(applicationContext, mRankRadioList!!)
+                    rankRadioAdapter = RankRadioAdapter(applicationContext, mRankRadioList)
                     rank_radio_list.adapter = rankRadioAdapter
 
                     rankRadioAdapter.setOnKotlinItemClickListener(object : RankRadioAdapter.IKotlinItemClickListener {

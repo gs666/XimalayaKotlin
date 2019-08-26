@@ -56,8 +56,8 @@ class SearchTabPagerFragment : BaseFragment() {
         frameLayout.addView(loadView)
 
 
-        if (arguments != null) {
-            key = (arguments as Bundle).getString("key")!!
+        arguments?.let {
+            (arguments as Bundle).getString("key")?.let { key = it }
         }
 
         search(key)
@@ -77,7 +77,7 @@ class SearchTabPagerFragment : BaseFragment() {
         CommonRequest.getSearchAll(map, object : IDataCallBack<SearchAll> {
             override fun onSuccess(p0: SearchAll?) {
                 if (p0 != null) {
-                    Log.d(TAG,"搜索完成")
+                    Log.d(TAG, "搜索完成")
                     trackResults = p0.trackList.tracks as ArrayList<Track>
                     albumResults = p0.albumList.albums as ArrayList<Album>
                     radioResults = p0.radioList.radios as ArrayList<Radio>
@@ -93,7 +93,7 @@ class SearchTabPagerFragment : BaseFragment() {
                     viewPager.adapter = adapter
                     viewPager.offscreenPageLimit = 3
 
-                    val tabLayout:TabLayout = contentView.findViewById<View>(R.id.tabs) as TabLayout
+                    val tabLayout: TabLayout = contentView.findViewById<View>(R.id.tabs) as TabLayout
                     tabLayout.setupWithViewPager(viewPager)
                     viewPager.currentItem = 0
 //                    tabLayout.setTabTextColors(R.color.text_color, ThemeUtils.getThemeColorStateList(mContext, R.color.theme_color_primary).getDefaultColor())

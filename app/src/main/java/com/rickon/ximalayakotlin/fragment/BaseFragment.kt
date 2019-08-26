@@ -15,7 +15,7 @@ open class BaseFragment() : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        mContext = context!!
+        context?.let { mContext = it }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

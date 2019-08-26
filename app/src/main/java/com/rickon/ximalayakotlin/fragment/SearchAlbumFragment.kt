@@ -24,10 +24,10 @@ import java.util.ArrayList
  */
 class SearchAlbumFragment : BaseFragment() {
 
-    private var mAdapter: AlbumAdapter? = null
+    private lateinit var mAdapter: AlbumAdapter
     private lateinit var albumsList: ArrayList<Album>
-    private var recyclerView: RecyclerView? = null
-    private var layoutManager: LinearLayoutManager? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.recylerview, container, false)
@@ -37,9 +37,9 @@ class SearchAlbumFragment : BaseFragment() {
 
         recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
         layoutManager = LinearLayoutManager(mContext)
-        recyclerView!!.layoutManager = layoutManager
+        recyclerView.layoutManager = layoutManager
         mAdapter = AlbumAdapter(XimalayaKotlin.context, albumsList)
-        mAdapter!!.setOnKotlinItemClickListener(object : AlbumAdapter.IKotlinItemClickListener {
+        mAdapter.setOnKotlinItemClickListener(object : AlbumAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
                 val intent = Intent(context, AlbumActivity::class.java)
                 //传递一个 album
@@ -48,9 +48,9 @@ class SearchAlbumFragment : BaseFragment() {
             }
         })
 
-        recyclerView!!.adapter = mAdapter
-        recyclerView!!.setHasFixedSize(true)
-        recyclerView!!.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
+        recyclerView.adapter = mAdapter
+        recyclerView.setHasFixedSize(true)
+        recyclerView.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
 
         return view
     }

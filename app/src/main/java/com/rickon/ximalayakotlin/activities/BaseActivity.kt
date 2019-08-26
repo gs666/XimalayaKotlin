@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.fragment.QuickControlsFragment
 
-open class BaseActivity : AppCompatActivity(){
+open class BaseActivity : AppCompatActivity() {
 
-    private var fragment: QuickControlsFragment? = null //底部播放控制栏
+    private lateinit var fragment: QuickControlsFragment //底部播放控制栏
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,15 +21,10 @@ open class BaseActivity : AppCompatActivity(){
     open fun showQuickControl(show: Boolean) {
         val ft = supportFragmentManager.beginTransaction()
         if (show) {
-            if (fragment == null) {
-                fragment = QuickControlsFragment.newInstance()
-                ft.add(R.id.bottom_container, fragment!!).commitAllowingStateLoss()
-            } else {
-                ft.show(fragment!!).commitAllowingStateLoss()
-            }
+            fragment = QuickControlsFragment.newInstance()
+            ft.add(R.id.bottom_container, fragment).commitAllowingStateLoss()
         } else {
-            if (fragment != null)
-                ft.hide(fragment!!).commitAllowingStateLoss()
+            ft.hide(fragment).commitAllowingStateLoss()
         }
     }
 }

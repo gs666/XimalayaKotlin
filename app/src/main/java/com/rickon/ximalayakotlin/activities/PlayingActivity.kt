@@ -116,7 +116,7 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
 
     private fun initListener() {
         like_btn.setOnClickListener(this)
-        countdown_btn.setOnClickListener (this)
+        countdown_btn.setOnClickListener(this)
 
         play_pause_btn.setOnClickListener(this)
         close_playing_btn.setOnClickListener(this)
@@ -174,7 +174,9 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                mPlayerServiceManager.seekTo(seekBar!!.progress * 1000)
+                seekBar?.let {
+                    mPlayerServiceManager.seekTo(it.progress * 1000)
+                }
             }
         })
 
@@ -199,9 +201,9 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
                     isLiked = false
                 }
             }
-            R.id.countdown_btn ->{
+            R.id.countdown_btn -> {
                 val moreFragment = SimpleMoreFragment.newInstance()
-                moreFragment.show(supportFragmentManager,"countdown")
+                moreFragment.show(supportFragmentManager, "countdown")
             }
 
             R.id.close_playing_btn -> {

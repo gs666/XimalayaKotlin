@@ -23,10 +23,10 @@ import java.util.ArrayList
  */
 class SearchRadioFragment : BaseFragment() {
 
-    private var mAdapter: RankRadioAdapter? = null
+    private lateinit var mAdapter: RankRadioAdapter
     private lateinit var radiosList: ArrayList<Radio>
-    private var recyclerView: RecyclerView? = null
-    private var layoutManager: LinearLayoutManager? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.recylerview, container, false)
@@ -36,9 +36,9 @@ class SearchRadioFragment : BaseFragment() {
 
         recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
         layoutManager = LinearLayoutManager(mContext)
-        recyclerView!!.layoutManager = layoutManager
+        recyclerView.layoutManager = layoutManager
         mAdapter = RankRadioAdapter(XimalayaKotlin.context, radiosList)
-        mAdapter!!.setOnKotlinItemClickListener(object : RankRadioAdapter.IKotlinItemClickListener {
+        mAdapter.setOnKotlinItemClickListener(object : RankRadioAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
                 val radio = radiosList[position]
                 //播放直播
@@ -46,9 +46,9 @@ class SearchRadioFragment : BaseFragment() {
             }
         })
 
-        recyclerView!!.adapter = mAdapter
-        recyclerView!!.setHasFixedSize(true)
-        recyclerView!!.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
+        recyclerView.adapter = mAdapter
+        recyclerView.setHasFixedSize(true)
+        recyclerView.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
 
         return view
     }

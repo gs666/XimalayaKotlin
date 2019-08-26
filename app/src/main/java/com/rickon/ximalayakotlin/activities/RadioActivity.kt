@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_radio.*
 
 class RadioActivity : BaseActivity(), View.OnClickListener {
 
-    private var mRecommendRadioList: List<Radio>? = null
+    private lateinit var mRecommendRadioList: MutableList<Radio>
     private var mLoading = false
     private var currentRadioPos = Int.MAX_VALUE
 
@@ -36,7 +36,7 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
             when (msg?.what) {
                 LOAD_RADIO_SUCCESS -> {
                     recommend_radio_list.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
-                    horiRadioAdapter = HoriRadioAdapter(applicationContext, mRecommendRadioList!!)
+                    horiRadioAdapter = HoriRadioAdapter(applicationContext, mRecommendRadioList)
                     recommend_radio_list.adapter = horiRadioAdapter
 
                     horiRadioAdapter.setOnKotlinItemClickListener(object : HoriRadioAdapter.IKotlinItemClickListener {
@@ -45,7 +45,7 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
                                 Log.d(TAG, position.toString())
                                 currentRadioPos = position
 
-                                val radio = mRecommendRadioList?.get(position)
+                                val radio = mRecommendRadioList[position]
                                 //播放直播
                                 mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
 
@@ -98,7 +98,6 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
         CommonRequest.getRadios(map, object : IDataCallBack<RadioList> {
             override fun onSuccess(radioList: RadioList?) {
                 if (radioList?.radios != null) {
-                    mRecommendRadioList = null
                     mRecommendRadioList = radioList.radios
 
                     val msg = Message()

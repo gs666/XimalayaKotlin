@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_book_city.*
 class BookCityFragment : BaseFragment() {
 
     private lateinit var albumAdapter: AlbumAdapter
-    private var hotBookAlbumList: List<Album>? = null
+    private lateinit var hotBookAlbumList: List<Album>
 
 
     //uiHandler在主线程中创建，所以自动绑定主线程
@@ -41,7 +41,7 @@ class BookCityFragment : BaseFragment() {
                     hot_books_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
                     //下面代码解决滑动无惯性的问题
                     hot_books_recycler.isNestedScrollingEnabled = false
-                    albumAdapter = AlbumAdapter(XimalayaKotlin.context, hotBookAlbumList!!)
+                    albumAdapter = AlbumAdapter(XimalayaKotlin.context, hotBookAlbumList)
                     hot_books_recycler.adapter = albumAdapter
 
                     hot_books_recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
@@ -57,7 +57,7 @@ class BookCityFragment : BaseFragment() {
 
                             val intent = Intent(context, AlbumActivity::class.java)
                             //传递一个 album
-                            intent.putExtra("album", hotBookAlbumList!![position])
+                            intent.putExtra("album", hotBookAlbumList[position])
                             context?.startActivity(intent)
 
                             albumAdapter.notifyDataSetChanged()
@@ -98,12 +98,14 @@ class BookCityFragment : BaseFragment() {
         //最火
         CommonRequest.getAlbumList(map, object : IDataCallBack<AlbumList> {
             override fun onSuccess(p0: AlbumList?) {
-                if (p0?.albums!!.size > 0) {
-                    hotBookAlbumList = p0.albums
+                p0?.albums?.let {
+                    if (it.size > 0) {
+                        hotBookAlbumList = p0.albums
 
-                    val msg = Message()
-                    msg.what = LOAD_SUCCESS
-                    uiHandler.sendMessage(msg)
+                        val msg = Message()
+                        msg.what = LOAD_SUCCESS
+                        uiHandler.sendMessage(msg)
+                    }
                 }
             }
 

@@ -70,9 +70,7 @@ class SimpleMoreFragment : DialogFragment() {
         params?.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog.window?.attributes = params
-        if (arguments != null) {
-            args = arguments!!.getLong("id")
-        }
+        arguments?.let { args = it.getLong("id") }
 
         //布局
         val view = inflater.inflate(R.layout.more_fragment, container, false)
@@ -126,7 +124,7 @@ class SimpleMoreFragment : DialogFragment() {
                     }
                     6 -> {
                         //自定义
-                        Toast.makeText(mContext,"暂未开发此功能",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mContext, "暂未开发此功能", Toast.LENGTH_SHORT).show()
                         dismiss()
                     }
                     7 -> {

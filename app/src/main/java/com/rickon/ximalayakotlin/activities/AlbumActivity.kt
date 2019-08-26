@@ -47,9 +47,9 @@ class AlbumActivity : BaseActivity(), OnClickListener {
     private var isLoadSuccess = false
     private var haveMore = true
 
-    private var tracksList: MutableList<Track>? = null
+    private lateinit var tracksList: MutableList<Track>
 
-    private var addTracksList: MutableList<Track>? = null
+    private lateinit var addTracksList: MutableList<Track>
     private var currentPage = 1
 
     private lateinit var mPlayerServiceManager: XmPlayerManager
@@ -110,51 +110,54 @@ class AlbumActivity : BaseActivity(), OnClickListener {
         //最火
         CommonRequest.getTracks(map, object : IDataCallBack<TrackList> {
             override fun onSuccess(p0: TrackList?) {
-                if (p0?.tracks!!.size > 0) {
-                    tracksList = p0.tracks
-                    isLoadSuccess = true
+                p0?.tracks?.let {
+                    if (it.size > 0) {
+                        tracksList = it
+                        isLoadSuccess = true
 
-                    BlurKit.init(this@AlbumActivity)
+                        BlurKit.init(this@AlbumActivity)
 
-                    Glide.with(applicationContext)
-                            .load(p0.coverUrlLarge)
-                            .listener(object : RequestListener<Drawable> {
-                                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                    cover_image.setImageDrawable(resource)
+                        Glide.with(applicationContext)
+                                .load(p0.coverUrlLarge)
+                                .listener(object : RequestListener<Drawable> {
+                                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                                        cover_image.setImageDrawable(resource)
 
-                                    cover_bg.setImageBitmap(BlurKit.getInstance().blur(cover_image, 25))
+                                        cover_bg.setImageBitmap(BlurKit.getInstance().blur(cover_image, 25))
 
-                                    return true
-                                }
+                                        return true
+                                    }
 
-                                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                    return true
-                                }
-                            })
-                            .apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                            .submit()
+                                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                                        return true
+                                    }
+                                })
+                                .apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                                .submit()
 
-                    tracks_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
-                    trackAdapter = TrackAdapter(applicationContext, p0.tracks, false)
-                    tracks_recycler.adapter = trackAdapter
+                        tracks_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
+                        trackAdapter = TrackAdapter(applicationContext, p0.tracks, false)
+                        tracks_recycler.adapter = trackAdapter
 
-                    trackAdapter.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {
-                        override fun onItemClickListener(position: Int) {
-                            Log.d(TAG, position.toString())
-                            mPlayerServiceManager.playList(tracksList!!, position)
+                        trackAdapter.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {
+                            override fun onItemClickListener(position: Int) {
+                                Log.d(TAG, position.toString())
+                                mPlayerServiceManager.playList(tracksList, position)
 
-                            //跳转PlayingActivity
-                            val intent = Intent(this@AlbumActivity, PlayingActivity::class.java)
-                            this@AlbumActivity.startActivity(intent)
+                                //跳转PlayingActivity
+                                val intent = Intent(this@AlbumActivity, PlayingActivity::class.java)
+                                this@AlbumActivity.startActivity(intent)
 
-                            trackAdapter.notifyDataSetChanged()
+                                trackAdapter.notifyDataSetChanged()
 
-                        }
-                    })
+                            }
+                        })
 
 //                    val msg = Message()
 //                    msg.what = LOAD_SUCCESS
 //                    uiHandler.sendMessage(msg)
+                    }
+
                 }
             }
 
@@ -198,16 +201,18 @@ class AlbumActivity : BaseActivity(), OnClickListener {
         //最火
         CommonRequest.getTracks(map, object : IDataCallBack<TrackList> {
             override fun onSuccess(p0: TrackList?) {
-                if (p0?.tracks!!.size > 0) {
-                    addTracksList = p0.tracks
-                    tracksList?.addAll(addTracksList!!)
-                    trackAdapter.notifyDataSetChanged()
-                    try_to_get_info.visibility = GONE
-                } else {
-                    //没有内容
-                    haveMore = false
-                    try_to_get_info.visibility = GONE
-                    Toast.makeText(XimalayaKotlin.context, "没有更多啦", Toast.LENGTH_SHORT).show()
+                p0?.tracks?.let {
+                    if (it.size > 0) {
+                        addTracksList = it
+                        tracksList.addAll(addTracksList)
+                        trackAdapter.notifyDataSetChanged()
+                        try_to_get_info.visibility = GONE
+                    } else {
+                        //没有内容
+                        haveMore = false
+                        try_to_get_info.visibility = GONE
+                        Toast.makeText(XimalayaKotlin.context, "没有更多啦", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
@@ -229,9 +234,9 @@ class AlbumActivity : BaseActivity(), OnClickListener {
         when (v?.id) {
             R.id.return_btn -> finish()
             R.id.play_all_btn -> {
-                if (isLoadSuccess && tracksList != null) {
+                if (isLoadSuccess) {
                     //播放列表
-                    mPlayerServiceManager.playList(tracksList!!, 0)
+                    mPlayerServiceManager.playList(tracksList, 0)
                 }
             }
         }
