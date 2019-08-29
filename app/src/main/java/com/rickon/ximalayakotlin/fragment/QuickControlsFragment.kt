@@ -200,16 +200,17 @@ class QuickControlsFragment : BaseFragment() {
                 if (queryResult.isEmpty()) {
                     Log.d(TAG, "添加记录")
                     val historyItem = HistoryItem()
-
-                    historyItem.itemId = schedule.radioId.toString()
-                    historyItem.isAlbum = false
-                    historyItem.itemTitle = schedule.radioName
-                    historyItem.itemImagePath = schedule.relatedProgram.backPicUrl
-                    historyItem.lastListenTime = System.currentTimeMillis()
-                    historyItem.trackId = ""
-                    historyItem.trackTitle = ""
-                    historyItem.lastBreakTime = 0
-                    historyItem.save()
+                    with(historyItem) {
+                        itemId = schedule.radioId.toString()
+                        isAlbum = false
+                        itemTitle = schedule.radioName
+                        itemImagePath = schedule.relatedProgram.backPicUrl
+                        lastListenTime = System.currentTimeMillis()
+                        trackId = ""
+                        trackTitle = ""
+                        lastBreakTime = 0
+                        save()
+                    }
                     Log.d(TAG, historyItem.toString())
                 } else {
                     //更新电台记录
@@ -226,27 +227,31 @@ class QuickControlsFragment : BaseFragment() {
                 if (queryAlbumResult.isEmpty()) {
                     val albumHistoryItem = HistoryItem()
                     val tempAlbum: SubordinatedAlbum? = tempTrack.album
-                    albumHistoryItem.itemId = tempAlbum?.albumId.toString()
-                    albumHistoryItem.isAlbum = true
-                    if(tempAlbum == null){
-                        albumHistoryItem.itemTitle = ""
-                    } else {
-                        albumHistoryItem.itemTitle = tempAlbum.albumTitle
+                    with(albumHistoryItem) {
+                        itemId = tempAlbum?.albumId.toString()
+                        isAlbum = true
+                        itemTitle = if (tempAlbum == null) {
+                            ""
+                        } else {
+                            tempAlbum.albumTitle
+                        }
+                        albumAuthor = tempTrack.announcer.nickname
+                        itemImagePath = tempTrack.coverUrlLarge
+                        lastListenTime = System.currentTimeMillis()
+                        trackId = tempTrack.dataId.toString()
+                        trackTitle = tempTrack.trackTitle
+                        lastBreakTime = 0
+                        save()
                     }
-                    albumHistoryItem.albumAuthor = tempTrack.announcer.nickname
-                    albumHistoryItem.itemImagePath = tempTrack.coverUrlLarge
-                    albumHistoryItem.lastListenTime = System.currentTimeMillis()
-                    albumHistoryItem.trackId = tempTrack.dataId.toString()
-                    albumHistoryItem.trackTitle = tempTrack.trackTitle
-                    albumHistoryItem.lastBreakTime = 0
-                    albumHistoryItem.save()
                 } else {
                     //更新专辑记录
                     val updateAlbumItem = HistoryItem()
-                    updateAlbumItem.lastListenTime = System.currentTimeMillis()
-                    updateAlbumItem.trackId = tempTrack.dataId.toString()
-                    updateAlbumItem.trackTitle = tempTrack.trackTitle
-                    updateAlbumItem.updateAll("itemId = ?", tempTrack.album?.albumId.toString())
+                    with(updateAlbumItem) {
+                        lastListenTime = System.currentTimeMillis()
+                        trackId = tempTrack.dataId.toString()
+                        trackTitle = tempTrack.trackTitle
+                        updateAll("itemId = ?", tempTrack.album?.albumId.toString())
+                    }
                 }
 
             }

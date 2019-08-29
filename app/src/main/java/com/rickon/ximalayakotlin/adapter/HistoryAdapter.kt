@@ -42,16 +42,19 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textViewTitle.text = historyList[position].itemTitle
-        if (historyList[position].isAlbum) {
-            holder.currentTrackTitle.text = "上次听到：${historyList[position].trackTitle}"
-        } else {
-            holder.currentTrackTitle.text = historyList[position].trackTitle
+        val item = historyList[position]
+        with(item){
+            holder.textViewTitle.text = itemTitle
+            if (isAlbum) {
+                holder.currentTrackTitle.text = "上次听到：$trackTitle"
+            } else {
+                holder.currentTrackTitle.text = trackTitle
+            }
+            holder.textViewSinger.text = albumAuthor
+            Glide.with(mContext)
+                    .load(itemImagePath).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                    .into(holder.imageCover)
         }
-        holder.textViewSinger.text = historyList[position].albumAuthor
-        Glide.with(mContext)
-                .load(historyList[position].itemImagePath).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                .into(holder.imageCover)
 
         holder.radioItemView.setOnClickListener {
             itemClickListener.onItemClickListener(position)

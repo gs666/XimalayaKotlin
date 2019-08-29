@@ -41,11 +41,14 @@ class RankRadioAdapter : RecyclerView.Adapter<RankRadioAdapter.ViewHolder> {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textViewTitle.text = radioList[position].radioName
-        holder.textViewIntro.text = "正在播放：${radioList[position].programName}"
-        Glide.with(mContext)
-                .load(radioList[position].coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                .into(holder.imageCover)
+        val item = radioList[position]
+        with(item){
+            holder.textViewTitle.text = radioName
+            holder.textViewIntro.text = "正在播放：$programName"
+            Glide.with(mContext)
+                    .load(coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                    .into(holder.imageCover)
+        }
 
         holder.radioItemView.setOnClickListener {
             itemClickListener.onItemClickListener(position)

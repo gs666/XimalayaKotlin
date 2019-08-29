@@ -52,11 +52,13 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
                     loadLastPlayList(historyList[position].itemId, historyList[position].trackId)
                 } else {
                     val tempRadio = Radio()
-                    tempRadio.dataId = historyList[position].itemId.toLong()
-                    tempRadio.kind = PlayableModel.KIND_RADIO
-                    tempRadio.radioName = historyList[position].itemTitle
-                    tempRadio.coverUrlLarge = historyList[position].itemImagePath
-                    XmPlayerManager.getInstance(this@HistoryActivity).playLiveRadioForSDK(tempRadio, -1, -1)
+                    with(tempRadio){
+                        dataId = historyList[position].itemId.toLong()
+                        kind = PlayableModel.KIND_RADIO
+                        radioName = historyList[position].itemTitle
+                        coverUrlLarge = historyList[position].itemImagePath
+                        XmPlayerManager.getInstance(this@HistoryActivity).playLiveRadioForSDK(this, -1, -1)
+                    }
                 }
             }
         })

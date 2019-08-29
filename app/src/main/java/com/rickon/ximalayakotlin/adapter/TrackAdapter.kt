@@ -46,14 +46,17 @@ class TrackAdapter : RecyclerView.Adapter<TrackAdapter.ViewHolder> {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textViewTitle.text = trackList[position].trackTitle
-        holder.textViewPlayCount.text = GlobalUtil.formatNum(trackList[position].playCount.toString(), false)
-        holder.textViewDuration.text = DateUtils.formatElapsedTime(trackList[position].duration.toLong())
-        if (showImageCover) {
-            Glide.with(mContext)
-                    .load(trackList[position].coverUrlLarge)
-                    .apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                    .into(holder.imageCover)
+        val item = trackList[position]
+        with(item){
+            holder.textViewTitle.text = trackTitle
+            holder.textViewPlayCount.text = GlobalUtil.formatNum(playCount.toString(), false)
+            holder.textViewDuration.text = DateUtils.formatElapsedTime(duration.toLong())
+            if (showImageCover) {
+                Glide.with(mContext)
+                        .load(coverUrlLarge)
+                        .apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                        .into(holder.imageCover)
+            }
         }
 
         holder.trackItemView.setOnClickListener {

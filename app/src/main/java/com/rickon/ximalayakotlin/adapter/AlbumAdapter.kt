@@ -41,11 +41,14 @@ class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textViewTitle.text = albumList[position].albumTitle
-        holder.textViewIntro.text = albumList[position].albumIntro
-        Glide.with(mContext)
-                .load(albumList[position].coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
-                .into(holder.imageCover)
+        val item = albumList[position]
+        with(item){
+            holder.textViewTitle.text = albumTitle
+            holder.textViewIntro.text = albumIntro
+            Glide.with(mContext)
+                    .load(coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
+                    .into(holder.imageCover)
+        }
 
         holder.albumItemView.setOnClickListener {
             itemClickListener.onItemClickListener(position)
