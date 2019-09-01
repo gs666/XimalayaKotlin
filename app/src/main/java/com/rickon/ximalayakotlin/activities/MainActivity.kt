@@ -17,6 +17,7 @@ import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import com.ximalaya.ting.android.opensdk.player.appnotification.NotificationColorUtils
 import com.ximalaya.ting.android.opensdk.player.appnotification.XmNotificationCreater
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayListControl
+import com.ximalaya.ting.android.sdkdownloader.XmDownloadManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -55,6 +56,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         XmPlayerManager.getInstance(this).init(notificationId,
                 XmNotificationCreater.getInstanse(this).createNotification(this,
                         MainActivity::class.java))
+
+        // 此代码表示播放时会去监测下是否已经下载
+        XmPlayerManager.getInstance(this).setCommonBusinessHandle(XmDownloadManager.getInstance())
 
         mPlayerManager.addOnConnectedListerner(object : XmPlayerManager.IConnectListener {
             override fun onConnected() {
