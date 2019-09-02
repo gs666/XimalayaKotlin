@@ -1,6 +1,7 @@
 package com.rickon.ximalayakotlin.activities
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -39,6 +40,9 @@ class SearchActivity : BaseActivity(), SearchView.OnQueryTextListener, View.OnTo
         //设置搜索框提示，去除左边搜索图标
         id_search_view.queryHint = getString(R.string.search_hint)
         id_search_view.isIconified = false
+        //隐藏底部横线
+        val viewById:View? = id_search_view.findViewById(R.id.search_plate)
+        viewById?.setBackgroundColor(Color.TRANSPARENT)
         id_search_view.setOnQueryTextListener(this)
 
         val searchHotWordFragment = SearchHotWordFragment()

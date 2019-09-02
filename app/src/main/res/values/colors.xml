@@ -19,4 +19,5 @@
     <color name="white_text">#fafafa</color>
     <color name="test_color">#696969</color>
     <color name="hot_word_bg">#F3EBDD</color>
+    <color name="search_view_color">#EAEAEA</color>
 </resources>
