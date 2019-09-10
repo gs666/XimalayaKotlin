@@ -1,5 +1,6 @@
 package com.rickon.ximalayakotlin.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -27,6 +28,7 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
 
     private var mPlayerServiceManager: XmPlayerManager? = null
     private lateinit var horiRadioAdapter: HoriRadioAdapter
+    private val mContext = this
 
 
     //uiHandler在主线程中创建，所以自动绑定主线程
@@ -48,8 +50,6 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
                                 val radio = mRecommendRadioList[position]
                                 //播放直播
                                 mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
-
-
 
                                 horiRadioAdapter.notifyDataSetChanged()
                             }
@@ -150,7 +150,8 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
 
             }
             R.id.country_btn -> {
-
+                val intent = Intent(mContext, CountryRadioActivity::class.java)
+                mContext.startActivity(intent)
             }
             R.id.province_city_btn -> {
             }

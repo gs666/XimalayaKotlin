@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RankListActivity">
+    tools:context=".activities.CountryRadioActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/rank_list_toolbar"
+        android:id="@+id/country_radio_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
@@ -19,45 +19,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/rank_list"
+            android:text="@string/country_radio"
             android:textColor="@color/black"
             android:textSize="22sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/country_radio_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_container"
-        android:layout_below="@id/rank_list_toolbar">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
-
-            <TextView
-                android:id="@+id/radio_rank"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="@string/radio_rank_list"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rank_radio_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/radio_rank"
-                android:layout_marginTop="10dp" />
-
-        </RelativeLayout>
-
-    </ScrollView>
-
+        android:layout_below="@id/country_radio_toolbar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 
     <FrameLayout
         android:id="@+id/bottom_container"

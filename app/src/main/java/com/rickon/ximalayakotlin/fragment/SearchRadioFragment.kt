@@ -1,6 +1,5 @@
 package com.rickon.ximalayakotlin.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rickon.ximalayakotlin.R
-import com.rickon.ximalayakotlin.adapter.RankRadioAdapter
+import com.rickon.ximalayakotlin.adapter.VerticalRadioAdapter
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
@@ -23,7 +22,7 @@ import java.util.ArrayList
  */
 class SearchRadioFragment : BaseFragment() {
 
-    private lateinit var mAdapter: RankRadioAdapter
+    private lateinit var mAdapter: VerticalRadioAdapter
     private lateinit var radiosList: ArrayList<Radio>
     private lateinit var recyclerView: RecyclerView
     private lateinit var layoutManager: LinearLayoutManager
@@ -37,8 +36,8 @@ class SearchRadioFragment : BaseFragment() {
         recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
         layoutManager = LinearLayoutManager(mContext)
         recyclerView.layoutManager = layoutManager
-        mAdapter = RankRadioAdapter(XimalayaKotlin.context, radiosList)
-        mAdapter.setOnKotlinItemClickListener(object : RankRadioAdapter.IKotlinItemClickListener {
+        mAdapter = VerticalRadioAdapter(XimalayaKotlin.context, radiosList)
+        mAdapter.setOnKotlinItemClickListener(object : VerticalRadioAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
                 val radio = radiosList[position]
                 //播放直播

@@ -19,7 +19,7 @@ import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
  * @CreateDate:  2019-07-19 11:44
  * @Email:       gaoshuo521@foxmail.com
  */
-class RankRadioAdapter : RecyclerView.Adapter<RankRadioAdapter.ViewHolder> {
+class VerticalRadioAdapter : RecyclerView.Adapter<VerticalRadioAdapter.ViewHolder> {
     private var mContext: Context
     private var radioList: List<Radio>
     private lateinit var itemClickListener: IKotlinItemClickListener
@@ -42,7 +42,7 @@ class RankRadioAdapter : RecyclerView.Adapter<RankRadioAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = radioList[position]
-        with(item){
+        with(item) {
             holder.textViewTitle.text = radioName
             holder.textViewIntro.text = "正在播放：$programName"
             Glide.with(mContext)

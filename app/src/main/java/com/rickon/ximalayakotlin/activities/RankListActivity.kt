@@ -1,6 +1,5 @@
 package com.rickon.ximalayakotlin.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -8,7 +7,7 @@ import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rickon.ximalayakotlin.R
-import com.rickon.ximalayakotlin.adapter.RankRadioAdapter
+import com.rickon.ximalayakotlin.adapter.VerticalRadioAdapter
 import com.ximalaya.ting.android.opensdk.model.live.radio.RadioList
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
@@ -24,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_rank_list.*
 class RankListActivity : BaseActivity() {
 
     private lateinit var mRankRadioList: List<Radio>
-    private lateinit var rankRadioAdapter: RankRadioAdapter
+    private lateinit var verticalRadioAdapter: VerticalRadioAdapter
     private var currentRadioPos = Integer.MAX_VALUE
 
     private var mPlayerServiceManager: XmPlayerManager? = null
@@ -37,20 +36,22 @@ class RankListActivity : BaseActivity() {
             when (msg?.what) {
                 LOAD_RADIO_RANK_SUCCESS -> {
                     rank_radio_list.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
-                    rankRadioAdapter = RankRadioAdapter(applicationContext, mRankRadioList)
-                    rank_radio_list.adapter = rankRadioAdapter
+                    //下面代码解决滑动无惯性的问题
+                    rank_radio_list.isNestedScrollingEnabled = false
+                    verticalRadioAdapter = VerticalRadioAdapter(applicationContext, mRankRadioList)
+                    rank_radio_list.adapter = verticalRadioAdapter
 
-                    rankRadioAdapter.setOnKotlinItemClickListener(object : RankRadioAdapter.IKotlinItemClickListener {
+                    verticalRadioAdapter.setOnKotlinItemClickListener(object : VerticalRadioAdapter.IKotlinItemClickListener {
                         override fun onItemClickListener(position: Int) {
                             if (position != currentRadioPos) {
                                 Log.d(TAG, position.toString())
                                 currentRadioPos = position
 
-                                val radio = mRankRadioList?.get(position)
+                                val radio = mRankRadioList[position]
                                 //播放直播
                                 mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
 
-                                rankRadioAdapter.notifyDataSetChanged()
+                                verticalRadioAdapter.notifyDataSetChanged()
                             }
                         }
                     })
@@ -108,7 +109,7 @@ class RankListActivity : BaseActivity() {
 
     private val mPlayerStatusListener = object : IXmPlayerStatusListener {
         override fun onSoundSwitch(laModel: PlayableModel?, curModel: PlayableModel) {
-            rankRadioAdapter.notifyDataSetChanged()
+            verticalRadioAdapter.notifyDataSetChanged()
         }
 
         override fun onSoundPrepared() {}
