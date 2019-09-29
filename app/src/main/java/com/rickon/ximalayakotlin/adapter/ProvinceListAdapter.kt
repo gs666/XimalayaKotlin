@@ -15,35 +15,30 @@ import com.ximalaya.ting.android.opensdk.model.live.provinces.Province
  * @CreateDate: 2019-06-06 14:15
  * @Email: gaoshuo521@foxmail.com
  */
-class ProvinceListAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ViewHolder> {
+class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
 
     private var mContext: Context
     private var provinceList: List<Province>
     private lateinit var itemClickListener: IKotlinItemClickListener
-    private var selectItem = -1
 
     constructor(mContext: Context, list: List<Province>) {
         this.mContext = mContext
         this.provinceList = list
     }
 
-    fun setSelectItem(selectItem: Int) {
-        this.selectItem = selectItem
-    }
-
-    class ViewHolder(var provinceItemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(provinceItemView) {
-        var textViewTitle: TextView = provinceItemView.findViewById(R.id.id_textview)
+    class ViewHolder(var provinceItemView: View) : RecyclerView.ViewHolder(provinceItemView) {
+        var provinceTitle: TextView = provinceItemView.findViewById(R.id.province_tv)
+//        var provinceCount: TextView = provinceItemView.findViewById(R.id.province_count)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.text_list_item, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.province_list_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textViewTitle.text = provinceList[position].provinceName
-
-        if (position == selectItem) holder.provinceItemView.setBackgroundResource(R.color.selected_bg) else holder.provinceItemView.setBackgroundResource(R.color.white)
+        holder.provinceTitle.text = provinceList[position].provinceName
+//        holder.provinceCount.text = provinceList[position].provinceId.toString()
 
         holder.provinceItemView.setOnClickListener {
             itemClickListener.onItemClickListener(position)

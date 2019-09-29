@@ -154,6 +154,8 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
                 mContext.startActivity(intent)
             }
             R.id.province_city_btn -> {
+                val tempIntent = Intent(mContext, ProvinceActivity::class.java)
+                mContext.startActivity(tempIntent)
             }
         }
     }
