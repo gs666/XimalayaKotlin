@@ -110,6 +110,7 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
             override fun onError(code: Int, message: String) {
                 mLoading = false
                 Log.d(TAG, "获取省市下的电台失败,错误码$code,错误信息$message")
+                showToast(getString(R.string.load_failed))
             }
         })
     }
@@ -147,7 +148,11 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.local_province_btn -> {
-
+                val intent = Intent(mContext, CountryRadioActivity::class.java)
+                //传递一个省份代码和省份名称
+                intent.putExtra("province_code", "320000")
+                intent.putExtra("province_name", "江苏省")
+                mContext.startActivity(intent)
             }
             R.id.country_btn -> {
                 val intent = Intent(mContext, CountryRadioActivity::class.java)

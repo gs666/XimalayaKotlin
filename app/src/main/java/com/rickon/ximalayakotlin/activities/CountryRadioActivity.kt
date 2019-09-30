@@ -26,29 +26,47 @@ class CountryRadioActivity : BaseActivity() {
 
     private var currentRadioPos = Integer.MAX_VALUE
 
+    private var provinceCode: String? = null
+    private var provinceName: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_country_radio)
 
-        initToolBar()
+        provinceCode = intent.getStringExtra("province_code")
+        provinceName = intent.getStringExtra("province_name")
 
-        loadRadioList()
+        if (provinceCode == null) {
+            initToolBar(true)
+            loadRadioList(true)
+        } else {
+            initToolBar(false)
+            loadRadioList(false)
+        }
 
         mPlayerServiceManager = XmPlayerManager.getInstance(applicationContext)
         mPlayerServiceManager?.addPlayerStatusListener(mPlayerStatusListener)
     }
 
     /**
-     * 加载对应省份直播电台不播放
+     * 加载国家台
      */
-    private fun loadRadioList() {
+    private fun loadRadioList(isCountry: Boolean) {
         Log.d(TAG, "加载国家台直播电台不播放")
         if (mLoading) {
             return
         }
         mLoading = true
         val map = HashMap<String, String>()
-        map[DTransferConstants.RADIOTYPE] = COUNTRY_RADIO_TYPE.toString()
+        if (isCountry) {
+            map[DTransferConstants.RADIOTYPE] = COUNTRY_RADIO_TYPE.toString()
+        } else {
+            map[DTransferConstants.RADIOTYPE] = PROVINCE_RADIO_TYPE.toString()
+            provinceCode?.let {
+                map[DTransferConstants.PROVINCECODE] = it
+            }
+
+        }
         CommonRequest.getRadios(map, object : IDataCallBack<RadioList> {
             override fun onSuccess(radioList: RadioList?) {
                 if (radioList?.radios != null) {
@@ -79,15 +97,21 @@ class CountryRadioActivity : BaseActivity() {
 
             override fun onError(code: Int, message: String) {
                 mLoading = false
-                Log.d(TAG, "获取省市下的电台失败,错误码$code,错误信息$message")
+                Log.d(TAG, "获取电台失败,错误码$code,错误信息$message")
+                showToast(getString(R.string.load_failed))
             }
         })
     }
 
-    private fun initToolBar() {
+    private fun initToolBar(isCountry: Boolean) {
         setSupportActionBar(country_radio_toolbar)
         //禁止显示默认 title
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbar_title.text = if (isCountry) {
+            getString(R.string.country_radio)
+        } else {
+            provinceName
+        }
         country_radio_toolbar.setNavigationOnClickListener { finish() }
     }
 

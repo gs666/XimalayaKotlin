@@ -28,7 +28,6 @@ class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
 
     class ViewHolder(var provinceItemView: View) : RecyclerView.ViewHolder(provinceItemView) {
         var provinceTitle: TextView = provinceItemView.findViewById(R.id.province_tv)
-//        var provinceCount: TextView = provinceItemView.findViewById(R.id.province_count)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,8 +37,6 @@ class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.provinceTitle.text = provinceList[position].provinceName
-//        holder.provinceCount.text = provinceList[position].provinceId.toString()
-
         holder.provinceItemView.setOnClickListener {
             itemClickListener.onItemClickListener(position)
         }

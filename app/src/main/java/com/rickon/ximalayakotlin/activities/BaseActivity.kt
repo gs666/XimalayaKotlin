@@ -2,6 +2,7 @@ package com.rickon.ximalayakotlin.activities
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.fragment.QuickControlsFragment
@@ -26,5 +27,9 @@ open class BaseActivity : AppCompatActivity() {
         } else {
             ft.hide(fragment).commitAllowingStateLoss()
         }
+    }
+
+    open fun showToast(str: String) {
+        Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
     }
 }
