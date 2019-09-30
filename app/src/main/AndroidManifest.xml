@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.ProvinceActivity" />
-        <activity android:name=".activities.CountryRadioActivity" />
+        <activity android:name=".activities.RadioListActivity" />
         <activity android:name=".activities.DownloadActivity" />
         <activity android:name=".activities.SearchActivity" />
         <activity android:name=".activities.HistoryActivity" />

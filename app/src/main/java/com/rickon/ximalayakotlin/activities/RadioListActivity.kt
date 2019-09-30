@@ -16,7 +16,7 @@ import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
 import kotlinx.android.synthetic.main.activity_country_radio.*
 
-class CountryRadioActivity : BaseActivity() {
+class RadioListActivity : BaseActivity() {
 
     private lateinit var mRecommendRadioList: MutableList<Radio>
     private lateinit var verticalRadioAdapter: VerticalRadioAdapter
@@ -147,7 +147,7 @@ class CountryRadioActivity : BaseActivity() {
 
     companion object {
 
-        private const val TAG = "CountryRadioActivity"
+        private const val TAG = "RadioListActivity"
         private const val COUNTRY_RADIO_TYPE = 1
         private const val PROVINCE_RADIO_TYPE = 2
         private const val NET_RADIO_TYPE = 3

@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickon.ximalayakotlin.R
-import com.rickon.ximalayakotlin.adapter.HoriRadioAdapter
 import com.rickon.ximalayakotlin.adapter.ProvinceListAdapter
-import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack
 import com.ximalaya.ting.android.opensdk.model.live.provinces.Province
@@ -50,7 +48,7 @@ class ProvinceActivity : BaseActivity() {
 
                     provinceListAdapter.setOnKotlinItemClickListener(object : ProvinceListAdapter.IKotlinItemClickListener {
                         override fun onItemClickListener(position: Int) {
-                            val intent = Intent(mContext, CountryRadioActivity::class.java)
+                            val intent = Intent(mContext, RadioListActivity::class.java)
                             //传递一个省份代码和省份名称
                             intent.putExtra("province_code", mProvinceList[position].provinceCode.toString())
                             intent.putExtra("province_name", mProvinceList[position].provinceName)

@@ -148,14 +148,14 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.local_province_btn -> {
-                val intent = Intent(mContext, CountryRadioActivity::class.java)
+                val intent = Intent(mContext, RadioListActivity::class.java)
                 //传递一个省份代码和省份名称
                 intent.putExtra("province_code", "320000")
                 intent.putExtra("province_name", "江苏省")
                 mContext.startActivity(intent)
             }
             R.id.country_btn -> {
-                val intent = Intent(mContext, CountryRadioActivity::class.java)
+                val intent = Intent(mContext, RadioListActivity::class.java)
                 mContext.startActivity(intent)
             }
             R.id.province_city_btn -> {
