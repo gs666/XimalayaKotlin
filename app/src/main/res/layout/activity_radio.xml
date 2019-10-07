@@ -40,7 +40,7 @@
         <TextView
             android:id="@+id/local_province_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
@@ -55,7 +55,7 @@
         <TextView
             android:id="@+id/country_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
@@ -70,7 +70,7 @@
         <TextView
             android:id="@+id/province_city_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center"
