@@ -87,9 +87,11 @@ class QuickControlsFragment : BaseFragment() {
 
         //跳转正在播放页面
         rootView.setOnClickListener {
-            val intent = Intent(context, PlayingActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            XimalayaKotlin.context.startActivity(intent)
+            if(mPlayerManager.isPlaying){
+                val intent = Intent(context, PlayingActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                XimalayaKotlin.context.startActivity(intent)
+            }
         }
     }
 
