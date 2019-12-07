@@ -81,13 +81,19 @@ class QuickControlsFragment : BaseFragment() {
         }
 
         currentListBtn.setOnClickListener {
-            Toast.makeText(XimalayaKotlin.context, "暂未开发此功能", Toast.LENGTH_SHORT).show()
+            //            Toast.makeText(XimalayaKotlin.context, "暂未开发此功能", Toast.LENGTH_SHORT).show()
+
+            val trackList = mPlayerManager.playList
+            Log.d(TAG, "trackList" + trackList.size)
+
+            val playingListFragment = PlayingListFragment(trackList as ArrayList<Track>)
+            playingListFragment.show(activity?.supportFragmentManager, "playingList")
         }
 
 
         //跳转正在播放页面
         rootView.setOnClickListener {
-            if(mPlayerManager.isPlaying){
+            if (mPlayerManager.isPlaying) {
                 val intent = Intent(context, PlayingActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 XimalayaKotlin.context.startActivity(intent)
