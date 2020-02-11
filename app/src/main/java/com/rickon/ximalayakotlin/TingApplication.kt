@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import com.rickon.ximalayakotlin.receiver.MyPlayerReceiver
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
+import com.umeng.commonsdk.UMConfigure
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.player.appnotification.XmNotificationCreater
 import com.ximalaya.ting.android.opensdk.util.BaseUtil
@@ -69,6 +70,15 @@ open class TingApplication : Application() {
         XimalayaKotlin.initialize(this)
         //初始化LitePal数据库
         LitePal.initialize(this)
+
+        /**
+         * 注意: 即使您已经在AndroidManifest.xml中配置过appkey和channel值，也需要在App代码中调
+         * 用初始化接口（如需要使用AndroidManifest.xml中配置好的appkey和channel值，
+         * UMConfigure.init调用中appkey和channel参数请置为null）。
+         */
+        val appkey = "5e4172ddcb23d27e2a00015e"
+        val channel = "github"
+        UMConfigure.init(this,appkey, channel, UMConfigure.DEVICE_TYPE_PHONE, null)
 
         val mp3 = getExternalFilesDir("mp3")?.absolutePath
         println("地址是  $mp3")

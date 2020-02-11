@@ -1,11 +1,11 @@
 package com.rickon.ximalayakotlin.activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.fragment.QuickControlsFragment
+import com.umeng.analytics.MobclickAgent
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -14,6 +14,16 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showQuickControl(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MobclickAgent.onResume(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        MobclickAgent.onPause(this)
     }
 
     /**

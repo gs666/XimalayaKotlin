@@ -48,4 +48,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation 'io.alterac.blurkit:blurkit:1.1.1'
     implementation 'org.litepal.android:kotlin:3.0.0'
+    implementation  'com.umeng.umsdk:analytics:8.0.0'
+    implementation  'com.umeng.umsdk:common:2.0.0'
 }
