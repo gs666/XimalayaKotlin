@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="830px"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/ivAlbumCoverBg"
+        android:layout_width="match_parent"
+        android:layout_height="830px"
+        android:scaleType="centerCrop"
+        android:src="@color/half_grey" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="830px"
+        android:scaleType="centerCrop"
+        android:src="@color/half_grey" />
+
+
+    <TextView
+        android:id="@+id/tvAlbumTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60px"
+        android:layout_marginTop="144px"
+        android:text="霸道总裁爱上我"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
+    <ImageView
+        android:id="@+id/ivAlbumCover"
+        android:layout_width="315px"
+        android:layout_height="315px"
+        android:layout_below="@id/tvAlbumTitle"
+        android:layout_alignLeft="@id/tvAlbumTitle"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_default" />
+
+    <TextView
+        android:id="@+id/tvAlbumAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/ivAlbumCover"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/ivAlbumCover"
+        android:text="主播：Messi"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:id="@+id/album_info_zone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAlbumAuthor"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/ivAlbumCover">
+
+        <TextView
+            android:id="@+id/tvAlbumSubscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:text="订阅：20万"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@color/black" />
+
+        <TextView
+            android:id="@+id/tvAlbumPlayCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="10万"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvAlbumIntro"
+        android:layout_width="wrap_content"
+        android:layout_height="200px"
+        android:layout_below="@id/album_info_zone"
+        android:layout_alignLeft="@id/album_info_zone"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="60px"
+        android:text="绝路下她被迫接受天价交易，本以为钱货两清，没想到五年后再相逢。 他嘴上说着厌弃， ..."
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+
+</RelativeLayout>

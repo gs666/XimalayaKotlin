@@ -6,31 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".activities.AlbumActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tracks_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_container" />
+
     <RelativeLayout
         android:id="@+id/toolbar_zone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/cover_bg"
-            android:layout_width="match_parent"
-            android:layout_height="830px"
-            android:scaleType="centerCrop"
-            android:src="@color/half_grey" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="830px"
-            android:scaleType="centerCrop"
-            android:src="@color/half_grey" />
-
-        <ImageView
-            android:id="@+id/return_btn"
+            android:id="@+id/returnBtn"
             android:layout_width="144px"
             android:layout_height="144px"
             android:padding="15dp"
             android:src="@drawable/ic_return_white" />
-
 
         <ImageView
             android:id="@+id/like_btn"
@@ -55,144 +47,6 @@
             android:layout_alignParentEnd="true"
             android:padding="15dp"
             android:src="@drawable/ic_more_white" />
-
-
-        <TextView
-            android:id="@+id/album_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/return_btn"
-            android:layout_marginLeft="60px"
-            android:text="霸道总裁爱上我"
-            android:textColor="@color/white"
-            android:textSize="25sp" />
-
-        <ImageView
-            android:id="@+id/cover_image"
-            android:layout_width="315px"
-            android:layout_height="315px"
-            android:layout_below="@id/album_title"
-            android:layout_alignLeft="@id/album_title"
-            android:layout_marginTop="20dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_default" />
-
-        <TextView
-            android:id="@+id/album_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/cover_image"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/cover_image"
-            android:text="主播：Messi"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-
-        <LinearLayout
-            android:id="@+id/album_info_zone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/album_author"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/cover_image">
-
-            <TextView
-                android:id="@+id/album_subscribe"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:text="订阅：20万"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:background="@color/black" />
-
-            <TextView
-                android:id="@+id/album_play_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:text="10万"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/album_intro"
-            android:layout_width="wrap_content"
-            android:layout_height="200px"
-            android:layout_below="@id/album_info_zone"
-            android:layout_alignLeft="@id/album_info_zone"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="60px"
-            android:text="绝路下她被迫接受天价交易，本以为钱货两清，没想到五年后再相逢。 他嘴上说着厌弃， ..."
-            android:textColor="@color/white"
-            android:textSize="10sp" />
-
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/play_all_zone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar_zone">
-
-        <ImageView
-            android:id="@+id/play_all_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="40px"
-            android:scaleType="center"
-            android:src="@drawable/ic_play_black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_below="@id/return_btn"
-            android:gravity="center"
-            android:text="@string/play_all"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@id/play_all_zone"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@color/split_line" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/play_all_zone"
-        android:layout_above="@id/bottom_container">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tracks_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/try_to_get_info"
-            android:layout_marginRight="20dp" />
-
-        <TextView
-            android:id="@+id/try_to_get_info"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/trying_to_get"
-            android:textSize="12sp"/>
-
     </RelativeLayout>
 
     <FrameLayout

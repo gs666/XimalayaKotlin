@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.activities.PlayingActivity
-import com.rickon.ximalayakotlin.adapter.TrackAdapter
+import com.rickon.ximalayakotlin.adapter.CommonTrackAdapter
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
@@ -24,7 +24,7 @@ import java.util.ArrayList
  */
 class SearchTrackFragment : BaseFragment() {
 
-    private lateinit var mAdapter: TrackAdapter
+    private lateinit var mAdapter: CommonTrackAdapter
     private lateinit var tracksList: ArrayList<Track>
     private lateinit var recyclerView: RecyclerView
     private lateinit var layoutManager: LinearLayoutManager
@@ -39,8 +39,8 @@ class SearchTrackFragment : BaseFragment() {
 
         layoutManager = LinearLayoutManager(mContext)
         recyclerView.layoutManager = layoutManager
-        mAdapter = TrackAdapter(XimalayaKotlin.context, tracksList, true)
-        mAdapter.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {
+        mAdapter = CommonTrackAdapter(XimalayaKotlin.context, tracksList, true)
+        mAdapter.setOnKotlinItemClickListener(object : CommonTrackAdapter.IKotlinItemClickListener {
             override fun onItemClickListener(position: Int) {
                 XmPlayerManager.getInstance(mContext).playList(tracksList, position)
                 val intent = Intent(context, PlayingActivity::class.java)
