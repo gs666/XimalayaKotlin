@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.activities.DownloadActivity
 import com.rickon.ximalayakotlin.activities.HistoryActivity
+import com.rickon.ximalayakotlin.activities.SettingActivity
 import kotlinx.android.synthetic.main.fragment_mine_layout.*
 
 class MineFragment : BaseFragment(), View.OnClickListener {
@@ -50,7 +51,7 @@ class MineFragment : BaseFragment(), View.OnClickListener {
 
             }
             R.id.my_setting_btn -> {
-
+                this.startActivity(Intent(mContext, SettingActivity::class.java))
             }
         }
     }

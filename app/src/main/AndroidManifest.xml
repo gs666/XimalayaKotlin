@@ -38,6 +38,7 @@
             android:launchMode="singleTask" />
         <activity android:name=".activities.RankListActivity" />
         <activity android:name=".activities.RadioActivity" />
+        <activity android:name=".activities.SettingActivity" />
         <activity android:name=".activities.BaseActivity" />
         <activity
             android:name=".activities.MainActivity"

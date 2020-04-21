@@ -87,7 +87,7 @@ class AlbumActivity : BaseActivity(), OnClickListener {
                     loadTracksByAlbumId()
                 }
                 else -> {
-                    Log.e(TAG, "msg" + msg.what)
+                    Log.e(TAG, "msg" + msg?.what)
                 }
             }
         }
