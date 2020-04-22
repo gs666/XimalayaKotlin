@@ -64,12 +64,12 @@ class SimpleMoreFragment : DialogFragment() {
 
         Log.d(TAG, "onCreateView")
         //设置无标题
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         //设置从底部弹出
-        val params = dialog.window?.attributes
+        val params = dialog?.window?.attributes
         params?.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog.window?.attributes = params
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window?.attributes = params
         arguments?.let { args = it.getLong("id") }
 
         //布局
@@ -147,9 +147,8 @@ class SimpleMoreFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
 //        //设置fragment高度 、宽度
-        dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-        dialog.setCanceledOnTouchOutside(true)
-
+        dialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialog?.setCanceledOnTouchOutside(true)
     }
 
     companion object {

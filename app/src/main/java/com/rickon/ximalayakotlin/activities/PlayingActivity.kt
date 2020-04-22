@@ -29,9 +29,9 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
             Log.i(TAG, "onSoundSwitch index:$curModel")
 
             val model = mPlayerServiceManager.currSound
-            var title: String
-            var singer: String
-            var coverUrl: String
+            val title: String
+            val singer: String
+            val coverUrl: String
             when (model) {
                 is Track -> {
                     title = model.trackTitle
@@ -193,12 +193,12 @@ class PlayingActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.like_btn -> {
-                if (!isLiked) {
-                    like_btn.setImageDrawable(getDrawable(R.drawable.ic_liked))
-                    isLiked = true
-                } else {
+                isLiked = if (isLiked) {
                     like_btn.setImageDrawable(getDrawable(R.drawable.ic_like))
-                    isLiked = false
+                    false
+                } else {
+                    like_btn.setImageDrawable(getDrawable(R.drawable.ic_liked))
+                    true
                 }
             }
             R.id.countdown_btn -> {

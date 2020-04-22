@@ -42,7 +42,7 @@ class AlbumActivity : BaseActivity(), OnClickListener {
     private var haveMore = true
 
     private var tracksList = mutableListOf<Track>()
-    private var albumInfos = arrayOf("", "", "", "", "", "")
+    private var albumInfoArray = arrayOf("", "", "", "", "", "")
 
     private lateinit var addTracksList: MutableList<Track>
     private var currentPage = 1
@@ -141,15 +141,15 @@ class AlbumActivity : BaseActivity(), OnClickListener {
 
     private fun initList() {
         //专辑相关信息
-        albumInfos[0] = album.albumTitle
-        albumInfos[1] = album.announcer.nickname
-        albumInfos[2] = "已订阅：${GlobalUtil.formatNum(album.subscribeCount.toString(), false)}"
-        albumInfos[3] = "播放${GlobalUtil.formatNum(album.playCount.toString(), false)}";
-        albumInfos[4] = album.albumIntro
-        albumInfos[5] = album.coverUrlLarge
+        albumInfoArray[0] = album.albumTitle
+        albumInfoArray[1] = album.announcer.nickname
+        albumInfoArray[2] = "已订阅：${GlobalUtil.formatNum(album.subscribeCount.toString(), false)}"
+        albumInfoArray[3] = "播放${GlobalUtil.formatNum(album.playCount.toString(), false)}"
+        albumInfoArray[4] = album.albumIntro
+        albumInfoArray[5] = album.coverUrlLarge
 
         tracks_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
-        trackAdapter = TrackAdapter(applicationContext, tracksList, albumInfos, false)
+        trackAdapter = TrackAdapter(applicationContext, tracksList, albumInfoArray, false)
         tracks_recycler.adapter = trackAdapter
 
         trackAdapter.setOnKotlinItemClickListener(object : TrackAdapter.IKotlinItemClickListener {

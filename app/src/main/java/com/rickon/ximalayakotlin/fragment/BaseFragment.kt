@@ -13,9 +13,9 @@ import androidx.fragment.app.Fragment
 open class BaseFragment() : Fragment() {
     lateinit var mContext: Context
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
-        context?.let { mContext = it }
+        mContext = context
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -87,7 +87,7 @@ class QuickControlsFragment : BaseFragment() {
             Log.d(TAG, "trackList" + trackList.size)
 
             val playingListFragment = PlayingListFragment(trackList as ArrayList<Track>)
-            playingListFragment.show(activity?.supportFragmentManager, "playingList")
+            activity?.supportFragmentManager?.let { it1 -> playingListFragment.show(it1, "playingList") }
         }
 
 
