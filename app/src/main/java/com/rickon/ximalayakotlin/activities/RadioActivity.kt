@@ -156,22 +156,20 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
                 when (msg.what) {
                     MSG_LOAD_RADIO_SUCCESS -> {
                         val myActivity = radioActivity.get()
-                        if (myActivity != null) {
-                            myActivity.recommend_radio_list.layoutManager = LinearLayoutManager(myActivity.applicationContext, LinearLayoutManager.HORIZONTAL, false)
-                            myActivity.horiRadioAdapter = HoriRadioAdapter(myActivity.applicationContext, myActivity.mRecommendRadioList)
-                            myActivity.recommend_radio_list.adapter = myActivity.horiRadioAdapter
+                        myActivity?.let {
+                            it.recommend_radio_list.layoutManager = LinearLayoutManager(it.applicationContext, LinearLayoutManager.HORIZONTAL, false)
+                            it.horiRadioAdapter = HoriRadioAdapter(it.applicationContext, it.mRecommendRadioList)
+                            it.recommend_radio_list.adapter = it.horiRadioAdapter
 
-                            myActivity.horiRadioAdapter.setOnKotlinItemClickListener(object : HoriRadioAdapter.IKotlinItemClickListener {
+                            it.horiRadioAdapter.setOnKotlinItemClickListener(object : HoriRadioAdapter.IKotlinItemClickListener {
                                 override fun onItemClickListener(position: Int) {
-                                    if (position != myActivity.currentRadioPos) {
+                                    if (position != it.currentRadioPos) {
                                         Log.d(TAG, position.toString())
-                                        myActivity.currentRadioPos = position
-
-                                        val radio = myActivity.mRecommendRadioList[position]
+                                        it.currentRadioPos = position
+                                        val radio = it.mRecommendRadioList[position]
                                         //播放直播
-                                        myActivity.mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
-
-                                        myActivity.horiRadioAdapter.notifyDataSetChanged()
+                                        it.mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
+                                        it.horiRadioAdapter.notifyDataSetChanged()
                                     }
                                 }
                             })
@@ -181,4 +179,5 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
+
 }
