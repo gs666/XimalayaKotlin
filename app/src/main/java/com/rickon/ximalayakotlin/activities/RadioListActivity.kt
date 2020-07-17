@@ -1,6 +1,7 @@
 package com.rickon.ximalayakotlin.activities
 
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickon.ximalayakotlin.R
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_country_radio.*
 
 class RadioListActivity : BaseActivity() {
 
-    private lateinit var mRecommendRadioList: MutableList<Radio>
+    private var mRecommendRadioList: MutableList<Radio> = mutableListOf()
     private lateinit var verticalRadioAdapter: VerticalRadioAdapter
 
     private var mLoading = false
@@ -33,6 +34,8 @@ class RadioListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_country_radio)
 
+        initRecyclerView()
+
         provinceCode = intent.getStringExtra("province_code")
         provinceName = intent.getStringExtra("province_name")
 
@@ -46,6 +49,34 @@ class RadioListActivity : BaseActivity() {
 
         mPlayerServiceManager = XmPlayerManager.getInstance(applicationContext)
         mPlayerServiceManager?.addPlayerStatusListener(mPlayerStatusListener)
+    }
+
+    override fun mainHandlerMessage(activity: BaseActivity?, msg: Message) {
+        super.mainHandlerMessage(activity, msg)
+        when (msg.what) {
+            MSG_LOAD_RADIO_SUCCESS -> verticalRadioAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun initRecyclerView() {
+        country_radio_recycler.layoutManager = LinearLayoutManager(applicationContext,
+                LinearLayoutManager.VERTICAL, false)
+        verticalRadioAdapter = VerticalRadioAdapter(applicationContext, mRecommendRadioList)
+        country_radio_recycler.adapter = verticalRadioAdapter
+
+        verticalRadioAdapter.setOnKotlinItemClickListener(object : VerticalRadioAdapter.IKotlinItemClickListener {
+            override fun onItemClickListener(position: Int) {
+                if (position != currentRadioPos) {
+                    Log.d(TAG, position.toString())
+                    currentRadioPos = position
+
+                    val radio = mRecommendRadioList[position]
+                    //播放直播
+                    mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
+                    verticalRadioAdapter.notifyDataSetChanged()
+                }
+            }
+        })
     }
 
     /**
@@ -70,27 +101,8 @@ class RadioListActivity : BaseActivity() {
         CommonRequest.getRadios(map, object : IDataCallBack<RadioList> {
             override fun onSuccess(radioList: RadioList?) {
                 if (radioList?.radios != null) {
-                    mRecommendRadioList = radioList.radios
-
-                    country_radio_recycler.layoutManager = LinearLayoutManager(applicationContext,
-                            LinearLayoutManager.VERTICAL, false)
-                    verticalRadioAdapter = VerticalRadioAdapter(applicationContext, mRecommendRadioList)
-                    country_radio_recycler.adapter = verticalRadioAdapter
-
-                    verticalRadioAdapter.setOnKotlinItemClickListener(object : VerticalRadioAdapter.IKotlinItemClickListener {
-                        override fun onItemClickListener(position: Int) {
-                            if (position != currentRadioPos) {
-                                Log.d(TAG, position.toString())
-                                currentRadioPos = position
-
-                                val radio = mRecommendRadioList[position]
-                                //播放直播
-                                mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
-
-                                verticalRadioAdapter.notifyDataSetChanged()
-                            }
-                        }
-                    })
+                    mRecommendRadioList.addAll(radioList.radios)
+                    mainHandler.sendEmptyMessage(MSG_LOAD_RADIO_SUCCESS)
                 }
                 mLoading = false
             }
@@ -151,7 +163,7 @@ class RadioListActivity : BaseActivity() {
         private const val COUNTRY_RADIO_TYPE = 1
         private const val PROVINCE_RADIO_TYPE = 2
         private const val NET_RADIO_TYPE = 3
-        private const val LOAD_PROVINCE_SUCCESS = 4
+        private const val MSG_LOAD_RADIO_SUCCESS = 4
     }
 
 }

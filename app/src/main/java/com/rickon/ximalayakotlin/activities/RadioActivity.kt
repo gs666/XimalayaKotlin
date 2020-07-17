@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_radio.*
 
 class RadioActivity : BaseActivity(), View.OnClickListener {
 
-    private lateinit var mRecommendRadioList: MutableList<Radio>
+    private var mRecommendRadioList: MutableList<Radio> = mutableListOf()
     private var mLoading = false
     private var currentRadioPos = Int.MAX_VALUE
 
@@ -33,12 +33,10 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_radio)
 
+        initView()
         initListener()
 
-        setSupportActionBar(radio_toolbar)
-        //禁止显示默认 title
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        radio_toolbar.setNavigationOnClickListener { finish() }
+        initRecyclerView()
 
         loadRadioList()
 
@@ -46,38 +44,43 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
         mPlayerServiceManager?.addPlayerStatusListener(mPlayerStatusListener)
     }
 
-    override fun mainHandlerMessage(activity: BaseActivity?, msg: Message?) {
+    override fun mainHandlerMessage(activity: BaseActivity?, msg: Message) {
         super.mainHandlerMessage(activity, msg)
-        when (msg?.what) {
-            MSG_LOAD_RADIO_SUCCESS -> {
-                val myActivity = activity as RadioActivity
-                myActivity?.let {
-                    it.recommend_radio_list.layoutManager = LinearLayoutManager(it.applicationContext, LinearLayoutManager.HORIZONTAL, false)
-                    it.horiRadioAdapter = HoriRadioAdapter(it.applicationContext, it.mRecommendRadioList)
-                    it.recommend_radio_list.adapter = it.horiRadioAdapter
-
-                    it.horiRadioAdapter.setOnKotlinItemClickListener(object : HoriRadioAdapter.IKotlinItemClickListener {
-                        override fun onItemClickListener(position: Int) {
-                            if (position != it.currentRadioPos) {
-                                Log.d(TAG, position.toString())
-                                it.currentRadioPos = position
-                                val radio = it.mRecommendRadioList[position]
-                                //播放直播
-                                it.mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
-                                it.horiRadioAdapter.notifyDataSetChanged()
-                            }
-                        }
-                    })
-                }
-            }
+        when (msg.what) {
+            MSG_LOAD_RADIO_SUCCESS -> horiRadioAdapter.notifyDataSetChanged()
         }
+    }
 
+    private fun initView() {
+        setSupportActionBar(radio_toolbar)
+        //禁止显示默认 title
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        radio_toolbar.setNavigationOnClickListener { finish() }
     }
 
     private fun initListener() {
         local_province_btn.setOnClickListener(this)
         country_btn.setOnClickListener(this)
         province_city_btn.setOnClickListener(this)
+    }
+
+    private fun initRecyclerView() {
+        recommend_radio_list.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        horiRadioAdapter = HoriRadioAdapter(applicationContext, mRecommendRadioList)
+        recommend_radio_list.adapter = horiRadioAdapter
+
+        horiRadioAdapter.setOnKotlinItemClickListener(object : HoriRadioAdapter.IKotlinItemClickListener {
+            override fun onItemClickListener(position: Int) {
+                if (position != currentRadioPos) {
+                    Log.d(TAG, position.toString())
+                    currentRadioPos = position
+                    val radio = mRecommendRadioList[position]
+                    //播放直播
+                    mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
+                    horiRadioAdapter.notifyDataSetChanged()
+                }
+            }
+        })
     }
 
     /**
@@ -94,11 +97,8 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
         CommonRequest.getRadios(map, object : IDataCallBack<RadioList> {
             override fun onSuccess(radioList: RadioList?) {
                 if (radioList?.radios != null) {
-                    mRecommendRadioList = radioList.radios
-
-                    val msg = Message()
-                    msg.what = MSG_LOAD_RADIO_SUCCESS
-                    mainHandler.sendMessage(msg)
+                    mRecommendRadioList.addAll(radioList.radios)
+                    mainHandler.sendEmptyMessage(MSG_LOAD_RADIO_SUCCESS)
                 }
                 mLoading = false
             }

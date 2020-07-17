@@ -49,7 +49,7 @@ open class BaseActivity : AppCompatActivity() {
         Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
     }
 
-    protected open fun mainHandlerMessage(activity: BaseActivity?, msg: Message?) {}
+    protected open fun mainHandlerMessage(activity: BaseActivity?, msg: Message) {}
 
     companion object {
         class WithoutLeakHandler(baseActivity: BaseActivity) : Handler() {

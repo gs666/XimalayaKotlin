@@ -25,7 +25,6 @@ Public contributions are welcomed in the form of pull requests with a clear desc
 ## Thanks to the open source project
 
 * [glide](https://github.com/bumptech/glide)
-* [Litepal](https://github.com/LitePalFramework/LitePal)
 * [blurkit-android](https://github.com/CameraKit/blurkit-android)
 
 ## About me

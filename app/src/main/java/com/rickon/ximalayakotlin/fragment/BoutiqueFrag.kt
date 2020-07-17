@@ -48,21 +48,25 @@ class BoutiqueFrag : BaseFragment() {
         tab_layout.setupWithViewPager(view_pager)
         val titleList = mutableListOf(getString(R.string.recommend),
                 getString(R.string.book_city),
-                getString(R.string.feeling),
                 getString(R.string.music),
+                getString(R.string.feeling),
                 getString(R.string.crosstalk),
                 getString(R.string.parent_child),
                 getString(R.string.headline),
                 getString(R.string.entertainment),
                 getString(R.string.knowledge))
         val fragmentList = mutableListOf(RecommendFrag.newInstance() as Fragment,
-                BookCityFragment.newInstance() as Fragment,
-                FeelingFragment.newInstance() as Fragment,
-                MusicFragment.newInstance() as Fragment)
+                CommonCategoryFrag.newInstance(3) as Fragment,
+                CommonCategoryFrag.newInstance(2) as Fragment,
+                CommonCategoryFrag.newInstance(10) as Fragment,
+                CommonCategoryFrag.newInstance(12) as Fragment,
+                CommonCategoryFrag.newInstance(6) as Fragment,
+                CommonCategoryFrag.newInstance(1) as Fragment,
+                CommonCategoryFrag.newInstance(4) as Fragment,
+                CommonCategoryFrag.newInstance(30) as Fragment)
         val myFragmentPagerAdapter = CommonFragmentPagerAdapter(childFragmentManager, titleList, fragmentList)
         view_pager.adapter = myFragmentPagerAdapter
         view_pager.offscreenPageLimit = 3
-
     }
 
 
