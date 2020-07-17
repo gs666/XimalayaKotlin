@@ -15,16 +15,10 @@ import com.ximalaya.ting.android.opensdk.model.live.provinces.Province
  * @CreateDate: 2019-06-06 14:15
  * @Email: gaoshuo521@foxmail.com
  */
-class ProvinceListAdapter : RecyclerView.Adapter<ViewHolder> {
+class ProvinceListAdapter(private var mContext: Context, list: List<Province>) : RecyclerView.Adapter<ViewHolder>() {
 
-    private var mContext: Context
-    private var provinceList: List<Province>
+    private var provinceList: List<Province> = list
     private lateinit var itemClickListener: IKotlinItemClickListener
-
-    constructor(mContext: Context, list: List<Province>) {
-        this.mContext = mContext
-        this.provinceList = list
-    }
 
     class ViewHolder(var provinceItemView: View) : RecyclerView.ViewHolder(provinceItemView) {
         var provinceTitle: TextView = provinceItemView.findViewById(R.id.province_tv)

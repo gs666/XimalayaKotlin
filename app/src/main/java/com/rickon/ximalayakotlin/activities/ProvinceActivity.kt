@@ -2,6 +2,7 @@ package com.rickon.ximalayakotlin.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rickon.ximalayakotlin.R
@@ -16,15 +17,39 @@ class ProvinceActivity : BaseActivity() {
 
     private var mLoading = false
     private val mContext = this
-    private lateinit var mProvinceList: MutableList<Province>
+    private var mProvinceList: MutableList<Province> = mutableListOf()
     private lateinit var provinceListAdapter: ProvinceListAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_province)
 
+        initRecyclerView()
+
         loadProvinceList()
+    }
+
+    override fun mainHandlerMessage(activity: BaseActivity?, msg: Message) {
+        super.mainHandlerMessage(activity, msg)
+        when (msg.what) {
+            MSG_LOAD_SUCCESS -> provinceListAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun initRecyclerView() {
+        province_list.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+        provinceListAdapter = ProvinceListAdapter(applicationContext, mProvinceList)
+        province_list.adapter = provinceListAdapter
+
+        provinceListAdapter.setOnKotlinItemClickListener(object : ProvinceListAdapter.IKotlinItemClickListener {
+            override fun onItemClickListener(position: Int) {
+                val intent = Intent(mContext, RadioListActivity::class.java)
+                //传递一个省份代码和省份名称
+                intent.putExtra("province_code", mProvinceList[position].provinceCode.toString())
+                intent.putExtra("province_name", mProvinceList[position].provinceName)
+                mContext.startActivity(intent)
+            }
+        })
     }
 
     /**
@@ -40,21 +65,10 @@ class ProvinceActivity : BaseActivity() {
         CommonRequest.getProvinces(map, object : IDataCallBack<ProvinceList> {
             override fun onSuccess(provinceList: ProvinceList?) {
                 if (provinceList?.provinceList != null) {
-                    mProvinceList = provinceList.provinceList
+                    mProvinceList.addAll(provinceList.provinceList)
+                    mainHandler.sendEmptyMessage(MSG_LOAD_SUCCESS)
 
-                    province_list.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
-                    provinceListAdapter = ProvinceListAdapter(applicationContext, mProvinceList)
-                    province_list.adapter = provinceListAdapter
 
-                    provinceListAdapter.setOnKotlinItemClickListener(object : ProvinceListAdapter.IKotlinItemClickListener {
-                        override fun onItemClickListener(position: Int) {
-                            val intent = Intent(mContext, RadioListActivity::class.java)
-                            //传递一个省份代码和省份名称
-                            intent.putExtra("province_code", mProvinceList[position].provinceCode.toString())
-                            intent.putExtra("province_name", mProvinceList[position].provinceName)
-                            mContext.startActivity(intent)
-                        }
-                    })
                 }
                 mLoading = false
             }
@@ -69,5 +83,6 @@ class ProvinceActivity : BaseActivity() {
 
     companion object {
         private const val TAG = "ProvinceActivity"
+        private const val MSG_LOAD_SUCCESS = 0
     }
 }

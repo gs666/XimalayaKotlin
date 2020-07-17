@@ -19,15 +19,9 @@ import com.rickon.ximalayakotlin.model.HistoryItem
  * @CreateDate:  2019-07-19 11:44
  * @Email:       gaoshuo521@foxmail.com
  */
-class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
-    private var mContext: Context
-    private var historyList: List<HistoryItem>
+class HistoryAdapter(private var mContext: Context, list: List<HistoryItem>) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+    private var historyList: List<HistoryItem> = list
     private lateinit var itemClickListener: IKotlinItemClickListener
-
-    constructor(mContext: Context, list: List<HistoryItem>) {
-        this.mContext = mContext
-        this.historyList = list
-    }
 
     class ViewHolder(var radioItemView: View) : RecyclerView.ViewHolder(radioItemView) {
         var imageCover: ImageView = radioItemView.findViewById(R.id.id_image_cover)
@@ -43,13 +37,9 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = historyList[position]
-        with(item){
+        with(item) {
             holder.textViewTitle.text = itemTitle
-            if (isAlbum) {
-                holder.currentTrackTitle.text = "上次听到：$trackTitle"
-            } else {
-                holder.currentTrackTitle.text = trackTitle
-            }
+            holder.currentTrackTitle.text = if (isAlbum) "上次听到：$trackTitle" else trackTitle
             holder.textViewSinger.text = albumAuthor
             Glide.with(mContext)
                     .load(itemImagePath).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))

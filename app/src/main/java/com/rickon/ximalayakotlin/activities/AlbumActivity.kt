@@ -2,8 +2,6 @@ package com.rickon.ximalayakotlin.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.Message
 import android.util.Log
 import android.view.View
@@ -78,18 +76,10 @@ class AlbumActivity : BaseActivity(), OnClickListener {
 
     }
 
-    // 创建一个Handler
-    private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
-        override fun handleMessage(msg: Message?) {
-            super.handleMessage(msg)
-            when (msg?.what) {
-                MSG_LOAD_DATA -> {
-                    loadTracksByAlbumId()
-                }
-                else -> {
-                    Log.e(TAG, "msg" + msg?.what)
-                }
-            }
+    override fun mainHandlerMessage(activity: BaseActivity?, msg: Message) {
+        super.mainHandlerMessage(activity, msg)
+        when (msg.what) {
+            MSG_LOAD_DATA -> loadTracksByAlbumId()
         }
     }
 
@@ -180,9 +170,8 @@ class AlbumActivity : BaseActivity(), OnClickListener {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1) && tracksList.size > 0 && haveMore) {
                     currentPage++
-                    mHandler.sendEmptyMessage(MSG_LOAD_DATA)
+                    mainHandler.sendEmptyMessage(MSG_LOAD_DATA)
                     Log.d(TAG, "拉到底部")
-
                 }
             }
         })

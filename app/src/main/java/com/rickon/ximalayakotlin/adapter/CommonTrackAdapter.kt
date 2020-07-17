@@ -21,17 +21,9 @@ import com.ximalaya.ting.android.opensdk.model.track.Track
  * @CreateDate:  2019-07-26 18:23
  * @Email:       gaoshuo521@foxmail.com
  */
-class CommonTrackAdapter : RecyclerView.Adapter<CommonTrackAdapter.ViewHolder> {
-    private var mContext: Context
-    private var trackList: List<Track>
-    private var showImageCover = false
+class CommonTrackAdapter(private var mContext: Context, list: List<Track>, private var showImageCover: Boolean) : RecyclerView.Adapter<CommonTrackAdapter.ViewHolder>() {
+    private var trackList: List<Track> = list
     private lateinit var itemClickListener: IKotlinItemClickListener
-
-    constructor(mContext: Context, list: List<Track>, showImageCover: Boolean) {
-        this.mContext = mContext
-        this.trackList = list
-        this.showImageCover = showImageCover
-    }
 
     class ViewHolder(var trackItemView: View) : RecyclerView.ViewHolder(trackItemView) {
         var imageCover: ImageView = trackItemView.findViewById(R.id.id_image_cover)

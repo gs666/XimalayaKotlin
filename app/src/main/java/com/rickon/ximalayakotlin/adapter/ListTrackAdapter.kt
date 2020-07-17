@@ -16,15 +16,9 @@ import com.ximalaya.ting.android.opensdk.model.track.Track
  * @CreateDate:  2019-07-26 18:23
  * @Email:       gaoshuo521@foxmail.com
  */
-class ListTrackAdapter : RecyclerView.Adapter<ListTrackAdapter.ViewHolder> {
-    private var mContext: Context
-    private var trackList: List<Track>
+class ListTrackAdapter(private var mContext: Context, list: List<Track>) : RecyclerView.Adapter<ListTrackAdapter.ViewHolder>() {
+    private var trackList: List<Track> = list
     private lateinit var itemClickListener: IKotlinItemClickListener
-
-    constructor(mContext: Context, list: List<Track>) {
-        this.mContext = mContext
-        this.trackList = list
-    }
 
     class ViewHolder(var trackItemView: View) : RecyclerView.ViewHolder(trackItemView) {
         var playingFlag: ImageView = trackItemView.findViewById(R.id.id_playing_flag)

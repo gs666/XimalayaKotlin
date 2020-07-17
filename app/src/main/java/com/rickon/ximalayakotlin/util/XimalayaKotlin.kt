@@ -17,10 +17,7 @@
 
 package com.rickon.ximalayakotlin.util
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 
 /**
  * 全局的API接口。
@@ -39,14 +36,6 @@ object XimalayaKotlin {
     lateinit var context: Context
 
     /**
-     * 获取创建在主线程上的Handler对象。
-     *
-     * @return 创建在主线程上的Handler对象。
-     */
-    var handler: Handler? = null
-
-
-    /**
      * 返回当前应用的包名。
      */
     val packageName: String
@@ -60,7 +49,6 @@ object XimalayaKotlin {
      */
     fun initialize(c: Context) {
         context = c
-        handler = Handler(Looper.getMainLooper())
     }
 
 }

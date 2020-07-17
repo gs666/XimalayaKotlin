@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.R
+import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 
 /**
@@ -19,15 +20,9 @@ import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
  * @CreateDate:  2019-07-18 14:38
  * @Email:       gaoshuo521@foxmail.com
  */
-class HoriRadioAdapter : RecyclerView.Adapter<HoriRadioAdapter.ViewHolder> {
-    private var mContext: Context
-    private var radioList: List<Radio>
+class HoriRadioAdapter(private var mContext: Context, list: List<Radio>) : RecyclerView.Adapter<HoriRadioAdapter.ViewHolder>() {
+    private var radioList: List<Radio> = list
     private lateinit var itemClickListener: IKotlinItemClickListener
-
-    constructor(mContext: Context, list: List<Radio>) {
-        this.mContext = mContext
-        this.radioList = list
-    }
 
     class ViewHolder(var radioItemView: View) : RecyclerView.ViewHolder(radioItemView) {
         var imageCover: ImageView = radioItemView.findViewById(R.id.id_image_cover)
@@ -44,7 +39,7 @@ class HoriRadioAdapter : RecyclerView.Adapter<HoriRadioAdapter.ViewHolder> {
         val item = radioList[position]
         with(item){
             holder.textViewTitle.text = radioName
-            holder.textViewIntro.text = "正在播放：$programName"
+            holder.textViewIntro.text = XimalayaKotlin.context.getString(R.string.now_playing,programName)
             Glide.with(mContext)
                     .load(coverUrlLarge).apply(RequestOptions.bitmapTransform(RoundedCorners(15)))
                     .into(holder.imageCover)

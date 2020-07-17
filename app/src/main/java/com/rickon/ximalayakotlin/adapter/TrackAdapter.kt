@@ -29,20 +29,10 @@ import kotlinx.android.synthetic.main.track_list_header.view.*
  * @CreateDate:  2019-07-26 18:23
  * @Email:       gaoshuo521@foxmail.com
  */
-class TrackAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private var mContext: Context
-    private var trackList: List<Track>
-    private var albumInfos = emptyArray<String>()
-    //标题，作者，订阅，播放次数，介绍，封面url
-    private var showImageCover = false
+class TrackAdapter(private var mContext: Context, list: List<Track>, private var albumInfos: Array<String>,//标题，作者，订阅，播放次数，介绍，封面url
+                   private var showImageCover: Boolean) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var trackList: List<Track> = list
     private lateinit var itemClickListener: IKotlinItemClickListener
-
-    constructor(mContext: Context, list: List<Track>, albumInfos: Array<String>, showImageCover: Boolean) {
-        this.mContext = mContext
-        this.trackList = list
-        this.albumInfos = albumInfos;
-        this.showImageCover = showImageCover
-    }
 
     /**
      * HeaderViewHolder
@@ -76,12 +66,10 @@ class TrackAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == ITEM_TYPE_HEADER) {
-            return HeaderViewHolder(LayoutInflater.from(mContext).inflate(R.layout.track_list_header, parent, false))
-        } else if (viewType == ITEM_TYPE_HEADER2) {
-            return HeaderView2Holder(LayoutInflater.from(mContext).inflate(R.layout.track_list_header2, parent, false))
-        } else {
-            return ContentViewHolder(LayoutInflater.from(mContext).inflate(R.layout.track_list_item, parent, false))
+        return when (viewType) {
+            ITEM_TYPE_HEADER -> HeaderViewHolder(LayoutInflater.from(mContext).inflate(R.layout.track_list_header, parent, false))
+            ITEM_TYPE_HEADER2 -> HeaderView2Holder(LayoutInflater.from(mContext).inflate(R.layout.track_list_header2, parent, false))
+            else -> ContentViewHolder(LayoutInflater.from(mContext).inflate(R.layout.track_list_item, parent, false))
         }
     }
 

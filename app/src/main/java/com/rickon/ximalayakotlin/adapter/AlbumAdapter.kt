@@ -19,15 +19,9 @@ import com.ximalaya.ting.android.opensdk.model.album.Album
  * @CreateDate:  2019-07-24 17:24
  * @Email:       gaoshuo521@foxmail.com
  */
-class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
-    private var mContext: Context
-    private var albumList: List<Album>
+class AlbumAdapter(private var mContext: Context, list: List<Album>) : RecyclerView.Adapter<AlbumAdapter.ViewHolder>() {
+    private var albumList: List<Album> = list
     private lateinit var itemClickListener: IKotlinItemClickListener
-
-    constructor(mContext: Context, list: List<Album>) {
-        this.mContext = mContext
-        this.albumList = list
-    }
 
     class ViewHolder(var albumItemView: View) : RecyclerView.ViewHolder(albumItemView) {
         var imageCover: ImageView = albumItemView.findViewById(R.id.id_image_cover)

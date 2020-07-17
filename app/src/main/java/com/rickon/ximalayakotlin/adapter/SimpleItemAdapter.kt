@@ -14,15 +14,9 @@ import com.rickon.ximalayakotlin.R
  * @CreateDate:  2019-07-19 11:44
  * @Email:       gaoshuo521@foxmail.com
  */
-class SimpleItemAdapter : RecyclerView.Adapter<SimpleItemAdapter.ViewHolder> {
-    private var mContext: Context
-    private var itemList: List<String>
+class SimpleItemAdapter(private var mContext: Context, list: List<String>) : RecyclerView.Adapter<SimpleItemAdapter.ViewHolder>() {
+    private var itemList: List<String> = list
     private lateinit var itemClickListener: IKotlinItemClickListener
-
-    constructor(mContext: Context, list: List<String>) {
-        this.mContext = mContext
-        this.itemList = list
-    }
 
     class ViewHolder(var simpleItemView: View) : RecyclerView.ViewHolder(simpleItemView) {
         var textViewTitle: TextView = simpleItemView.findViewById(R.id.item_tv)
