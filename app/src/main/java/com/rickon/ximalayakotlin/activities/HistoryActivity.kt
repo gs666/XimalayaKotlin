@@ -1,13 +1,13 @@
 package com.rickon.ximalayakotlin.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.adapter.HistoryAdapter
+import com.rickon.ximalayakotlin.db.HistoryDatabase
 import com.rickon.ximalayakotlin.model.HistoryItem
 import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants
@@ -18,7 +18,6 @@ import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.model.track.LastPlayTrackList
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import kotlinx.android.synthetic.main.activity_history.*
-import org.litepal.LitePal
 import kotlin.collections.ArrayList
 
 
@@ -35,12 +34,31 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
 
         initListener()
 
-        //按照时间排序，先展示最新的
-        LitePal.order("lastListenTime DESC").find(HistoryItem::class.java).forEach {
-            historyList.add(it)
-            Log.d(TAG, it.toString())
-        }
+        initRecyclerView()
 
+        Thread(Runnable {
+
+            HistoryDatabase.getInstance(this).historyDao().getAllHistory().forEach {
+                historyList.add(it)
+            }
+            history_recycler.post {
+                historyAdapter.notifyDataSetChanged()
+            }
+        }).start()
+    }
+
+    private fun initView() {
+        setSupportActionBar(recent_history_toolbar)
+        //禁止显示默认 title
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        recent_history_toolbar.setNavigationOnClickListener { finish() }
+    }
+
+    private fun initListener() {
+        clear_all_btn.setOnClickListener(this)
+    }
+
+    private fun initRecyclerView() {
         history_recycler.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
         historyAdapter = HistoryAdapter(applicationContext, historyList)
         history_recycler.adapter = historyAdapter
@@ -52,7 +70,7 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
                     loadLastPlayList(historyList[position].itemId, historyList[position].trackId)
                 } else {
                     val tempRadio = Radio()
-                    with(tempRadio){
+                    with(tempRadio) {
                         dataId = historyList[position].itemId.toLong()
                         kind = PlayableModel.KIND_RADIO
                         radioName = historyList[position].itemTitle
@@ -62,19 +80,6 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
                 }
             }
         })
-    }
-
-    private fun initView() {
-        setSupportActionBar(recent_history_toolbar)
-        //禁止显示默认 title
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        recent_history_toolbar.setNavigationOnClickListener { finish() }
-
-
-    }
-
-    private fun initListener() {
-        clear_all_btn.setOnClickListener(this)
     }
 
     private fun loadLastPlayList(albumId: String, trackId: String) {
@@ -112,9 +117,11 @@ class HistoryActivity : BaseActivity(), View.OnClickListener {
                 AlertDialog.Builder(this, R.style.XimalayaAlertDialogStyle)
                         .setMessage(GlobalUtil.getString(R.string.confirm_to_clear_all_history))
                         .setPositiveButton(GlobalUtil.getString(R.string.confirm)) { _, _ ->
-                            LitePal.deleteAll(HistoryItem::class.java)
                             historyList.clear()
                             historyAdapter.notifyDataSetChanged()
+                            Thread(Runnable {
+                                HistoryDatabase.getInstance(this).historyDao().deleteAllHistory()
+                            }).start()
                         }
                         .setNegativeButton(GlobalUtil.getString(R.string.cancel), null)
                         .create()

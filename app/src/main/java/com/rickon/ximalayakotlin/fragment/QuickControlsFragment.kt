@@ -2,24 +2,22 @@ package com.rickon.ximalayakotlin.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.activities.PlayingActivity
+import com.rickon.ximalayakotlin.db.HistoryDatabase
 import com.rickon.ximalayakotlin.model.HistoryItem
 import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
-import com.ximalaya.ting.android.opensdk.model.album.Album
 import com.ximalaya.ting.android.opensdk.model.album.SubordinatedAlbum
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.model.live.schedule.Schedule
@@ -27,8 +25,6 @@ import com.ximalaya.ting.android.opensdk.model.track.Track
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
-import org.litepal.LitePal
-import org.litepal.extension.find
 import java.util.*
 
 class QuickControlsFragment : BaseFragment() {
@@ -46,7 +42,6 @@ class QuickControlsFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.bottom_nav, container, false)
-        this.rootView = rootView
 
         //初始化播放器
         mPlayerManager = XmPlayerManager.getInstance(XimalayaKotlin.context)
@@ -201,11 +196,8 @@ class QuickControlsFragment : BaseFragment() {
                 //添加电台播放记录
                 val schedule: Schedule = mPlayerManager.currSound as Schedule
                 Log.d(TAG, "Schedule查询是否存在此电台信息，${schedule.radioId}")
-                val queryResult = LitePal.where("itemId = ?", schedule.radioId.toString())
-                        .find<HistoryItem>()
-                Log.d(TAG, "查询当前电台：$queryResult")
 
-                if (queryResult.isEmpty()) {
+                Thread(Runnable {
                     Log.d(TAG, "添加记录")
                     val historyItem = HistoryItem()
                     with(historyItem) {
@@ -217,22 +209,14 @@ class QuickControlsFragment : BaseFragment() {
                         trackId = ""
                         trackTitle = ""
                         lastBreakTime = 0
-                        save()
+                        //数据库insert数据
+                        HistoryDatabase.getInstance(XimalayaKotlin.context).historyDao().insertHistory(this)
                     }
-                    Log.d(TAG, historyItem.toString())
-                } else {
-                    //更新电台记录
-                    val updateHistoryItem = HistoryItem()
-                    updateHistoryItem.lastListenTime = System.currentTimeMillis()
-                    updateHistoryItem.updateAll("itemId = ?", schedule.radioId.toString())
-                }
+                }).start();
             } else if (mPlayerManager.currSound is Track) {
                 //添加新记录
                 val tempTrack = mPlayerManager.currSound as Track
-                val queryAlbumResult = LitePal.where("itemId = ?", tempTrack.album?.albumId.toString())
-                        .find<HistoryItem>()
-                Log.d(TAG, queryAlbumResult.toString())
-                if (queryAlbumResult.isEmpty()) {
+                Thread(Runnable {
                     val albumHistoryItem = HistoryItem()
                     val tempAlbum: SubordinatedAlbum? = tempTrack.album
                     with(albumHistoryItem) {
@@ -249,19 +233,10 @@ class QuickControlsFragment : BaseFragment() {
                         trackId = tempTrack.dataId.toString()
                         trackTitle = tempTrack.trackTitle
                         lastBreakTime = 0
-                        save()
+                        //数据库insert数据
+                        HistoryDatabase.getInstance(XimalayaKotlin.context).historyDao().insertHistory(this)
                     }
-                } else {
-                    //更新专辑记录
-                    val updateAlbumItem = HistoryItem()
-                    with(updateAlbumItem) {
-                        lastListenTime = System.currentTimeMillis()
-                        trackId = tempTrack.dataId.toString()
-                        trackTitle = tempTrack.trackTitle
-                        updateAll("itemId = ?", tempTrack.album?.albumId.toString())
-                    }
-                }
-
+                }).start()
             }
         }
 

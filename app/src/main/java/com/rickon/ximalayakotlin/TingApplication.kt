@@ -14,8 +14,6 @@ import com.ximalaya.ting.android.sdkdownloader.XmDownloadManager
 import com.ximalaya.ting.android.sdkdownloader.http.RequestParams
 import com.ximalaya.ting.android.sdkdownloader.http.app.RequestTracker
 import com.ximalaya.ting.android.sdkdownloader.http.request.UriRequest
-import org.litepal.LitePal
-
 
 /**
  * @Description:
@@ -68,8 +66,6 @@ open class TingApplication : Application() {
         mXimalaya.init(this, mAppSecret)
 
         XimalayaKotlin.initialize(this)
-        //初始化LitePal数据库
-        LitePal.initialize(this)
 
         /**
          * 注意: 即使您已经在AndroidManifest.xml中配置过appkey和channel值，也需要在App代码中调
