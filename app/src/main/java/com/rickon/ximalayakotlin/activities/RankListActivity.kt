@@ -28,37 +28,32 @@ class RankListActivity : BaseActivity() {
 
     private var mPlayerServiceManager: XmPlayerManager? = null
 
+    override fun mainHandlerMessage(activity: BaseActivity?, msg: Message?) {
+        super.mainHandlerMessage(activity, msg)
+        when (msg?.what) {
+            LOAD_RADIO_RANK_SUCCESS -> {
+                rank_radio_list.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
+                //下面代码解决滑动无惯性的问题
+                rank_radio_list.isNestedScrollingEnabled = false
+                verticalRadioAdapter = VerticalRadioAdapter(applicationContext, mRankRadioList)
+                rank_radio_list.adapter = verticalRadioAdapter
 
-    //uiHandler在主线程中创建，所以自动绑定主线程
-    private var uiHandler = object : Handler() {
-        override fun handleMessage(msg: Message?) {
-            super.handleMessage(msg)
-            when (msg?.what) {
-                LOAD_RADIO_RANK_SUCCESS -> {
-                    rank_radio_list.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
-                    //下面代码解决滑动无惯性的问题
-                    rank_radio_list.isNestedScrollingEnabled = false
-                    verticalRadioAdapter = VerticalRadioAdapter(applicationContext, mRankRadioList)
-                    rank_radio_list.adapter = verticalRadioAdapter
+                verticalRadioAdapter.setOnKotlinItemClickListener(object : VerticalRadioAdapter.IKotlinItemClickListener {
+                    override fun onItemClickListener(position: Int) {
+                        if (position != currentRadioPos) {
+                            Log.d(TAG, position.toString())
+                            currentRadioPos = position
 
-                    verticalRadioAdapter.setOnKotlinItemClickListener(object : VerticalRadioAdapter.IKotlinItemClickListener {
-                        override fun onItemClickListener(position: Int) {
-                            if (position != currentRadioPos) {
-                                Log.d(TAG, position.toString())
-                                currentRadioPos = position
+                            val radio = mRankRadioList[position]
+                            //播放直播
+                            mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
 
-                                val radio = mRankRadioList[position]
-                                //播放直播
-                                mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
-
-                                verticalRadioAdapter.notifyDataSetChanged()
-                            }
+                            verticalRadioAdapter.notifyDataSetChanged()
                         }
-                    })
-                }
+                    }
+                })
             }
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,7 +86,7 @@ class RankListActivity : BaseActivity() {
 
                     val msg = Message()
                     msg.what = LOAD_RADIO_RANK_SUCCESS
-                    uiHandler.sendMessage(msg)
+                    mainHandler.sendMessage(msg)
                 }
             }
 

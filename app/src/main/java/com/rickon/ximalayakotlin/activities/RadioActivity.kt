@@ -2,7 +2,6 @@ package com.rickon.ximalayakotlin.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.os.Message
 import android.util.Log
 import android.view.View
@@ -19,7 +18,6 @@ import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import com.ximalaya.ting.android.opensdk.player.service.IXmPlayerStatusListener
 import com.ximalaya.ting.android.opensdk.player.service.XmPlayerException
 import kotlinx.android.synthetic.main.activity_radio.*
-import java.lang.ref.WeakReference
 
 class RadioActivity : BaseActivity(), View.OnClickListener {
 
@@ -30,7 +28,6 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
     private var mPlayerServiceManager: XmPlayerManager? = null
     private lateinit var horiRadioAdapter: HoriRadioAdapter
     private val mContext = this
-    private var mHandler: Handler = WithoutLeakHandler(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +44,34 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
 
         mPlayerServiceManager = XmPlayerManager.getInstance(applicationContext)
         mPlayerServiceManager?.addPlayerStatusListener(mPlayerStatusListener)
+    }
+
+    override fun mainHandlerMessage(activity: BaseActivity?, msg: Message?) {
+        super.mainHandlerMessage(activity, msg)
+        when (msg?.what) {
+            MSG_LOAD_RADIO_SUCCESS -> {
+                val myActivity = activity as RadioActivity
+                myActivity?.let {
+                    it.recommend_radio_list.layoutManager = LinearLayoutManager(it.applicationContext, LinearLayoutManager.HORIZONTAL, false)
+                    it.horiRadioAdapter = HoriRadioAdapter(it.applicationContext, it.mRecommendRadioList)
+                    it.recommend_radio_list.adapter = it.horiRadioAdapter
+
+                    it.horiRadioAdapter.setOnKotlinItemClickListener(object : HoriRadioAdapter.IKotlinItemClickListener {
+                        override fun onItemClickListener(position: Int) {
+                            if (position != it.currentRadioPos) {
+                                Log.d(TAG, position.toString())
+                                it.currentRadioPos = position
+                                val radio = it.mRecommendRadioList[position]
+                                //播放直播
+                                it.mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
+                                it.horiRadioAdapter.notifyDataSetChanged()
+                            }
+                        }
+                    })
+                }
+            }
+        }
+
     }
 
     private fun initListener() {
@@ -73,7 +98,7 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
 
                     val msg = Message()
                     msg.what = MSG_LOAD_RADIO_SUCCESS
-                    mHandler.sendMessage(msg)
+                    mainHandler.sendMessage(msg)
                 }
                 mLoading = false
             }
@@ -147,37 +172,6 @@ class RadioActivity : BaseActivity(), View.OnClickListener {
         private const val COUNTRY_RADIO_TYPE = 1
 
         private const val MSG_LOAD_RADIO_SUCCESS = 0
-
-        private class WithoutLeakHandler(radioActivity: RadioActivity) : Handler() {
-            private var radioActivity: WeakReference<RadioActivity> = WeakReference(radioActivity)
-
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
-                when (msg.what) {
-                    MSG_LOAD_RADIO_SUCCESS -> {
-                        val myActivity = radioActivity.get()
-                        myActivity?.let {
-                            it.recommend_radio_list.layoutManager = LinearLayoutManager(it.applicationContext, LinearLayoutManager.HORIZONTAL, false)
-                            it.horiRadioAdapter = HoriRadioAdapter(it.applicationContext, it.mRecommendRadioList)
-                            it.recommend_radio_list.adapter = it.horiRadioAdapter
-
-                            it.horiRadioAdapter.setOnKotlinItemClickListener(object : HoriRadioAdapter.IKotlinItemClickListener {
-                                override fun onItemClickListener(position: Int) {
-                                    if (position != it.currentRadioPos) {
-                                        Log.d(TAG, position.toString())
-                                        it.currentRadioPos = position
-                                        val radio = it.mRecommendRadioList[position]
-                                        //播放直播
-                                        it.mPlayerServiceManager?.playLiveRadioForSDK(radio, -1, -1)
-                                        it.horiRadioAdapter.notifyDataSetChanged()
-                                    }
-                                }
-                            })
-                        }
-                    }
-                }
-            }
-        }
     }
 
 }
