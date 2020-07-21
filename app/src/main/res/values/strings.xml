@@ -33,7 +33,7 @@
 
     <string name="play_all">播放全部</string>
     <string name="trying_to_get">正在努力获取中~</string>
-    <string name="load_failed">加载失败~</string>
+    <string name="load_failed">加载失败!~</string>
 
     <string name="recent_history">最近收听</string>
     <string name="clear_all">清空</string>
