@@ -18,7 +18,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/hottest_rank"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/hot_books_recycler"
@@ -26,9 +26,28 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/hottest_rank_tv"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:minHeight="20dp" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/new_rank_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hot_books_recycler"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/new_rank"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/new_album_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/new_rank_tv"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:minHeight="20dp" />
 
 
     </RelativeLayout>

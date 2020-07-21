@@ -30,10 +30,14 @@ class CommonCategoryFrag(private var categoryId: Int) : BaseFragment() {
     private lateinit var albumAdapter: AlbumAdapter
     private var hotBookAlbumList: MutableList<Album> = mutableListOf()
 
+    private lateinit var newAlbumAdapter: AlbumAdapter
+    private var newAlbumList: MutableList<Album> = mutableListOf()
+
     override fun mainHandlerMessage(baseFragment: BaseFragment?, msg: Message) {
         super.mainHandlerMessage(baseFragment, msg)
         when (msg.what) {
             MSG_LOAD_SUCCESS -> albumAdapter.notifyDataSetChanged()
+            MSG_LOAD_NEW_SUCCESS -> newAlbumAdapter.notifyDataSetChanged()
         }
     }
 
@@ -48,6 +52,7 @@ class CommonCategoryFrag(private var categoryId: Int) : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
         loadAlbumList()
+        loadNewAlbumList()
     }
 
     private fun initRecyclerView() {
@@ -74,6 +79,32 @@ class CommonCategoryFrag(private var categoryId: Int) : BaseFragment() {
                 context?.startActivity(intent)
 
                 albumAdapter.notifyDataSetChanged()
+            }
+        })
+
+        new_album_recycler.layoutManager = LinearLayoutManager(XimalayaKotlin.context)
+        //下面代码解决滑动无惯性的问题
+        new_album_recycler.isNestedScrollingEnabled = false
+        newAlbumAdapter = AlbumAdapter(XimalayaKotlin.context, newAlbumList)
+        new_album_recycler.adapter = newAlbumAdapter
+
+        new_album_recycler.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+                super.getItemOffsets(outRect, view, parent, state)
+                outRect.top = 10
+            }
+        })
+
+        newAlbumAdapter.setOnKotlinItemClickListener(object : AlbumAdapter.IKotlinItemClickListener {
+            override fun onItemClickListener(position: Int) {
+                Log.d(TAG, position.toString())
+
+                val intent = Intent(context, AlbumActivity::class.java)
+                //传递一个 album
+                intent.putExtra("album", newAlbumList[position])
+                context?.startActivity(intent)
+
+                newAlbumAdapter.notifyDataSetChanged()
             }
         })
     }
@@ -107,11 +138,34 @@ class CommonCategoryFrag(private var categoryId: Int) : BaseFragment() {
         })
     }
 
+    private fun loadNewAlbumList() {
+        val map = HashMap<String, String>()
+        map[DTransferConstants.CATEGORY_ID] = categoryId.toString()
+        //有声书
+        map[DTransferConstants.CALC_DIMENSION] = "2"
+        map[DTransferConstants.PAGE_SIZE] = "10"
+
+        //最火
+        CommonRequest.getAlbumList(map, object : IDataCallBack<AlbumList> {
+            override fun onSuccess(p0: AlbumList?) {
+                p0?.albums?.let {
+                    if (it.size > 0) {
+                        newAlbumList.addAll(p0.albums)
+                        mainHandler.sendEmptyMessage(MSG_LOAD_NEW_SUCCESS)
+                    }
+                }
+            }
+
+            override fun onError(p0: Int, p1: String?) {
+            }
+        })
+    }
+
     companion object {
 
         private const val TAG = "CommonCategoryFrag"
         private const val MSG_LOAD_SUCCESS = 1
-
+        private const val MSG_LOAD_NEW_SUCCESS = MSG_LOAD_SUCCESS + 1
 
         fun newInstance(categoryId: Int): CommonCategoryFrag {
             return CommonCategoryFrag(categoryId)

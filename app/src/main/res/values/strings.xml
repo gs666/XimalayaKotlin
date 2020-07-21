@@ -29,6 +29,7 @@
     <string name="now_playing">正在播放：%1s</string>
 
     <string name="hottest_rank">热听榜</string>
+    <string name="new_rank">新上榜</string>
 
     <string name="play_all">播放全部</string>
     <string name="trying_to_get">正在努力获取中~</string>
