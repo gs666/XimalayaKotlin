@@ -13,12 +13,9 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.rickon.ximalayakotlin.R
 import com.rickon.ximalayakotlin.activities.PlayingActivity
-import com.rickon.ximalayakotlin.db.HistoryDatabase
-import com.rickon.ximalayakotlin.model.HistoryItem
 import com.rickon.ximalayakotlin.util.GlobalUtil
 import com.rickon.ximalayakotlin.util.XimalayaKotlin
 import com.ximalaya.ting.android.opensdk.model.PlayableModel
-import com.ximalaya.ting.android.opensdk.model.album.SubordinatedAlbum
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio
 import com.ximalaya.ting.android.opensdk.model.live.schedule.Schedule
 import com.ximalaya.ting.android.opensdk.model.track.Track
@@ -191,53 +188,6 @@ class QuickControlsFragment : BaseFragment() {
         override fun onPlayStart() {
             Log.i(TAG, "onPlayStart")
             playOrPauseBtn.setImageResource(R.drawable.ic_pause)
-
-            if (mPlayerManager.currSound is Schedule) {
-                //添加电台播放记录
-                val schedule: Schedule = mPlayerManager.currSound as Schedule
-                Log.d(TAG, "Schedule查询是否存在此电台信息，${schedule.radioId}")
-
-                Thread(Runnable {
-                    Log.d(TAG, "添加记录")
-                    val historyItem = HistoryItem()
-                    with(historyItem) {
-                        itemId = schedule.radioId.toString()
-                        isAlbum = false
-                        itemTitle = schedule.radioName
-                        itemImagePath = schedule.relatedProgram.backPicUrl
-                        lastListenTime = System.currentTimeMillis()
-                        trackId = ""
-                        trackTitle = ""
-                        lastBreakTime = 0
-                        //数据库insert数据
-                        HistoryDatabase.getInstance(XimalayaKotlin.context).historyDao().insertHistory(this)
-                    }
-                }).start();
-            } else if (mPlayerManager.currSound is Track) {
-                //添加新记录
-                val tempTrack = mPlayerManager.currSound as Track
-                Thread(Runnable {
-                    val albumHistoryItem = HistoryItem()
-                    val tempAlbum: SubordinatedAlbum? = tempTrack.album
-                    with(albumHistoryItem) {
-                        itemId = tempAlbum?.albumId.toString()
-                        isAlbum = true
-                        itemTitle = if (tempAlbum == null) {
-                            ""
-                        } else {
-                            tempAlbum.albumTitle
-                        }
-                        albumAuthor = tempTrack.announcer.nickname
-                        itemImagePath = tempTrack.coverUrlLarge
-                        lastListenTime = System.currentTimeMillis()
-                        trackId = tempTrack.dataId.toString()
-                        trackTitle = tempTrack.trackTitle
-                        lastBreakTime = 0
-                        //数据库insert数据
-                        HistoryDatabase.getInstance(XimalayaKotlin.context).historyDao().insertHistory(this)
-                    }
-                }).start()
-            }
         }
 
         //播放进度回调

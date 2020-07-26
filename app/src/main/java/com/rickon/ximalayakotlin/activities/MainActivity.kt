@@ -12,6 +12,7 @@ import com.rickon.ximalayakotlin.adapter.CommonFragmentPagerAdapter
 import com.rickon.ximalayakotlin.fragment.BoutiqueFrag
 import com.rickon.ximalayakotlin.fragment.CategoryFrag
 import com.rickon.ximalayakotlin.fragment.MineFragment
+import com.rickon.ximalayakotlin.service.OnlineFmService
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest
 import com.ximalaya.ting.android.opensdk.player.XmPlayerManager
 import com.ximalaya.ting.android.opensdk.player.appnotification.NotificationColorUtils
@@ -67,6 +68,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                 Toast.makeText(mContext, "播放器初始化成功", Toast.LENGTH_SHORT).show()
             }
         })
+
+        val intent = Intent(this, OnlineFmService::class.java)
+        startService(intent)
     }
 
     override fun onDestroy() {
