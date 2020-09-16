@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,24 +13,24 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1080px"
+            android:layout_height="360dp"
             android:background="@color/grey">
 
             <ImageView
                 android:id="@+id/image_cover"
                 android:layout_width="match_parent"
-                android:layout_height="1080px"
+                android:layout_height="360dp"
                 android:background="@color/half_grey" />
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="340px"
+                android:layout_height="113dp"
                 android:background="@drawable/gradient_black_shape" />
 
             <ImageView
                 android:id="@+id/close_playing_btn"
-                android:layout_width="228px"
-                android:layout_height="105px"
+                android:layout_width="76dp"
+                android:layout_height="35dp"
                 android:layout_centerHorizontal="true"
                 android:scaleType="center"
                 android:src="@drawable/ic_down_close" />
@@ -69,17 +69,18 @@
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
             android:maxHeight="10dp"
             android:minHeight="10dp"
-            android:thumb="@null"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:progress="0"
-            android:progressDrawable="@drawable/seekbar"/>
+            android:progressDrawable="@drawable/seekbar"
+            android:thumb="@null" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/playing_current_time"
                 android:layout_width="wrap_content"
@@ -87,10 +88,12 @@
                 android:text="@string/zero_time"
                 android:textColor="@color/grey"
                 android:textSize="15sp" />
+
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/playing_duration"
                 android:layout_width="wrap_content"
@@ -138,8 +141,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/play_pause_btn"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@id/play_pause_btn"
                 android:background="@drawable/play_btn_bg"
                 android:padding="10dp"
                 android:src="@drawable/ic_next" />
@@ -148,7 +151,7 @@
                 android:id="@+id/go_15_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/next_btn" />
+                android:layout_toEndOf="@id/next_btn" />
 
         </RelativeLayout>
 
@@ -158,7 +161,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:id="@+id/like_btn"
@@ -203,4 +206,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

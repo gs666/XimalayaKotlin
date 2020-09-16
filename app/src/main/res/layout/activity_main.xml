@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,29 +10,30 @@
         android:id="@+id/tab_layout_zone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#EDEDED">
+        android:background="#EDEDED"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/search_btn"
-            android:layout_width="180px"
-            android:layout_height="132px"
-            android:layout_alignParentLeft="true"
-            android:padding="32px"
+            android:layout_width="60dp"
+            android:layout_height="44dp"
+            android:layout_alignParentStart="true"
+            android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_search" />
 
         <ImageView
             android:id="@+id/history_btn"
-            android:layout_width="180px"
-            android:layout_height="132px"
-            android:layout_alignParentRight="true"
-            android:padding="30px"
+            android:layout_width="60dp"
+            android:layout_height="44dp"
+            android:layout_alignParentEnd="true"
+            android:padding="10dp"
             android:src="@drawable/ic_listen_history" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/main_tab_layout"
             android:layout_width="wrap_content"
-            android:layout_height="132px"
+            android:layout_height="44dp"
             android:layout_centerHorizontal="true"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp"
@@ -47,15 +48,15 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_container"
-        android:layout_below="@id/tab_layout_zone" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_container"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout_zone" />
 
     <FrameLayout
         android:id="@+id/bottom_container"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
