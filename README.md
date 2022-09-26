@@ -1,4 +1,4 @@
-# XimalayaKotlin
+# XimalayaKotlin【已停止维护，喜马拉雅SDK已被官方弃用】
 一个模仿企鹅 FM 界面的Android 应用—喜马拉雅Kotlin。完全使用 Kotlin 开发。有声资源和播放器由喜马拉雅 SDK 提供。
 主要功能：
 - 在线播放专辑点播
